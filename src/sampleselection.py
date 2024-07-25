@@ -31,12 +31,12 @@ filtered_clinical.to_csv(args.outfile, sep=',', quoting=csv.QUOTE_ALL, index=Fal
 # Create a list of elements found in column "N°ADN IRT 1" and "N°ADN IRT 2"
 aic_samples = []
 # Merged samples: CD21425_CD23878 CD21678_CD21237 CD26637_CD22832
+# These samples should be eliminated as there was an issue during sampleing (info source: Raphael)
 merged_samples = ["CD21425", "CD23878", "CD21678", "CD21237", "CD26637", "CD22832"]
-actually_merged_samples = ["CD21425_CD23878", "CD21678_CD21237", "CD26637_CD22832"]
 for index, row in filtered_clinical.iterrows():
     if row['N°ADN IRT 1'] not in merged_samples and row['N°ADN IRT 1'] not in aic_samples:
         aic_samples.append(row["N°ADN IRT 1"])
-aic_samples = aic_samples + actually_merged_samples
+
 # Write aic_samples to outfile parameter path
 with open(args.outsamples, 'w') as f: f.write('\n'.join(aic_samples))
 
