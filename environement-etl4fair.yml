@@ -1,0 +1,8 @@
+name: etl4fair
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - snakemake
+prefix: /home/bodrug-a/miniconda3/envs/etl4fair

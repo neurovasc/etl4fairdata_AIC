@@ -1,0 +1,24 @@
+# General Notes
+ conda export --from-history > ~/Devlopment/etl4fairdata_AIC/environement-etl4fair.yml
+ https://www.youtube.com/watch?v=r9PWnEmz_tc
+ snakemake --dag targets | dot -Tpng > dag.png
+ rule targets:
+    input:
+        vcfagg = "data-output/aic-aggregate.vcf",
+        rdfagg = "data-output/aic-aggregate.rdf",
+        genomicVariants = "data-output/aic-genomicVariations.json",
+        analyses = "data-output/aic-analyses.json",
+        biosamples = "data-output/aic-biosamples.json",
+        cohorts = "data-output/aic-cohorts.json",
+        datasets = "data-output/aic-satasets.json",
+        individuals = "data-output/aic-individuals.json",
+        runs = "data-output/aic-runs.json"
+
+rule sample_selection:
+    input:
+        csv = "data-input/extraction_GAIA_ICAN_26-09-2023.csv"
+    output:
+        samplelist = "data-intermediate/aicdataset-samplelist.lst",
+        csv = "data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.csv"
+    script: 
+        "src/sampleselection.py input.csv output.samplelist output.csv"
