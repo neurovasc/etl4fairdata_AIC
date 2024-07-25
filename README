@@ -1,24 +1,12 @@
+# Description
+This repository contains the code for the etl4fairdata_AIC project. 
+The project aims to develop a pipeline to extract, transform, and load data from different sources 
+to a FAIR genomic ecosystem. The final goal is to create the files that will enable the
+deployement of a Beacon (json files for the BeaconFriendlyFormat for mongoDB) and the deployement 
+of a SPARQL endpoint (rdf files of aggregate genomic data). 
+The pipeline is developed using the Snakemake workflow management system.
+
 # General Notes
  conda export --from-history > ~/Devlopment/etl4fairdata_AIC/environement-etl4fair.yml
  https://www.youtube.com/watch?v=r9PWnEmz_tc
  snakemake --dag targets | dot -Tpng > dag.png
- rule targets:
-    input:
-        vcfagg = "data-output/aic-aggregate.vcf",
-        rdfagg = "data-output/aic-aggregate.rdf",
-        genomicVariants = "data-output/aic-genomicVariations.json",
-        analyses = "data-output/aic-analyses.json",
-        biosamples = "data-output/aic-biosamples.json",
-        cohorts = "data-output/aic-cohorts.json",
-        datasets = "data-output/aic-satasets.json",
-        individuals = "data-output/aic-individuals.json",
-        runs = "data-output/aic-runs.json"
-
-rule sample_selection:
-    input:
-        csv = "data-input/extraction_GAIA_ICAN_26-09-2023.csv"
-    output:
-        samplelist = "data-intermediate/aicdataset-samplelist.lst",
-        csv = "data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.csv"
-    script: 
-        "src/sampleselection.py input.csv output.samplelist output.csv"

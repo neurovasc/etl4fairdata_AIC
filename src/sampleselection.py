@@ -1,4 +1,4 @@
-# bodrug-a
+# authors: bodrug-a, chatgpt, github Copilot
 # 25/07/2024
 # This script takes in phenotypic and clinical data
 # from patients of ICA and relatives. It will look for
