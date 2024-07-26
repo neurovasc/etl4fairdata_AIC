@@ -19,28 +19,33 @@ agp.add_argument('-o', '--outfile', type=str, help='Path to the output file', de
 args = agp.parse_args()
 
 # Functions
-def build_phenotypedf_for_variant(clinical, chromosome, position, reference, alternative, genotypes):
+def build_phenotypedf_for_variant(clinical, genotypes):
     # Build a new df with the genotypes for the variant
     # The columns are the samples and the values are the genotypes
     genotypesarray = genotypes.split(',')
     genotypesarray.pop() # The last element of this array is empty because there is a comma at the end of
-    # the genotypes string. It was created with bcftools query -f '[%GT,]' (see snakemake file)
-    samples = clinical["N°ADN IRT 1"].values
-    genotypesdf = pd.DataFrame(data=genotypesarray, index=samples, columns=['genotype'])
-    genotypesdf['chromosome'] = chromosome
-    genotypesdf['position'] = position
-    genotypesdf['reference'] = reference
-    genotypesdf['alternative'] = alternative
-    return genotypesdf
+    # the line in the genotypes file obtained with bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t[%GT,\t]\n'
+    # sanity check
+    if len(clinical) != len(genotypesarray):
+        raise ValueError("Length of clinical dataframe does not match length of genotypes array")
+    
+    clinical['genotypes'] = genotypesarray
+    return clinical
 
-# Load clinical data
-clinical = pd.read_csv(args.clinical, sep=',')
 
-# Read genotype file line by line
-# Do not load it with pandas because the genotypes file is
-# potentially very large and it's better to process it line by line
-with open(args.genotypes, 'r') as genotypes_file:
-    for line in genotypes_file:
-        chromosome, position, reference, alternative, genotypes = line.strip().split('\t')
+if __name__ == "__main__":
 
+    # Load clinical data
+    clinical = pd.read_csv(args.clinical, sep=',')
+
+    # Read genotype file line by line
+    # Do not load it with pandas because the genotypes file is
+    # potentially very large and it's better to process it line by line
+    with open(args.genotypes, 'r') as genotypes_file:
+        next(genotypes_file) # Skip the header
+        for line in genotypes_file:
+            chromosome, position, reference, alternative, genotypes = line.strip().split('\t')
+            # Build a new df with the genotypes for the variant
+            clinicalgenotyped = build_phenotypedf_for_variant(clinical, genotypes)
+            AF_inpop = compute_AF_inpop(clinicalgenotyped) # allele frequency in population
 
