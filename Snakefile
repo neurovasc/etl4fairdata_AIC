@@ -126,6 +126,17 @@ rule vcf2querygenotype:
 # # # #
 #
 #
+# Extract vcf header contigs
+rule extractvcfheadercontigs:
+    input:
+        bcf="data-intermediate/aicdataset-QCed.VEP.AFctrls.GND.CADD.bcf"
+    output:
+        contigs="data-intermediate/aicdataset-contigs.txt"
+    shell:
+        "bcftools view -h {input.bcf} | grep '^##contig'  > {output.contigs}"
+# # # #
+#
+#
 # Build frequencies per variant 
 # Each variant has genotype information, I slap it into the phenotype file, and calculate the 
 # frequencies I want to use for the new VCF aggregate
@@ -134,10 +145,11 @@ rule computeallelefrequencies:
     input:
         code="src/computeallelefrequencies.py",
         query="data-intermediate/aicdataset-querygenotype.tsv",
-        csv="data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.csv"
+        csv="data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.reordered.csv",
+        sequences="data-intermediate/aicdataset-contigs.txt"
     output:
-        gtfreq="data-intermediate/aicdataset-genotypefrequencies.tsv"
+        aggregatevcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz"
     shell:
-        "python3 {input.code} -q {input.query} -c {input.csv} -o {output.gtfreq}"
+        "python3 {input.code} -g {input.query} -c {input.csv} -o {output.aggregatevcf} -s {input.sequences}"
 
 

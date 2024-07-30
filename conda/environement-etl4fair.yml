@@ -5,4 +5,7 @@ channels:
   - defaults
 dependencies:
   - snakemake
+  - graphviz
+  - bcftools
+  - bioconda::vcftools
 prefix: /home/bodrug-a/miniconda3/envs/etl4fair
