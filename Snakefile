@@ -1,3 +1,4 @@
+import os
 # # # #
 #
 #
@@ -109,13 +110,19 @@ rule sanity_check_samples:
 #
 #
 # Extract minimal genotype information from the VCF file
+# Before extraction: eliminate positions with no alternative alleles (--min-ac=1)
+# Before extraction: reformat the bcf so that one single allele per line appears 
+# BEWARE WARNING WARNING: It will do funky things with multiallelic sites
+# Not a problem for primary (1) allele frequency calculation
+# https://stackoverflow.com/questions/73611363/better-splitting-of-mutliallelic-sites-then-bcftools-norm-m-any
 rule vcf2querygenotype:
     input:
         bcf="data-intermediate/aicdataset-QCed.VEP.AFctrls.GND.CADD.bcf"
     output:
         query="data-intermediate/aicdataset-querygenotype.tsv"
     shell:
-        "bcftools query -H -f '%CHROM\t%POS\t%REF\t%ALT\t[%GT,]\n' {input.bcf} > {output.query}"
+        "bcftools norm -a {input.bcf} | bcftools view --min-ac=1 | \
+        bcftools query -H -f '%CHROM\t%POS\t%REF\t%ALT\t[%GT,]\n' > {output.query}"
 # # # #
 #
 #

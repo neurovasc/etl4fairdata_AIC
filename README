@@ -10,3 +10,15 @@ The pipeline is developed using the Snakemake workflow management system.
  conda export --from-history > ~/Devlopment/etl4fairdata_AIC/environement-etl4fair.yml
  https://www.youtube.com/watch?v=r9PWnEmz_tc
  snakemake --dag targets | dot -Tpng > dag.png
+
+# Git pushing
+git push --set-upstream origin --all
+git push --set-upstream origin --tags
+
+# About my input files 
+QCed.VEP.AFctrls.GND.CADD.bcf 
+- has positions with genotypes that are all reference like
+- has samples that are not in the phenotype file
+- has samples that are a merge of two samples in the phenotype file
+signaled like sample1_sample2. These need to be eliminated as this is
+contamination.

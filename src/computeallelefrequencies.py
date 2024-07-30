@@ -3,19 +3,27 @@
 # This script takes in phenotypic data for AIC patients
 # and corresponding genotypes from the VCF file.
 # The genotypes are in 0/1 format after a bcftools query. 
-# This script create a new df for each variation, and concatenates it
+# The multiallelic sites were split into biallelic sites.
+# The positions without alternative alleles were removed.
+# This script creates a new df for each variation, and concatenates it
 # to the phenotypic data csv/df. Then it computes the allele frequencies
 # according to different features.
+# The output of this script is a VCF aggregate file with allele frequencies
+# and no individuals genotypes.
 
+import sys
 import argparse
 import pandas as pd
+import utilitary as ut
 
 # Argument parser
 agp = argparse.ArgumentParser(description='Compute allele frequencies')
-agp.add_argument('-g', '--genotypes', type=str, help='Path to the query genotype file', required=True)
-agp.add_argument('-c', '--clinical', type=str, help='Path to the phenotype file csv', required=True)
-agp.add_argument('-o', '--outfile', type=str, help='Path to the output file', default='stdout')
-
+agp.add_argument('-g', '--genotypes', type=str, help='Path to the query genotype file',\
+                  required=True)
+agp.add_argument('-c', '--clinical', type=str, help='Path to the phenotype file csv',\
+                  required=True)
+agp.add_argument('-o', '--outfile', type=str, help='Path to the output file',\
+                  default=None)
 args = agp.parse_args()
 
 # Functions
@@ -28,11 +36,10 @@ def build_phenotypedf_for_variant(clinical, genotypes):
     # sanity check
     if len(clinical) != len(genotypesarray):
         raise ValueError("Length of clinical dataframe does not match length of genotypes array")
-    
     clinical['genotypes'] = genotypesarray
     return clinical
-
-
+    
+# Main
 if __name__ == "__main__":
 
     # Load clinical data
@@ -41,11 +48,30 @@ if __name__ == "__main__":
     # Read genotype file line by line
     # Do not load it with pandas because the genotypes file is
     # potentially very large and it's better to process it line by line
+    
+    # Allele frequencies and allele counts should be specified in the vcf header
+    # Choosing which frequencies to add to VCF:
+    info = ['whole', 'male', 'female']
+    # Write the header
+    for i in info:
+        if args.outfile:
+            with open(args.outfile, 'a') as f:
+                f.write(ut.write_headervcf(i))
+        else:
+            sys.stdout.write(ut.write_headervcf(i))
+    exit()
     with open(args.genotypes, 'r') as genotypes_file:
         next(genotypes_file) # Skip the header
         for line in genotypes_file:
             chromosome, position, reference, alternative, genotypes = line.strip().split('\t')
             # Build a new df with the genotypes for the variant
             clinicalgenotyped = build_phenotypedf_for_variant(clinical, genotypes)
-            AF_inpop = compute_AF_inpop(clinicalgenotyped) # allele frequency in population
+            ##################################################
+            # Compute allele frequencies                     #
+            # Compute allele counts                          #
+            # Build corresponding VCF header lines           #
+            ##################################################
+            #
+            # Whole population
+            AF, AC = ut.compute_AFAC_inpop(clinicalgenotyped) # allele frequency in population
 
