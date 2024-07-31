@@ -169,4 +169,25 @@ rule sanity_check_vcfvalidity:
             return True
 
         check_vcf_validity(input.vcf)
-
+# # # #
+#
+#
+# Build RDF from the VCF aggregate
+# This step uses a RDF schema for variant information
+# similar to disgenet
+# This script uses gnomad file and dbsnp file, by default the paths are those
+# on my PC pp-irs1-4071ylt but you can change them with -g and -d parameters
+rule vcfaggregate2rdf:
+    input:
+        code="src/vcfaggregate2rdf.py",
+        vcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz",
+        samples="data-intermediate/aicdataset-samplelist.lst"
+    params:
+        limit=100,
+        threads=4,
+        chunksize=10
+    output:
+        rdf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.rdf"
+    shell:
+        "python3 {input.code} -b {input.vcf} -r {output.rdf} -s {input.samples} \
+        -l {params.limit} -t {params.threads} -k {params.chunksize}"
