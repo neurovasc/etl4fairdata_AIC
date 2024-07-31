@@ -1,11 +1,13 @@
 import os
 import io
+import glob
 import pandas as pd
 from rdflib import Graph, URIRef, Literal, Namespace
 from rdflib.namespace import RDF, XSD
 import argparse
 import concurrent.futures
 import threading
+
 
 
 # Arguments
@@ -16,7 +18,6 @@ def limit_type(x):
         raise argparse.ArgumentTypeError("Maximum bandwidth is 12")
     return x
 agp = argparse.ArgumentParser(description='Convert VCF to RDF-ttl')
-agp.add_argument('-s', '--samples', type=str, help='Path to the samples file')
 agp.add_argument('-r', '--varrdf', type=str, help='Path to the output RDF file')
 agp.add_argument('-b', '--bcf', type=str, help='Path to the BCF file') 
 agp.add_argument('-l', '--limit', type=limit_type, help='Number of variants to process')
@@ -64,23 +65,30 @@ def create_rdfgraph_namespace():
 
 def initiate_rdf_from_vcf(bcf, varrdf):
     '''
-    In this function we create the namespace and the variant information
-    Found in the vcf
+    Build the rdf graph from the vcf file
     '''
-    #
+    # Convert vcf.gz or bcf to bcftools query file 
     queryvcf = args.temp + '/temp_vcf.query'
+    os.system('bcftools query'
+                " -f'%CHROM\t%POS\t%REF\t%ALT\t%INFO\n' "  +
+                bcf + '>' + queryvcf)
+    # Start the graph 
+    g = create_rdfgraph_namespace()
+    # Read the queryvcf file and build the graph
+    # No multithreading
     if args.limit:
         df = pd.read_csv(queryvcf, sep='\t', \
-                        names=['chromosome', 'position', 'reference', 'alternate', 'genotypes'], \
+                        names=['chromosome', 'position', 'reference', 'alternate', 'info'], \
                         nrows=args.limit)
-        for index, row in df.iterrows():
-            rowg = build_rdfgraph(g, row)
+        rowg = build_rdfgraph(g, df) # this functions modified the graph
+        g.serialize(destination=varrdf, format="turtle")
+    # Multithreading : sometimes not worth it
     else:
         chunksize = args.chunksize
         with open(queryvcf, 'r') as file:
             lines = file.readlines()
         with concurrent.futures.ThreadPoolExecutor(max_workers=args.thread) as executor:
-            print("Submitting to concurrent executor with ", args.thread, " threads.")
+            print("Submitting to concurrent executor with", args.thread, "threads.")
             futures = [executor.submit(process_queryline, lines[chunk:chunk+chunksize], chunk) for chunk in range(0, len(lines), chunksize)]
             print("Finished building futures. Waiting for results.")
             results = [future.result() for future in concurrent.futures.as_completed(futures)]
@@ -96,13 +104,13 @@ def process_queryline(linechunk, chunk):
     Process the query line from the bcftools query
     '''
     minig = create_rdfgraph_namespace()
-    output = str(args.varrdf)+'_'+str(chunk)+'_intermediate.ttl'
+    output = args.temp + '/' +str(os.path.basename(args.varrdf))+'_'+str(chunk)+'_intermediate.ttl'
 
     df = pd.DataFrame()
     for line in linechunk:
         #print(line)
         dfl = pd.read_csv(io.StringIO(line), sep='\t', \
-                        names=['chromosome', 'position', 'reference', 'alternate', 'genotypes'])
+                        names=['chromosome', 'position', 'reference', 'alternate', 'info'])
         df = pd.concat([df, dfl])
     #     
     minig = build_rdfgraph(minig, df)
@@ -110,7 +118,14 @@ def process_queryline(linechunk, chunk):
     minig.serialize(destination=output, format="turtle")
     print("Wrote to output file: ", output)
     return minig
-    
+#
+def clean_temp_files():
+    ''' Deleting intermediate turtle files created during multithreading
+    '''
+    temp_folder = args.temp
+    temp_files = glob.glob(os.path.join(temp_folder, '*.ttl'))
+    for file in temp_files:
+        os.remove(file)
 #
 def build_rdfgraph(g, df):
     for index, row in df.iterrows():
@@ -118,9 +133,10 @@ def build_rdfgraph(g, df):
         position = int(row['position'])
         reference = row['reference']
         alternate = row['alternate']
-        genotypes = row['genotypes']
+        info = row['info']
+        #print(chromosome, position, reference, alternate, info)
         fq_gnomad = calculate_fqgnomad(chromosome, position, reference, alternate)
-        fq_ican = calculate_fqican(genotypes)
+        fq_ican_AF_whole = info.split(';')[0].split('=')[1]
         rsid = get_rsids_fromdbsnp(chromosome, position, reference, alternate)
 
         # Define the variant URI
@@ -162,7 +178,7 @@ def build_rdfgraph(g, df):
         # ican
         g.add((variant_fq_ican_uri, RDF.type, sio["SIO_001367"]))
         g.add((variant_fq_ican_uri, sio["000253"], ican['cohort/ican']))
-        g.add((variant_fq_ican_uri, sio["000300"], Literal(fq_ican, datatype=XSD.float)))
+        g.add((variant_fq_ican_uri, sio["000300"], Literal(fq_ican_AF_whole, datatype=XSD.float)))
     return g
 #
 def calculate_fqgnomad(chromosome, position, reference, alternate):
@@ -227,9 +243,12 @@ if __name__ == "__main__":
     # Info about parameters
     print("Script launched with:")
     bcf = args.bcf ; print(f"\tinput - BCF: {bcf}.")
-    samples = args.samples ; print(f"\tinput - samples: {samples}.")
-    print("\n")
-    print("Writing output RDF to:")
-    varrdf = args.varrdf; print(f"\toutput - RDF: {varrdf}")
+    print("Writing output RDF to...")
+    varrdf = args.varrdf
     # Build rdf from vcf aggregagte
     initiate_rdf_from_vcf(bcf, varrdf)
+    print(f"\tdone: {varrdf}")
+    if args.thread:
+        print("Cleaning temp files...\r")
+        clean_temp_files()
+        print("done.")
