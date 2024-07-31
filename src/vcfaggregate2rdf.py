@@ -15,7 +15,7 @@ import threading
 def limit_type(x):
     x = int(x)
     if x > 100:
-        raise argparse.ArgumentTypeError("Maximum bandwidth is 12")
+        raise argparse.ArgumentTypeError("Maximum unithread processing is 100 variants.")
     return x
 agp = argparse.ArgumentParser(description='Convert VCF to RDF-ttl')
 agp.add_argument('-r', '--varrdf', type=str, help='Path to the output RDF file')
@@ -92,10 +92,16 @@ def initiate_rdf_from_vcf(bcf, varrdf):
             futures = [executor.submit(process_queryline, lines[chunk:chunk+chunksize], chunk) for chunk in range(0, len(lines), chunksize)]
             print("Finished building futures. Waiting for results.")
             results = [future.result() for future in concurrent.futures.as_completed(futures)]
-        print("Finished processing all chunks: ", len(results), type(results), type(results[0]))
+        nb_chunks = len(results)
+        print(f"\nFinished processing all {nb_chunks}.")
         graph = Graph()
+        print("Merging all temp .ttl files...")
+        count = 0
         for res in results:
+            count += 1
+            print(f"\rMerging files: {count}/{nb_chunks}", end="")
             graph =  graph + res
+        print("\nDone.")
         graph.serialize(destination=varrdf, format="turtle")
 
 #
@@ -116,7 +122,7 @@ def process_queryline(linechunk, chunk):
     minig = build_rdfgraph(minig, df)
     #
     minig.serialize(destination=output, format="turtle")
-    print("Wrote to output file: ", output)
+    print(f"\rWriting to output files: {output}", end="")
     return minig
 #
 def clean_temp_files():
@@ -243,12 +249,13 @@ if __name__ == "__main__":
     # Info about parameters
     print("Script launched with:")
     bcf = args.bcf ; print(f"\tinput - BCF: {bcf}.")
-    print("Writing output RDF to...")
+    #
     varrdf = args.varrdf
     # Build rdf from vcf aggregagte
     initiate_rdf_from_vcf(bcf, varrdf)
-    print(f"\tdone: {varrdf}")
+    print("Wrote output RDF to:")
+    print(f"\toutput - ttl: {varrdf}.")
     if args.thread:
         print("Cleaning temp files...\r")
         clean_temp_files()
-        print("done.")
+        print("Done.")

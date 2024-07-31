@@ -180,7 +180,7 @@ rule sanity_check_vcfvalidity:
 rule vcfaggregate2rdf:
     input:
         code="src/vcfaggregate2rdf.py",
-        vcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz",
+        vcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz"
     params:
         #limit=100,
         threads=15,

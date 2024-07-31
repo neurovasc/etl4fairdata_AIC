@@ -7,13 +7,12 @@ of a SPARQL endpoint (rdf files of aggregate genomic data).
 The pipeline is developed using the Snakemake workflow management system.
 
 # General Notes
- conda export --from-history > ~/Devlopment/etl4fairdata_AIC/environement-etl4fair.yml
+ conda export --from-history > ~/Devlopment/etl4fairdata_AIC/conda/environement-etl4fair.yml
  https://www.youtube.com/watch?v=r9PWnEmz_tc
  snakemake --dag targets | dot -Tpng > dag.png
 
 # Git pushing
 git push --set-upstream origin --all
-git push --set-upstream origin --tags
 
 # About my input files 
 QCed.VEP.AFctrls.GND.CADD.bcf 
@@ -22,3 +21,9 @@ QCed.VEP.AFctrls.GND.CADD.bcf
 - has samples that are a merge of two samples in the phenotype file
 signaled like sample1_sample2. These need to be eliminated as this is
 contamination.
+
+# TODOs
+- For variants that do not have a gnomad frequency, should the frequency be set to 0 
+in the rdf file or simply not included? Now it appears as "NaN"^^xsd:float
+- Add logger and verbose argument for vcfaggregate3rdf.py
+- Add custom check function that prevents the usage of both --limit and (--chunk or --threads)
