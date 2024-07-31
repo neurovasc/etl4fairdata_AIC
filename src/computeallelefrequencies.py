@@ -26,7 +26,7 @@ agp.add_argument('-s', '--sequences', type=str, help='Contig name',\
 agp.add_argument('-c', '--clinical', type=str, help='Path to the phenotype file csv',\
                   required=True)
 agp.add_argument('-o', '--outfile', type=str,\
-                  help='Path to the output file (should end with .vcf and will be compressed with bgzip)',\
+                  help='Path to the output file (should end with .vcf.gz as it will be a bgzipeed vcf file)',\
                   required=True)
 args = agp.parse_args()
 
@@ -49,6 +49,9 @@ if __name__ == "__main__":
     # Load clinical data
     clinical = pd.read_csv(args.clinical, sep=',')
 
+    # Uncompressed vcf 
+    vcfout = args.outfile.replace('.gz', '')
+
     # Read genotype file line by line
     # Do not load it with pandas because the genotypes file is
     # potentially very large and it's better to process it line by line
@@ -57,7 +60,7 @@ if __name__ == "__main__":
     # Choosing which frequencies to add to VCF:
     info = ['whole', 'male', 'female']
     # Write the header
-    with open(args.outfile, 'w') as f:
+    with open(vcfout, 'w') as f:
         f.write(ut.write_headervcf(info, args.sequences))
     # Write the variant positions
     with open(args.genotypes, 'r') as genotypes_file:
@@ -76,13 +79,13 @@ if __name__ == "__main__":
             AF, AC = ut.compute_AFAC_inpop(clinicalgenotyped) # allele frequency in population
             info_field_for_variant = f'AF_whole={AF};AC_whole={AC}'
             variant_line = f'{chromosome}\t{position}\t.\t{reference}\t{alternative}\t.\t.\t{info_field_for_variant}'
-            with open(args.outfile, 'a') as f:
+            with open(vcfout, 'a') as f:
                 f.write(variant_line + "\n")
             
     # Compress the file using bgzip
     try:
-        subprocess.run(['bgzip', '-f', args.outfile], check=True)
-        print(f"File compressed successfully to {args.outfile}.gz")
+        subprocess.run(['bgzip', '-f', vcfout], check=True)
+        print(f"File compressed successfully to {args.outfile}")
     except subprocess.CalledProcessError as e:
         print(f"Error compressing file: {e}")
         # Clean up temporary file if compression fails

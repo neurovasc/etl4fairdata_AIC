@@ -151,5 +151,22 @@ rule computeallelefrequencies:
         aggregatevcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz"
     shell:
         "python3 {input.code} -g {input.query} -c {input.csv} -o {output.aggregatevcf} -s {input.sequences}"
+# # # #
+#
+#
+# Sanity check: is the bgziped VCF file valid?
+rule sanity_check_vcfvalidity:
+    input:
+        vcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz"
+    run:
+        import subprocess
+        def check_vcf_validity(vcf):
+            try:
+                subprocess.check_output("bcftools view " + vcf + " > /dev/null", shell=True)
+                subprocess.check_output("vcf-validator " + vcf + " > /dev/null", shell=True)
+            except subprocess.CalledProcessError as e:
+                raise ValueError("The bgziped VCF file is not valid.")
+            return True
 
+        check_vcf_validity(input.vcf)
 
