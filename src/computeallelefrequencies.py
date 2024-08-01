@@ -77,6 +77,14 @@ if __name__ == "__main__":
             #
             # Whole population
             AF, AC = ut.compute_AFAC_inpop(clinicalgenotyped) # allele frequency in population
+            # Frequencies by sex: male, female, other
+            # TODO: add frequencies, write function in utilitary.py
+            # Frequencies by case type: familial certain, familial uncertain, sporadic, other
+            # TODO: add frequencies, write function in utilitary.py
+            # Frequencies by onset: early, late, other
+            # Frequencies by number of stroked: multiple, single, duo, other
+            # Frequencies by bmi: underweight, normal, overweight, obese1, obese2, other
+
             info_field_for_variant = f'AF_whole={AF};AC_whole={AC}'
             variant_line = f'{chromosome}\t{position}\t.\t{reference}\t{alternative}\t.\t.\t{info_field_for_variant}'
             with open(vcfout, 'a') as f:

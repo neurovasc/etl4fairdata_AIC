@@ -1,3 +1,9 @@
+# author: bodrug-a, chatgpt, github Copilot
+# 2024-08-01
+# This script takes in a VCF file and converts it to RDF-ttl format
+# Unithread processing is (should be) limited to 100 variants
+# Multithreading is used for processing more than 100 variants
+
 import os
 import io
 import glob
