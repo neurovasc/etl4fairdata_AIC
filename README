@@ -27,3 +27,6 @@ contamination.
 in the rdf file or simply not included? Now it appears as "NaN"^^xsd:float
 - Add logger and verbose argument for vcfaggregate3rdf.py
 - Add custom check function that prevents the usage of both --limit and (--chunk or --threads)
+- Maybe add function in vcfaggregate3rdf.py that checks if the number of variants
+is the same in the vcf and in the final rdf -> it is also a sanity check in the snakemake pipeline
+- Issue with clean up function -> I want to keep the intermediate merged file, but it is deleted. why?

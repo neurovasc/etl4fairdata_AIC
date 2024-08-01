@@ -191,3 +191,50 @@ rule vcfaggregate2rdf:
     shell:
         "python3 {input.code} -b {input.vcf} -r {output.rdf} \
          -t {params.threads} -k {params.chunksize}"
+# # # #
+#
+#
+# Sanity check: is the RDF file valid? turtle format
+rule sanity_check_ttlvalidity:
+    input:
+        rdf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.ttl"
+    run:
+        import rdflib
+        def check_turtle(file):
+            '''
+            Check if the file is a valid turtle file
+            '''
+            if not os.path.isfile(file):
+                print(f"File does not exist: {file}")
+                return False
+            try:
+                g = Graph()
+                g.parse(file, format='turtle')
+                return True
+            except Exception as e:
+                print(f"Error: {e}")
+                return False
+        check_turtle(input.rdf)
+# # # #
+#
+#
+# Sanity check: are there as many variants in the VCF and as in the RDF file?
+rule sanity_check_nbvariantsinttlandrdf:
+    input:
+        vcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz",
+        rdf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.ttl"
+    run:
+        import subprocess
+        #
+        def count_variants_in_vcf(vcf):
+            vcf_variants = subprocess.check_output("bcftools query -f '%CHROM\t%POS' " + vcf + " | wc -l", shell=True)
+            return int(vcf_variants)
+        def count_variants_in_rdf(rdf):
+            rdf_variants = subprocess.check_output("grep -c 'a so:0001060 ' " + rdf, shell=True)
+            return int(rdf_variants)
+        #
+        if count_variants_in_vcf(input.vcf) != count_variants_in_rdf(input.rdf):
+            raise ValueError("The number of variants in the VCF and in the RDF file is different.")
+        else:
+            print("The number of variants in the VCF and in the RDF file is the same.")
+# # # #

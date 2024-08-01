@@ -134,7 +134,7 @@ def check_turtle(file):
         return False
     try:
         g = Graph()
-        g.parse(file, format='turtle')
+        g.parse(file, format='turtle') # this will load everything into memory
         return True
     except Exception as e:
         print(f"Error: {e}")
