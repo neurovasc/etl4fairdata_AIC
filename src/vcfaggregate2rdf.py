@@ -72,18 +72,20 @@ def initiate_rdf_from_vcf(bcf, varrdf):
     os.system('bcftools query'
                 " -f'%CHROM\t%POS\t%REF\t%ALT\t%INFO\n' "  +
                 bcf + '>' + queryvcf)
-    # Start the graph 
-    g = create_rdfgraph_namespace()
     # Read the queryvcf file and build the graph
     # No multithreading
     if args.limit:
+        g1 = create_rdfgraph_namespace()
         df = pd.read_csv(queryvcf, sep='\t', \
                         names=['chromosome', 'position', 'reference', 'alternate', 'info'], \
                         nrows=args.limit)
-        rowg = build_rdfgraph(g, df) # this functions modified the graph
-        g.serialize(destination=varrdf, format="turtle")
+        rowg = build_rdfgraph(g1, df) # this functions modified the graph
+        g1.serialize(destination=varrdf, format="turtle")
     # Multithreading : sometimes not worth it
     else:
+        # Clean any previously existing temp turtle files
+        clean_temp_ttlfiles()
+        #
         chunksize = args.chunksize
         with open(queryvcf, 'r') as file:
             lines = file.readlines()
@@ -94,20 +96,55 @@ def initiate_rdf_from_vcf(bcf, varrdf):
             results = [future.result() for future in concurrent.futures.as_completed(futures)]
         nb_chunks = len(results)
         print(f"\nFinished processing all {nb_chunks}.")
-        graph = Graph()
         print("Merging all temp .ttl files...")
         count = 0
-        for res in results:
-            count += 1
-            print(f"\rMerging files: {count}/{nb_chunks}", end="")
-            graph =  graph + res
+        # The turtle files should not be loaded into memory
+        # but rather serialized to the final file
+        temporary_merge = args.temp + '/temp_merge.ttl'
+        # Empty file if it already exists
+        if os.path.exists(temporary_merge):
+            open(temporary_merge, 'w').close()
+        # Get all the turtle files in temp
+        ttlfiles = glob.glob(args.temp + '/' +str(os.path.basename(args.varrdf))+'_*_intermediate.ttl')
+        # Merge all the turtle files into one, without loading them into memory all at once
+        with open(temporary_merge, 'w') as f:
+            for ttl in ttlfiles:
+                count += 1
+                print(f"\rMerging files: {count}/{nb_chunks}", end="")
+                graph = Graph()
+                graph.parse(ttl, format='turtle')
+                f.write(graph.serialize(format='turtle'))
+        # Create graph for final serialization
+        g2 = create_rdfgraph_namespace() # merged graph
+        g2.parse(temporary_merge, format='turtle')
+        g2.serialize(varrdf, format="turtle")
         print("\nDone.")
-        graph.serialize(destination=varrdf, format="turtle")
-
+        print(f"Checking if valid turtle file: {varrdf}.")
+        if check_turtle(varrdf):
+            print("Valid turtle file.")
+        else:
+            print("Invalid turtle file.")
+#
+def check_turtle(file):
+    '''
+    Check if the file is a valid turtle file
+    '''
+    if not os.path.isfile(file):
+        print(f"File does not exist: {file}")
+        return False
+    try:
+        g = Graph()
+        g.parse(file, format='turtle')
+        return True
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
 #
 def process_queryline(linechunk, chunk):
     '''
     Process the query line from the bcftools query
+    For each bcftools query line a small ttl file is created
+    With the namespace and the info of the one variant
     '''
     minig = create_rdfgraph_namespace()
     output = args.temp + '/' +str(os.path.basename(args.varrdf))+'_'+str(chunk)+'_intermediate.ttl'
@@ -125,7 +162,7 @@ def process_queryline(linechunk, chunk):
     print(f"\rWriting to output files: {output}", end="")
     return minig
 #
-def clean_temp_files():
+def clean_temp_ttlfiles():
     ''' Deleting intermediate turtle files created during multithreading
     '''
     temp_folder = args.temp
@@ -257,5 +294,5 @@ if __name__ == "__main__":
     print(f"\toutput - ttl: {varrdf}.")
     if args.thread:
         print("Cleaning temp files...\r")
-        clean_temp_files()
+        clean_temp_ttlfiles()
         print("Done.")

@@ -181,10 +181,11 @@ rule vcfaggregate2rdf:
     input:
         code="src/vcfaggregate2rdf.py",
         vcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz"
+        #vcf="temp/small.bcf"
     params:
         #limit=100,
         threads=15,
-        chunksize=100
+        chunksize=500
     output:
         rdf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.ttl"
     shell:
