@@ -6,7 +6,7 @@ import json
 import build_bff_metadata4beacon as bbm 
 
 # Arguments 
-agp = argparse.ArgumentParser(description='Build BFF analyses file')
+agp = argparse.ArgumentParser(description='Build BFF runs file')
 agp.add_argument('-p', '--phenotypes', type=str,
                 help='Path to the file containing phenotypes (one individual per line)',
                 required=True)
