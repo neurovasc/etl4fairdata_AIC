@@ -11,6 +11,7 @@ import pandas as pd
 #
 # Metadata
 #
+# what is the metadata that is true for all analyses?
 analyses = {"aligner" : 'dragen,Version="SW: 07.021.624.3.10.8, HW: 07.021.624"', 
             "analysisDate" : "2024-02-13", 
             "pipelineName" : "dragen-variant-caller-for-AIC", 
@@ -19,12 +20,36 @@ analyses = {"aligner" : 'dragen,Version="SW: 07.021.624.3.10.8, HW: 07.021.624"'
             "idbasename" : "AIC_analyisid",
             "runbasename" : "SRR00"
             }
+# what is the metadata that is true for all runs?
 librarySource = {"id": "GENEPIO:0001966", "label": "genomic Source"}
 runs = {'libraryLayout' : 'PAIRED', 
         'librarySelection' : 'RANDOM', 
         'librarySource' : librarySource, 
         'platform' : 'unknown', 
         'platformModel' : 'unknown'}
+# what is the metadata that is true for the cohort, no matters its subsampling?
+# https://docs.genomebeacons.org/schemas-md/cohorts_defaultSchema/
+# DOI:10.1093/neuros/nyw135
+cohortDesign = {'id': 'OMIABIS:0001020', 'label': 'prospective cohort study'}
+inclusionCriteria = {
+                    "genders" : [{"id": "NCIT:C16576","label": "female"},
+                                {"id": "NCIT:C20197","label": "male"}],
+
+                    "ageRange" : [{"end": {"iso8601duration": "P120Y"}, 
+                                   "start": {"iso8601duration": "P0Y"}}],
+
+                    "locations": [{"id": "SNOMED:223666001", "label": "France"}]
+                    }
+# if needed, we can expand inclusion criteria, add exclusion criteria, and refine geographic
+# origin. See publication (Bourcier R et al. 2017)
+cohorts = {'cohortDesign' : cohortDesign,
+           'cohortId' : 'ICAN', 
+           'cohortType' : 'user-defined', 
+           'cohortName' : 'The French ICAN project',
+           'id' : 'ICAN', 
+           'inclusionCriteria' : inclusionCriteria
+           }
+# to build: cohortSize int, collectionEvents [], ids {biosamples : [], individuals: []}
 #
 # Functions 
 #
@@ -118,3 +143,43 @@ class Run:
             'individualId': self.individualId,
             'runDate': self.runDate
         }
+#
+class Cohort:
+    #
+    def __init__(self, cohortDesign, cohortId, cohortType, cohortName, id, inclusionCriteria,
+                 cohortSize, collectionEvents, ids):
+        self.cohortDesign = cohortDesign
+        self.cohortId = cohortId
+        self.cohortName = cohortName
+        self.cohortType = cohortType
+        self.id = id
+        self.inclusionCriteria = inclusionCriteria
+        self.cohortSize = cohortSize
+        self.collectionEvents = collectionEvents
+        self.ids = ids
+    #
+    def __str__(self):
+        return (f"Cohort(cohortDesign={self.cohortDesign}, \
+                cohortId={self.cohortId}, \
+                cohortName={self.cohortName}, \
+                cohortType={self.cohortType}, \
+                id={self.id}, \
+                inclusionCriteria={self.inclusionCriteria}, \
+                cohortSize={self.cohortSize}, \
+                collectionEvents={self.collectionEvents}, \
+                ids={self.ids})")
+    #
+    def to_dict(self):
+        return {
+            'cohortDesign' : self.cohortDesign,
+            'cohortId': self.cohortId,
+            'cohortName': self.cohortName,
+            'cohortType': self.cohortType,
+            'id': self.id,
+            'inclusionCriteria': self.inclusionCriteria,
+            'cohortSize': self.cohortSize,
+            'collectionEvents': self.collectionEvents,
+            'ids': self.ids
+        }
+    
+        

@@ -41,5 +41,6 @@ def write_analysis_bff(slist, output):
 if __name__ == "__main__":
     # Load samples
     slist = bbm.load_samples(args.phenotypes)
+    # Write bff
     write_analysis_bff(slist, args.output)        
     
