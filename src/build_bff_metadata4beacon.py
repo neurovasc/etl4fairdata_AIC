@@ -54,6 +54,9 @@ datasets = {'createDateTime' : '2022-06-01',
             'id' : 'ICAN',
             'name' : 'The French ICAN project, genotyped dataset'
             }
+# what are the metadata that is true for the dataset, no matter its subsampling?
+bsinfo = {"characteristics": [{"organism": [{"ontologyTerms": ["http://purl.obolibrary.org/obo/NCBITaxon_9606"], "text": "Homo sapiens"}]}],"taxId": 9606}
+biosamples = {"info" : bsinfo}
 #
 # Functions 
 #
@@ -210,5 +213,41 @@ class Dataset:
             'name': self.name,
             'ids': self.ids
         }
-
+#
+# https://docs.genomebeacons.org/schemas-md/biosamples_defaultSchema/
+class Biosample:
+    #
+    def __init__(self, info, 
+                 biosampleStatus, obtentionProcedure, sampleOriginType, 
+                 collectionDate, collectionMoment, id, individualId):
+        self.info = info 
+        self.biosampleStatus = biosampleStatus
+        self.obtentionProcedure = obtentionProcedure
+        self.sampleOriginType = sampleOriginType
+        self.collectionDate = collectionDate
+        self.collectionMoment = collectionMoment
+        self.id = id
+        self.individualId = individualId
+    #
+    def __str__(self):
+        return f"Biosample(info={self.info}, \
+            biosampleStatus={self.biosampleStatus}, \
+            obtentionProcedure={self.obtentionProcedure}, \
+            sampleOriginType={self.sampleOriginType}, \
+            collectionDate={self.collectionDate}, \
+            collectionMoment={self.collectionMoment}, \
+            id={self.id}, \
+            individualId={self.individualId})"
+    #
+    def to_dict(self):
+        return {
+            'info': self.info,
+            'biosampleStatus': self.biosampleStatus,
+            'obtentionProcedure': self.obtentionProcedure,
+            'sampleOriginType': self.sampleOriginType,
+            'collectionDate': self.collectionDate,
+            'collectionMoment': self.collectionMoment,
+            'id': self.id,
+            'individualId': self.individualId
+        }
         
