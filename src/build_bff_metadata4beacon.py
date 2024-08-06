@@ -34,10 +34,8 @@ cohortDesign = {'id': 'OMIABIS:0001020', 'label': 'prospective cohort study'}
 inclusionCriteria = {
                     "genders" : [{"id": "NCIT:C16576","label": "female"},
                                 {"id": "NCIT:C20197","label": "male"}],
-
                     "ageRange" : [{"end": {"iso8601duration": "P120Y"}, 
                                    "start": {"iso8601duration": "P0Y"}}],
-
                     "locations": [{"id": "SNOMED:223666001", "label": "France"}]
                     }
 # if needed, we can expand inclusion criteria, add exclusion criteria, and refine geographic
@@ -45,11 +43,17 @@ inclusionCriteria = {
 cohorts = {'cohortDesign' : cohortDesign,
            'cohortId' : 'ICAN', 
            'cohortType' : 'user-defined', 
-           'cohortName' : 'The French ICAN project',
+           'cohortName' : 'The French ICAN project, cohort',
            'id' : 'ICAN', 
            'inclusionCriteria' : inclusionCriteria
            }
-# to build: cohortSize int, collectionEvents [], ids {biosamples : [], individuals: []}
+# what are the metadata that is true for the dataset, no matter its subsampling?
+# date: last validated patient
+datasets = {'createDateTime' : '2022-06-01', 
+            'description' : 'individuals recruited for The French ICAN project that have genotypic data',
+            'id' : 'ICAN',
+            'name' : 'The French ICAN project, genotyped dataset'
+            }
 #
 # Functions 
 #
@@ -181,5 +185,30 @@ class Cohort:
             'collectionEvents': self.collectionEvents,
             'ids': self.ids
         }
-    
+#
+class Dataset:
+    #
+    def __init__(self, createDateTime, description, id, name, ids):
+        self.createDateTime = createDateTime
+        self.description = description
+        self.id = id
+        self.name = name
+        self.ids = ids
+    #
+    def __str__(self):
+        return (f"Dataset(createDateTime={self.createDateTime}, \
+            description={self.description}, \
+            id={self.id}, \
+            name={self.name}, \
+            ids={self.ids})")
+    #
+    def to_dict(self):
+        return {
+            'createDateTime': self.createDateTime,
+            'description': self.description,
+            'id': self.id,
+            'name': self.name,
+            'ids': self.ids
+        }
+
         
