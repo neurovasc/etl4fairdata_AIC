@@ -11,7 +11,7 @@ import pandas as pd
 #
 # Metadata
 #
-# what is the metadata that is true for all analyses?
+# what is the metadata that is true for all analyses, no matter the subsampling of ican
 analyses = {"aligner" : 'dragen,Version="SW: 07.021.624.3.10.8, HW: 07.021.624"', 
             "analysisDate" : "2024-02-13", 
             "pipelineName" : "dragen-variant-caller-for-AIC", 
@@ -27,7 +27,7 @@ runs = {'libraryLayout' : 'PAIRED',
         'librarySource' : librarySource, 
         'platform' : 'unknown', 
         'platformModel' : 'unknown'}
-# what is the metadata that is true for the cohort, no matters its subsampling?
+# what is the metadata that is true for the cohort, no matter the subsampling of ican
 # https://docs.genomebeacons.org/schemas-md/cohorts_defaultSchema/
 # DOI:10.1093/neuros/nyw135
 cohortDesign = {'id': 'OMIABIS:0001020', 'label': 'prospective cohort study'}
@@ -47,16 +47,18 @@ cohorts = {'cohortDesign' : cohortDesign,
            'id' : 'ICAN', 
            'inclusionCriteria' : inclusionCriteria
            }
-# what are the metadata that is true for the dataset, no matter its subsampling?
+# what are the metadata that is true for the dataset, no matter the subsampling of ican
 # date: last validated patient
 datasets = {'createDateTime' : '2022-06-01', 
             'description' : 'individuals recruited for The French ICAN project that have genotypic data',
             'id' : 'ICAN',
             'name' : 'The French ICAN project, genotyped dataset'
             }
-# what are the metadata that is true for the dataset, no matter its subsampling?
+# what are the metadata that is true for the biosamples, no matter the subsampling of ican
 bsinfo = {"characteristics": [{"organism": [{"ontologyTerms": ["http://purl.obolibrary.org/obo/NCBITaxon_9606"], "text": "Homo sapiens"}]}],"taxId": 9606}
 biosamples = {"info" : bsinfo}
+# what are the metadata that is true for the individuals, no matter the subsampling of ican
+individuals = {} # nothing
 #
 # Functions 
 #
@@ -250,4 +252,49 @@ class Biosample:
             'id': self.id,
             'individualId': self.individualId
         }
-        
+#
+# https://docs.genomebeacons.org/schemas-md/individuals_defaultSchema/
+class Individual:
+    # id, sex, measures, ethnicity, geographicOrigin, pedigree
+    # exposures, diseases, interventionsOrProcedures, treatments
+    # 
+    def __init__(self,
+                 id, sex, measures, ethnicity, geographicOrigin, pedigree,
+                 exposures, diseases, interventionsOrProcedures, treatments):
+        self.id = id
+        self.sex = sex
+        self.measures = measures
+        self.ethnicity = ethnicity
+        self.geographicOrigin = geographicOrigin
+        self.pedigree = pedigree
+        self.exposures = exposures
+        self.diseases = diseases
+        self.interventionsOrProcedures = interventionsOrProcedures
+        self.treatments = treatments
+    #
+    def __str__(self):
+        return f"Individual(id={self.id}, \
+            sex={self.sex}, \
+            measures={self.measures}, \
+            ethnicity={self.ethnicity}, \
+            geographicOrigin={self.geographicOrigin}, \
+            pedigree={self.pedigree}, \
+            exposures={self.exposures}, \
+            diseases={self.diseases}, \
+            interventionsOrProcedures={self.interventionsOrProcedures}, \
+            treatments={self.treatments})"
+    #
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'sex': self.sex,
+            'measures': self.measures,
+            'ethnicity': self.ethnicity,
+            'geographicOrigin': self.geographicOrigin,
+            'pedigree': self.pedigree,
+            'exposures': self.exposures,
+            'diseases': self.diseases,
+            'interventionsOrProcedures': self.interventionsOrProcedures,
+            'treatments': self.treatments
+        }
+

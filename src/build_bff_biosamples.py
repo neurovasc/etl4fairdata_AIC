@@ -102,9 +102,9 @@ def write_biosamples_bff(phenotypefile, output):
     #
     with open(output+'/biosamples.json', 'w') as f:
         json.dump(biosamples, f, indent=4)
+    return 0
 #
 # Main
 if __name__ == "__main__":
-
     # Write bff
     write_biosamples_bff(args.phenotypes, args.output) 
