@@ -5,6 +5,7 @@ import argparse
 import json
 import pandas as pd
 import build_bff_metadata4beacon as bbm
+import datetime
 
 # Arguments 
 agp = argparse.ArgumentParser(description='Build BFF individuals file')
@@ -17,16 +18,68 @@ agp.add_argument('-o', '--output', type=str,
 args = agp.parse_args()
 #
 def get_individualId(row):
-    # TODO: Implement logic to get individual ID from row
-    return 0
+    '''
+    '''
+    id = 'ivid-'+row['N°ADN IRT 1']
+
+    return id
 
 def get_sex(row):
-    # TODO: Implement logic to get sex from row
-    return 0
+    '''
+    '''
+    malestr = ['M', 'm', 'Male', 'homme', 'Homme']
+    femalestr = ['F', 'f', 'female', 'femme', 'Femme']
+    sex = { "id": "", "label": ""}
+    if row['sexe'] in malestr:
+        sex['id'] = "NCIT:C20197"
+        sex['label'] = "male"
+    elif row['sexe'] in femalestr:
+        sex['id'] = "NCIT:C16576"
+        sex['label'] = "female"
+    return sex
+
 
 def get_measures(row):
-    # TODO: Implement logic to get measures from row
-    return 0
+    ''' BMI, Aneurysm size (1st), Number of aneurysms
+    '''
+    # inner functions
+    def build_bmi(bmi, observationdate, dob):
+        observationdate = observationdate.split(" ")[0]
+        observationdate = datetime.datetime.strptime(observationdate, "%d/%m/%Y").date()
+        dob = datetime.datetime.strptime(dob, "%d/%m/%Y").date()
+        age = observationdate - dob
+        years = age.days // 365
+        months = (age.days % 365) // 30
+        age_of_observation = f"P{years}Y{months}M"
+        try:
+            bmi = round(float(str(bmi).replace(',', '.')), 2)
+        except ValueError:
+            bmi = 'NaN'
+        bmistructure = {
+                "assayCode": {
+                    "id": "LOINC:35925-4",
+                    "label": "BMI"
+                },
+                "date": observationdate.strftime("%Y-%m-%d"),
+                "measurementValue": {
+                    "unit": {
+                        "id": "NCIT:C49671",
+                        "label": "Kilogram per Square Meter"
+                    },
+                    "value": bmi
+                },
+                "observationMoment": {
+                    "age": {
+                        "iso8601duration": age_of_observation
+                    }
+                }
+            }
+        return bmistructure
+
+    bmi = build_bmi(row['imc'], row['valide le /conformite signature cst biocoll'], row['date de naissance'])
+    measures = [ bmi ]
+            
+    return measures
 
 def get_enthnicity(row):
     # TODO: Implement logic to get ethnicity from row
@@ -86,6 +139,7 @@ def write_individuals_bff(phenotypefile, output):
                                    interventionsOrProcedures, 
                                    treatments)
         individuals.append(individual.to_dict())
+        print(individual.to_dict())
     #
     with open(output+'/individuals.json', 'w') as f:
         json.dump(individuals, f, indent=4)
