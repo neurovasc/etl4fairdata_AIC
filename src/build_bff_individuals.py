@@ -177,38 +177,140 @@ def get_exposures(row):
     DOI: 10.3233/SHTI240636 
     '''
     exposures = []
+    ##################
+    # smoking status
+    ##################
     def build_smokingstatus(row):
         ''' Jamais fumé, abstinence >3, abstinence <3, tabagisme actif
         '''
-        cigsinapaq = 20 # nombre de cigarettes dans un paquet? idk
         consomation = row['consommation de tabac O/N']
-        duration = row['duree en annees']
-        smokingstatus = {}
-        if consomation == 'Tabagisme actif':
-            paqperday = float(str(row['nb de paquets/jour']).replace(',','.'))
-            cigsperday = cigsinapaq * paqperday
-            smokingstatus = {'exposureCode': {'id' : 'NCIT:C19796', 'label' : 'Smoking Status'},
-                             'exposureDescription' : {'id' : 'NCIT:C67147', 'label' : 'Current Smoker'}, 
-                                'unit' : {'label': 'cigarettes per day', 'id' : 'EFO:0006525'}, 
-                                'value' : cigsperday, 
-                                'duration' : duration}
+        smokingstatus = handle_consumption(consomation, row)
         return smokingstatus
+    def handle_consumption(consomation, row):
+        ''' Building blocks of smoking status dictionnary according to consumption info in GAIA extraction
+            Sevrage plus de 3 and et moins de 3 ans sont tous les deux --> Former Smoker
+        '''
+        consomation = str(consomation)
+        cigsinapaq = 20 # nombre de cigarettes dans un paquet? idk
+        duration = row['duree en annees']
+        paqperday = float(str(row['nb de paquets/jour']).replace(',','.'))
+        cigsperday = cigsinapaq * paqperday
+        
+        action = {
+                'Tabagisme actif': {'exposureCode': {'id' : 'NCIT:C19796', 'label' : 'Smoking Status'},
+                    'exposureDescription' : {'id' : 'NCIT:C67147', 'label' : 'Current Smoker'}, 
+                    'unit' : {'label': 'cigarettes per day', 'id' : 'EFO:0006525'}, 
+                    'value' : cigsperday, 
+                    'duration' : duration}, 
+
+                'Jamais fumé' : {'exposureCode': {'id' : 'NCIT:C19796', 'label' : 'Smoking Status'},
+                    'exposureDescription' : {'id' : 'NCIT:C65108', 'label' : 'Never Smoked'}},
+                'nan' : {'exposureCode': {'id' : 'NCIT:C19796', 'label' : 'Smoking Status'},
+                    'exposureDescription' : {'id' : 'NCIT:C67151', 'label' : 'Former Smoker'}},
+
+                'Sevrage > 3ans' : {'exposureCode': {'id' : 'NCIT:C67148', 'label' : 'Smoking Status'},
+                    'exposureDescription' : {'id' : 'NCIT:C67147', 'label' : 'Current Smoker'}, 
+                    'unit' : {'label': 'cigarettes per day', 'id' : 'EFO:0006525'}, 
+                    'value' : cigsperday, 
+                    'duration' : duration},
+                'Sevrage < 3 ans' : {'exposureCode': {'id' : 'NCIT:C67148', 'label' : 'Former Smoker'},
+                    'exposureDescription' : {'id' : 'NCIT:C67147', 'label' : 'Current Smoker'}, 
+                    'unit' : {'label': 'cigarettes per day', 'id' : 'EFO:0006525'}, 
+                    'value' : cigsperday, 
+                    'duration' : duration}
+                }
+        return action[consomation]
     
+    ##################
+    # alcohol consumption
+    ##################
+    def build_alcoholconsumption(row):
+        '''
+        https://evsexplore.semantics.cancer.gov/evsexplore/hierarchy/ncit/C16273
+        Difficult to find an ontology and described alcohol consumption per week...
+        and draws a limit at 150g per week... 
+        TODO
+        '''
+        alcoholconsumption = {}
+        perweekalcohol = row['quantite alcool par semaine (g)']
+
+        return alcoholconsumption
+    #############
+    # EXPOSURES
+    #############
     smokingstatus = build_smokingstatus(row)
+    alcoholconsumption = build_alcoholconsumption(row)
     if smokingstatus != {}:
         exposures.append(smokingstatus)
+    if alcoholconsumption != {}:
+        exposures.append(alcoholconsumption)
     return exposures
 
 def get_diseases(row):
-    # TODO: Implement logic to get diseases from row
-    return 0
+    ''' like {"diseases": [{"diseaseCode": {"id": "ICD10:D70", "label": "agranulocytosis"}}]
+    '''
+    diseases = []
+    #
+    def get_strokestatus(row):
+        status = {}
+        sporatic = row['cas sporadique']
+        familial1 = row['ATCD familial d\'AIC (1er degré)']
+        familial2 = row['ATCD familial d\'AIC (2ème degré ou plus)']
+        discoverycircumstances = row['circonstances de decouverte']
+        rupturedate = row['date de rupture']
+        return status
+    def get_htastatus(hta):
+        status = {}
+        if 'HTA' in hta:
+            status = {'diseaseCode' : {'id' : 'HP:0000822', 'label' : 'Hypertension'}}
+        if 'HTA gravidique' in hta :
+            status = {'diseaseCode' : {'id' : 'HP:0008071', 'label' : 'Maternal hypertension'}}
+        return status
+    def get_diabetesstatus(diab):
+        status = {}
+        if 'DNID' in diab: # type 2 insuline resistant
+            status = {'diseaseCode' : {'id' : 'HP:0005978', 'label' : 'Type II diabetes mellitus'}}
+        if 'DID' in diab: # type 1 insulino dépendant
+            status = {'diseaseCode' : {'id' : 'HP:0100651', 'label' : 'Type I diabetes mellitus'}}
+        if 'gravidique' in diab:
+            status = {'diseaseCode' : {'id' : 'HP:0009800', 'label' : 'Maternal diabetes'}}
+        return status
+    def get_dyslipidemiastatus(dislip):
+        status = {}
+        # TODO
+        return status
+    def get_asthmastatus(dislip):
+        status = {}
+        # TODO
+        return status
+    def get_allergystatus(dislip):
+        status = {}
+        # TODO
+        return status
+    def get_eczemastatus(dislip):
+        status = {}
+        # TODO
+        return status
+    #
+    hta = str(row['hypertension arterielle'])
+    diabetes = str(row['diabete'])
+    htastatus = get_htastatus(hta)
+    diabetesstatus = get_diabetesstatus(diabetes)
+    if htastatus != {}:
+        diseases.append(htastatus)
+    if diabetesstatus != {}:
+        diseases.append(diabetesstatus)
+    #
+    return diseases
 
 def get_interventionsOrProcedures(row):
     # TODO: Implement logic to get interventions or procedures from row
+    # Need to loop for approatiate ontology
     return 0
 
 def get_treatments(row):
     # TODO: Implement logic to get treatments from row
+    # Need to look for appropriate ontology, no idea how to encode statin treatment for example
     return 0
 #
 def write_individuals_bff(phenotypefile, output):
