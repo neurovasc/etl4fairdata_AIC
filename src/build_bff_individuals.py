@@ -28,7 +28,7 @@ def get_individualId(row):
     This function should be changed in the case of multiple samples per individual
     and add another id code (for example 'PATIENT' column in the GAIA extraction)
     '''
-    id = ''
+    id = 'ivid-'
     try:
         id = 'ivid-'+row['N°ADN IRT 1']
         if str(row['N°ADN IRT 1']).lower == 'aucun':
@@ -36,7 +36,7 @@ def get_individualId(row):
     except TypeError:
         logger.debug("Issue with individual's id: empty field, 'aucun', non str value?")
 
-    return id
+    return str(id)
 
 def get_sex(row):
     '''
@@ -57,82 +57,147 @@ def get_measures(row):
     ''' BMI, Aneurysm size (1st), Number of aneurysms
     '''
     # inner functions
-    def build_bmi(bmi, observationdate, dob):
+    def build_bmi(row):
         ''' Build dictionary structure for beacon BFF individuals bmi
         to welcome values for an individual and return the filled in structure.
-        For individuals with no BMI information
+        For individuals with no BMI information, nothing is added in the measures (no
+        empty structure, just no structure). But this does not happen when working with the
+        rows/individuals that have a genotyping (so in data-intermediate of the snakemake
+        pipeline). The try excepts are not useful in that case, and are just an additional
+        safeguard.
         '''
+        #
+        bmi = row['imc']
+        observationdate = row['valide le /conformite signature cst biocoll']
+        dob = row['date de naissance']
+        individualId = get_individualId(row)
+        bmistructure = {}
         # bmi
         try:
             bmi = round(float(str(bmi).replace(',', '.')), 2)
             if bmi != bmi: # check if bmi is nan
-                logger.debug("There is no BMI for individual (dob: ", dob, " )")
-                return False
-        except ValueError:
-            bmi = float('nan')
-            logger.debug("There is no BMI for individual (dob: ", dob, " )")
-            return False
-        # observation date
-        try:
-            observationdate = observationdate.split(" ")[0]
-            observationdate = datetime.datetime.strptime(observationdate, "%d/%m/%Y").date()
-            dob = datetime.datetime.strptime(dob, "%d/%m/%Y").date()
-        except AttributeError:
-            logger.debug("Date of observation for BMI is absent.")
-            observationdate = ''
-        # age at observation: ObservationMoment
-        print(bmi, observationdate, dob)
-        age = observationdate - dob
-        years = age.days // 365
-        months = (age.days % 365) // 30
-        age_of_observation = f"P{years}Y{months}M"
-        bmistructure = {
+                logger.debug("There is no BMI for individual "+individualId)
+                return bmistructure
+            bmistructure = {
                 "assayCode": {
                     "id": "LOINC:35925-4",
                     "label": "BMI"
                 },
-                "date": observationdate.strftime("%Y-%m-%d"),
                 "measurementValue": {
                     "unit": {
                         "id": "NCIT:C49671",
                         "label": "Kilogram per Square Meter"
                     },
                     "value": bmi
-                },
-                "observationMoment": {
-                    "age": {
-                        "iso8601duration": age_of_observation
-                    }
                 }
             }
+        except ValueError:
+            bmi = float('nan')
+            logger.debug("There is no BMI for individual "+individualId)
+            return bmistructure
+        # dob
+        try :
+            dob = datetime.datetime.strptime(dob, "%d/%m/%Y").date()
+            if dob != dob: # check if dob is nan
+                logger.debug("There is no DOB for individual "+individualId)
+        except ValueError:
+            dob = float('nan')
+            logger.debug("There is no DOB for individual "+individualId)
+        except TypeError:
+            logger.debug("The DOB value is 'nan' for individual "+individualId)
+        # observation date
+        try:
+            observationdate = observationdate.split(" ")[0]
+            observationdate = datetime.datetime.strptime(observationdate, "%d/%m/%Y").date()
+            bmistructure["date"] = observationdate.strftime("%Y-%m-%d")
+        except AttributeError:
+            logger.debug("Date of observation for BMI is absent for individual "+individualId)
+        # moment of observation and stucture build
+        try:
+            age = observationdate - dob
+            years = age.days // 365
+            months = (age.days % 365) // 30
+            age_of_observation = f"P{years}Y{months}M"
+            bmistructure["observationMoment"] = {"age": {"iso8601duration": age_of_observation}}
+        except:
+            logger.debug("Impossible to compute moment of observation for individual "+individualId)
+            
         return bmistructure
 
-    bmi = build_bmi(row['imc'], row['valide le /conformite signature cst biocoll'], row['date de naissance'])
-    measures = [ bmi ]
+    bmi = build_bmi(row)
+    measures = []
+    if bmi != {}:
+        measures.append(bmi)
             
     return measures
 
 def get_enthnicity(row):
     ''' Get ethnicity. In the ICAN cohort as registered in GAIA
     the ethnicity/origin is registed in 'Origine Ethnique' column
-    and Précision autre origine ethnique
+    and 'Précision autre origine ethnique'. Only Causasian and 
+    Asians are processed, too complicated to choose ontology terms
+    between race / ethnicity / geographic origin ontologies. 
     '''
+    #
+    ethnicity = {}
+    #
+    origin1 = str(row['Origine ethnique']).lower()
+    origin2 = str(row['Précision autre origine ethnique']).lower()
+    #
     ethnicitydict = bbm.ethnicitydict
-    print(ethnicitydict)
-    # TODO: Implement logic to get ethnicity from row
-    return 0
+    #
+    for o in [origin1, origin2]:
+        try:
+            e = ethnicitydict[o]
+            ethnicity = {"id": e[0], "label": e[1]}
+            return ethnicity
+        except KeyError:
+            if o != 'nan':
+                logger.debug("There is no ethnicity corresponding to "+o+" in metadata ethnicitydict.")
+            return ethnicity
 
 def get_geographicOrigin(row):
-    # TODO: Implement logic to get geographic origin from row
-    return 0
+    ''' Geographic origin of individual
+    Depends on the meaning: where do they live? where we they born? which hospital are they treated in?
+    I put everything in France.
+    '''
+    return {"id" : "NCIT:C16592", "label" : "France"}
 
 def get_pedigree(row):
-    # TODO: Implement logic to get pedigree from row
-    return 0
+    '''In the ICAN study, with the GAIA extraction, 
+    there are no related individuals'''
+    return {}
 
 def get_exposures(row):
-    # TODO: Implement logic to get exposures from row
-    return 0
+    ''' Exposures such as smoking, alcohol
+    NB: In beacon exposures is an array
+    https://github.com/ga4gh-beacon/beacon-v2/blob/main/models/json/beacon-v2-default-model/common/exposure.json
+    No examples provided as of 09-2024
+    Some studies put the number of smoked packets per year in the measures array
+    DOI: 10.3233/SHTI240636 
+    '''
+    exposures = []
+    def build_smokingstatus(row):
+        ''' Jamais fumé, abstinence >3, abstinence <3, tabagisme actif
+        '''
+        cigsinapaq = 20 # nombre de cigarettes dans un paquet? idk
+        consomation = row['consommation de tabac O/N']
+        duration = row['duree en annees']
+        smokingstatus = {}
+        if consomation == 'Tabagisme actif':
+            paqperday = float(str(row['nb de paquets/jour']).replace(',','.'))
+            cigsperday = cigsinapaq * paqperday
+            smokingstatus = {'exposureCode': {'id' : 'NCIT:C19796', 'label' : 'Smoking Status'},
+                             'exposureDescription' : {'id' : 'NCIT:C67147', 'label' : 'Current Smoker'}, 
+                                'unit' : {'label': 'cigarettes per day', 'id' : 'EFO:0006525'}, 
+                                'value' : cigsperday, 
+                                'duration' : duration}
+        return smokingstatus
+    
+    smokingstatus = build_smokingstatus(row)
+    if smokingstatus != {}:
+        exposures.append(smokingstatus)
+    return exposures
 
 def get_diseases(row):
     # TODO: Implement logic to get diseases from row

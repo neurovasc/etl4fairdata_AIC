@@ -60,11 +60,8 @@ biosamples = {"info" : bsinfo}
 # what are the metadata that is true for the individuals, no matter the subsampling of ican
 individuals = {} # nothing
 # Dictionaries for individuals
-ethnicitydict = {'Afrique du nord' : 'NCIT:',
-                  'Antilles' : 'NCIT:', 
-                  'Asie' : 'NCIT:',
-                  'Causasien': '',
-                  'Reste de l\'Afrique' : 'NCIT:'}
+ethnicitydict = { 'asie' : ['Asian', 'NCIT:C41260'],
+                  'caucasien': ['White', 'NCIT:C41261']}
 
 #
 # Functions 
