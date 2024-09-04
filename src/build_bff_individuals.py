@@ -8,6 +8,8 @@ import build_bff_metadata4beacon as bbm
 import datetime
 import logging
 
+#https://docs.genomebeacons.org/schemas-md/individuals_defaultSchema/
+
 # Logger 
 logger = logging.getLogger(__name__)
 logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
@@ -166,7 +168,7 @@ def get_geographicOrigin(row):
 def get_pedigree(row):
     '''In the ICAN study, with the GAIA extraction, 
     there are no related individuals'''
-    return {}
+    return []
 
 def get_exposures(row):
     ''' Exposures such as smoking, alcohol
@@ -251,13 +253,59 @@ def get_diseases(row):
     '''
     diseases = []
     #
-    def get_strokestatus(row):
-        status = {}
-        sporatic = row['cas sporadique']
+    def get_aneurysmtatus(row):
+        ''' If patient is in the ICAN cohort, then it surely has a history of
+        aneurysm, but not necessarily a stroke episode. However in the GAIA extraction
+        there are individuals without aneurysms, but those were never sequenced in the 
+        context of the ICAN cohort.
+        '''
+        individualid = get_individualId(row)
+        # There is an aneurysm
+        status = {'diseaseCode' : {'id' : 'NCIT:C27208', 'label' : 'Brain Aneurysm'}}
+        presence = row['statut phenotypique']
+        if presence == 'pas d\'anévrisme':
+            status['phenotype'] = {'id' : 'NCIT:C41133', 'label' : 'Healed'}
+        if presence == 'certain':
+            status['phenotype'] = {'id' : 'NCIT:C25626', 'label' : 'Present'}
+        if presence == 'incertain':
+            status['phenotype'] = {'id' : 'NCIT:C47944', 'label' : 'Uncertain'}
+        # Is it a sporadic case or familal history?
+        sporadic = row['cas sporadique']
         familial1 = row['ATCD familial d\'AIC (1er degré)']
         familial2 = row['ATCD familial d\'AIC (2ème degré ou plus)']
+        if familial1 == 'Oui certain' or familial2 == 'Oui certain':
+            status['context'] = {'id' : 'SNOMEDCT:275104002', 'label' : 'Family history of stroke'}
+        elif sporadic == 'Oui':
+            status['context'] = {'id' : 'SNOMEDCT:75741005', 'label' : 'Sporadic'}
+        # How was it discovered? -> This is also an info that can end up in Procedures, if there was
+        # a screening
+        '''
         discoverycircumstances = row['circonstances de decouverte']
+        actions = {
+            'Fortuite' : {'id' : 'SNOMED:', 'label' :  'Description'}, 
+            'Dépistage familial' : {'id' : 'SNOMED:', 'label' :  'Description'},
+            'Rupture AIC' : {'id' : 'SNOMED:', 'label' :  'Description'}, 
+            'Compressif ou ischémique' :  {'id' : 'SNOMED:', 'label' :  'Description'}
+                   }
+        try:
+            status['discovery'] =  actions[discoverycircumstances]
+        except:
+            logger.warning("No discovery context known for individual "+individualid)
+        '''
+        return status
+    def get_strokestatus(row):
+        individualid = get_individualId(row)
+        status = {}
+        # Was there a rupture? Often is discovery is 'Rupture d'AIC' but can also be something else
+        # so we consider that there was a rupture if there is a rupture date
         rupturedate = row['date de rupture']
+        try:
+            rupturedate = datetime.datetime.strptime(rupturedate, "%d/%m/%Y").date()
+            status = {'diseaseCode' : {'id' : 'HP:0001297', 'label' : 'Stroke'}, 
+                      'date' : str(rupturedate)}
+        except:
+            logger.info('No rupture for individual '+individualid)
+        #
         return status
     def get_htastatus(hta):
         status = {}
@@ -296,6 +344,12 @@ def get_diseases(row):
     diabetes = str(row['diabete'])
     htastatus = get_htastatus(hta)
     diabetesstatus = get_diabetesstatus(diabetes)
+    aneurysmstatus = get_aneurysmtatus(row)
+    strokestatus = get_strokestatus(row)
+    #
+    diseases.append(aneurysmstatus)
+    if strokestatus != {}:
+        diseases.append(strokestatus)
     if htastatus != {}:
         diseases.append(htastatus)
     if diabetesstatus != {}:
@@ -306,12 +360,12 @@ def get_diseases(row):
 def get_interventionsOrProcedures(row):
     # TODO: Implement logic to get interventions or procedures from row
     # Need to loop for approatiate ontology
-    return 0
+    return []
 
 def get_treatments(row):
     # TODO: Implement logic to get treatments from row
     # Need to look for appropriate ontology, no idea how to encode statin treatment for example
-    return 0
+    return []
 #
 def write_individuals_bff(phenotypefile, output):
     '''
