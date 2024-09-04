@@ -371,33 +371,37 @@ def write_individuals_bff(phenotypefile, output):
     '''
     '''
     individuals = []
+    keeptrack = [] # some individuals have several lines (usually Exome/GWAS, different sequencing centers)
+    # I keep track of processed individuals in this array 
     individualsinfo = bbm.individuals # there is nothing here
     df = pd.read_csv(phenotypefile)
     # id, sex, measures, ethnicity, geographicOrigin, pedigree
     # exposures, diseases, interventionsOrProcedures, treatments
     for index, row in df.iterrows():
         id = get_individualId(row)
-        sex = get_sex(row)
-        measures = get_measures(row)
-        ethnicity = get_enthnicity(row)
-        geographicOrigin = get_geographicOrigin(row)
-        pedigree = get_pedigree(row)
-        exposures = get_exposures(row)
-        diseases = get_diseases(row)
-        interventionsOrProcedures = get_interventionsOrProcedures(row)
-        treatments = get_treatments(row)
-        individual = bbm.Individual(id, 
-                                   sex, 
-                                   measures, 
-                                   ethnicity, 
-                                   geographicOrigin, 
-                                   pedigree,
-                                   exposures,
-                                   diseases, 
-                                   interventionsOrProcedures, 
-                                   treatments)
-        individuals.append(individual.to_dict())
-        print(individual.to_dict())
+        if id not in keeptrack:
+            sex = get_sex(row)
+            measures = get_measures(row)
+            ethnicity = get_enthnicity(row)
+            geographicOrigin = get_geographicOrigin(row)
+            pedigree = get_pedigree(row)
+            exposures = get_exposures(row)
+            diseases = get_diseases(row)
+            interventionsOrProcedures = get_interventionsOrProcedures(row)
+            treatments = get_treatments(row)
+            individual = bbm.Individual(id, 
+                                    sex, 
+                                    measures, 
+                                    ethnicity, 
+                                    geographicOrigin, 
+                                    pedigree,
+                                    exposures,
+                                    diseases, 
+                                    interventionsOrProcedures, 
+                                    treatments)
+            individuals.append(individual.to_dict())
+            keeptrack.append(id)
+            print(individual.to_dict())
     #
     with open(output+'/individuals.json', 'w') as f:
         json.dump(individuals, f, indent=4)
