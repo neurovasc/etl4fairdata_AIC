@@ -83,7 +83,7 @@ def write_biosamples_bff(phenotypefile, output):
     # info, biosampleStatus, obtentionProcedure, sampleOriginType, 
     # collectionDate, collectionMoment, id, individualId
     for index, row in df.iterrows():
-        id = 'bsid-'+row['N°ADN IRT 1']
+        id = row['N°ADN IRT 1']
         individualId = 'ivid-'+row['N°ADN IRT 1']
         biosampleStatus = get_biosampleStatus(row)
         obtentionProcedure = get_obtentionProcedure(row)

@@ -28,7 +28,7 @@ def write_analysis_bff(slist, output):
                             bbm.analyses['pipelineName'],
                             bbm.analyses['pipelineRef'], 
                             bbm.analyses['variantCaller'],
-                            'bsid-' + biosample, 
+                            biosample, 
                             'anid-' + bbm.analyses['idbasename'] +'-'+str(count), 
                             'ivid-' + biosample,
                             'runId-' + bbm.analyses['runbasename']+'-'+str(count)

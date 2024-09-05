@@ -29,5 +29,5 @@ def write_genomicVariations_bff(vcf, output):
 # Main
 if __name__ == "__main__":
     # Write bff
-    write_genomicVariations_bff(args.genotypes, args.output) 
+    write_genomicVariations_bff(args.genotypes, args.output)
 

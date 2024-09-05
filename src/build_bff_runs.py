@@ -40,7 +40,7 @@ def write_runs_bff(samples, output):
                       libraryStrategy, 
                       bbm.runs['platform'], 
                       bbm.runs['platformModel'],
-                      'bsid-' + biosample, 
+                      biosample, 
                       'runId-' + bbm.analyses['runbasename']+'-'+str(count), 
                       'ivid-' + biosample, 
                       runDate)

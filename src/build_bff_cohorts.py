@@ -31,7 +31,7 @@ def get_ids(phenotypefile):
     individualids = []
     slist = bbm.load_samples(phenotypefile)
     for id in slist:
-        biosampleids.append('bsid-' + id)
+        biosampleids.append(id)
         individualids.append('ivid-' + id)
     ids = {'biosampleIds' : biosampleids,
            'individualIds' : individualids}

@@ -40,6 +40,9 @@ def get_individualId(row):
 
     return str(id)
 
+def get_biosampleId(row):
+    return 0
+
 def get_sex(row):
     '''
     '''
@@ -202,24 +205,26 @@ def get_exposures(row):
                 'Tabagisme actif': {'exposureCode': {'id' : 'NCIT:C19796', 'label' : 'Smoking Status'},
                     'exposureDescription' : {'id' : 'NCIT:C67147', 'label' : 'Current Smoker'}, 
                     'unit' : {'label': 'cigarettes per day', 'id' : 'EFO:0006525'}, 
-                    'value' : cigsperday, 
-                    'duration' : duration}, 
+                    'value' : str(cigsperday), 
+                    'duration' : str(duration)}, 
 
                 'Jamais fumé' : {'exposureCode': {'id' : 'NCIT:C19796', 'label' : 'Smoking Status'},
                     'exposureDescription' : {'id' : 'NCIT:C65108', 'label' : 'Never Smoked'}},
-                'nan' : {'exposureCode': {'id' : 'NCIT:C19796', 'label' : 'Smoking Status'},
-                    'exposureDescription' : {'id' : 'NCIT:C67151', 'label' : 'Former Smoker'}},
 
-                'Sevrage > 3ans' : {'exposureCode': {'id' : 'NCIT:C67148', 'label' : 'Smoking Status'},
-                    'exposureDescription' : {'id' : 'NCIT:C67147', 'label' : 'Current Smoker'}, 
+                'nan' : {'exposureCode': {'id' : 'NCIT:C19796', 'label' : 'Smoking Status'},
+                    'exposureDescription' : {'id' : 'NCIT:C163971', 'label' : 'Smoking Status Not Documented'}},
+
+                'Sevrage > 3ans' : {'exposureCode': {'id' : 'NCIT:C19796', 'label' : 'Smoking Status'},
+                    'exposureDescription' : {'id' : 'NCIT:C67148', 'label' : 'Former Smoker'}, 
                     'unit' : {'label': 'cigarettes per day', 'id' : 'EFO:0006525'}, 
-                    'value' : cigsperday, 
-                    'duration' : duration},
-                'Sevrage < 3 ans' : {'exposureCode': {'id' : 'NCIT:C67148', 'label' : 'Former Smoker'},
-                    'exposureDescription' : {'id' : 'NCIT:C67147', 'label' : 'Current Smoker'}, 
+                    'value' : str(cigsperday), 
+                    'duration' : str(duration)},
+
+                'Sevrage < 3 ans' : {'exposureCode': {'id' : 'NCIT:C19796', 'label' : 'Smoking Status'},
+                    'exposureDescription' : {'id' : 'NCIT:C67148', 'label' : 'Former Smoker'}, 
                     'unit' : {'label': 'cigarettes per day', 'id' : 'EFO:0006525'}, 
-                    'value' : cigsperday, 
-                    'duration' : duration}
+                    'value' : str(cigsperday), 
+                    'duration' : str(duration)}
                 }
         return action[consomation]
     
@@ -401,7 +406,7 @@ def write_individuals_bff(phenotypefile, output):
                                     treatments)
             individuals.append(individual.to_dict())
             keeptrack.append(id)
-            print(individual.to_dict())
+            #print(individual.to_dict())
     #
     with open(output+'/individuals.json', 'w') as f:
         json.dump(individuals, f, indent=4)
