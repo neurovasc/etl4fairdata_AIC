@@ -33,6 +33,9 @@ rule sample_selection:
 #
 # Extract samples with phenotype information and AIC or related from the VCF file
 # Samples are ordered in the order of the file aicdataset-samplelist.lst
+# -c1:alt1 : filters out positions with an allele count lower than 1
+# :alt1 just in case there are positions where all genotypes are alternative
+# but this does not occur in the ICAN cohort as far as i've seen
 rule vcf_sample_selection:
     input:
         samples="data-intermediate/aicdataset-samplelist.lst",
@@ -40,7 +43,7 @@ rule vcf_sample_selection:
     output:
         bcf="data-intermediate/aicdataset-QCed.VEP.AFctrls.GND.CADD.bcf"
     shell:
-        "bcftools view -S {input.samples} {input.bcf} -O b -o {output.bcf}"
+        "bcftools view -S {input.samples} {input.bcf} -c1:alt1 -O b -o {output.bcf}"
 # # # #
 #
 #
