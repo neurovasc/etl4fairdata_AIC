@@ -5,6 +5,8 @@
 # The genotypes are in 0/1 format after a bcftools query. 
 # The multiallelic sites were split into biallelic sites.
 # The positions without alternative alleles were removed.
+# Normally these positions without an alt are eliminated with previous
+# filterings in the pipeline: bcftools view -c1:alt1 
 # This script creates a new df for each variation, and concatenates it
 # to the phenotypic data csv/df. Then it computes the allele frequencies
 # according to different features.
@@ -14,7 +16,7 @@
 import os
 import subprocess
 import argparse
-import pandas as pd
+import fireducks.pandas as pd
 import utilitary as ut
 
 # Argument parser
@@ -78,17 +80,24 @@ if __name__ == "__main__":
             # Whole population
             AF, AC = ut.compute_AFAC_inpop(clinicalgenotyped) # allele frequency in population
             # Frequencies by sex: male, female, other
-            # TODO: add frequencies, write function in utilitary.py
+            AFm, AFf, ACm, ACf = ut.compute_AFAC_bysex(clinicalgenotyped)
+
             # Frequencies by case type: familial certain, familial uncertain, sporadic, other
             # TODO: add frequencies, write function in utilitary.py
             # Frequencies by onset: early, late, other
             # Frequencies by number of stroked: multiple, single, duo, other
             # Frequencies by bmi: underweight, normal, overweight, obese1, obese2, other
 
-            info_field_for_variant = f'AF_whole={AF};AC_whole={AC}'
+            info_field_for_variant = f'AF_whole={AF};AC_whole={AC};'
+            info_field_for_variant += f'AF_female={AFf};AC_female={ACf};'
+            info_field_for_variant += f'AF_male={AFm};AC_male={ACm};'
             variant_line = f'{chromosome}\t{position}\t.\t{reference}\t{alternative}\t.\t.\t{info_field_for_variant}'
             with open(vcfout, 'a') as f:
                 f.write(variant_line + "\n")
+            #
+            print(variant_line)
+            
+
             
     # Compress the file using bgzip
     try:
