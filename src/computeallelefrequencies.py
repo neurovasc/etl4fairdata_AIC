@@ -18,6 +18,8 @@ import subprocess
 import argparse
 import fireducks.pandas as pd
 import utilitary as ut
+from concurrent.futures import ProcessPoolExecutor
+import multiprocessing
 
 # Argument parser
 agp = argparse.ArgumentParser(description='Compute allele frequencies')
@@ -70,7 +72,7 @@ if __name__ == "__main__":
         for line in genotypes_file:
             chromosome, position, reference, alternative, genotypes = line.strip().split('\t')
             # Build a new df with the genotypes for the variant
-            clinicalgenotyped = build_phenotypedf_for_variant(clinical, genotypes)
+            clinicalgenotyped = build_phenotypedf_for_variant(clinical, genotypes) # this is a pandas df
             ##################################################
             # Compute allele frequencies                     #
             # Compute allele counts                          #
@@ -82,15 +84,27 @@ if __name__ == "__main__":
             # Frequencies by sex: male, female, other
             AFm, AFf, ACm, ACf = ut.compute_AFAC_bysex(clinicalgenotyped)
 
-            # Frequencies by case type: familial certain, familial uncertain, sporadic, other
-            # TODO: add frequencies, write function in utilitary.py
+            # Frequencies by case type: familial, sporadic, uncertain
+            AFfam, AFspo, AFunc, ACfam, ACspo, ACunc = ut.compute_AFAC_bytype(clinicalgenotyped)
             # Frequencies by onset: early, late, other
+            AFearly, AFlate, AFother, ACearly, AClate, ACother = ut.compute_AFAC_byonset(clinicalgenotyped)
             # Frequencies by number of stroked: multiple, single, duo, other
             # Frequencies by bmi: underweight, normal, overweight, obese1, obese2, other
 
+            # overall data
             info_field_for_variant = f'AF_whole={AF};AC_whole={AC};'
+            # by sex data
             info_field_for_variant += f'AF_female={AFf};AC_female={ACf};'
             info_field_for_variant += f'AF_male={AFm};AC_male={ACm};'
+            # by type (sporaic, familail, uncertain)
+            info_field_for_variant += f'AF_familial={AFfam};AC_familial={ACfam};'
+            info_field_for_variant += f'AF_sporadic={AFspo};AC_sporadic={ACspo};'
+            info_field_for_variant += f'AF_uncertain={AFunc};AC_uncertain={ACunc};'
+            # by age of onset 
+            info_field_for_variant += f'AF_earlyonset={AFearly};AC_earlyonset={ACearly};'
+            info_field_for_variant += f'AF_lateonset={AFlate};AC_lateonset={AClate};'
+            #info_field_for_variant += f'AF_otheronset={AFother};AC_otheronset={ACother};'
+            #
             variant_line = f'{chromosome}\t{position}\t.\t{reference}\t{alternative}\t.\t.\t{info_field_for_variant}'
             with open(vcfout, 'a') as f:
                 f.write(variant_line + "\n")

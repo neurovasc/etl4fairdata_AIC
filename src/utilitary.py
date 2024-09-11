@@ -16,6 +16,7 @@
 
 import sys
 import logging
+import fireducks.pandas as pd
 
 # Logger 
 logger = logging.getLogger(__name__)
@@ -164,6 +165,69 @@ def compute_AFAC_bysex(df):
     #print(len(df), len(female_df), len(male_df))
     
     return AFm, AFf, ACm, ACf
+#
+def compute_AFAC_bytype(df):
+    ''' Compute allele frequency by type: familial, sporadic, uncertain
+
+    '''
+    # Familial cases are non sporadic and have a confirmed first OR second degree family
+    # member that had a confirmed/certain aneurysm
+    
+    familial_df = df[((df['ATCD familial d\'AIC (1er degré)'] == 'Oui certain') | \
+                     (df['ATCD familial d\'AIC (2ème degré ou plus)'] == 'Oui certain')) & \
+                     (df['cas sporadique'] == 'Non')]
+    # Sporadic cases are marked as such and no not have unconfirmed familal cases of first AND
+    # second degree link.
+    sporadic_df = df[(df['cas sporadique'] ==  'Oui') & \
+                     (df['ATCD familial d\'AIC (1er degré)'] != 'Oui non confirmé') & \
+                     (df['ATCD familial d\'AIC (2ème degré ou plus)'] != 'Oui non confirmé')]
+    # Uncertain cases are cases where neither the familial or the sporadicity type was
+    # confirmed. Could be a case marked sporadic but with an unconfirmed familial background zB
+    # for cases where sporadic is set to 'Non' but nothing in ATCD fields
+    indices_to_drop = pd.concat([familial_df, sporadic_df]).index
+    uncertain_df = df.drop(indices_to_drop)
+    #
+    nbfam = len(familial_df) # ok, checked visually 11092024
+    nbspo = len(sporadic_df) # ok, check visually 11092024
+    nbunc = len(uncertain_df) # the remaining lines in df afer familial and sporadic extraction
+    #print(uncertain_df[['cas sporadique', 'ATCD familial d\'AIC (1er degré)', 'ATCD familial d\'AIC (2ème degré ou plus)']].to_string())
+    #logger.debug(check_values_equal(nbfam+nbspo+nbunc, len(df)))
+    AFf_among, ACf = compute_AFAC_inpop(familial_df)
+    AFs_among, ACs = compute_AFAC_inpop(sporadic_df)
+    AFu_among, ACu = compute_AFAC_inpop(uncertain_df)
+    AFf = get_round_af(ACf, df)
+    AFs = get_round_af(ACs, df)
+    AFu = get_round_af(ACu, df) 
+
+    return AFf, AFs, AFu, ACf, ACs, ACu
+#
+def compute_AFAC_byonset(df):
+    ''' Onseat can be early, late, or unknown?
+    age of onset -> date of birth - L'age du premier diag: age
+    Si moins de 35 ans, early onset.
+    See: 
+    '''
+    df['date de naissance'] = pd.to_datetime(df['date de naissance'])
+    df['date du 1er diagnostic'] = pd.to_datetime(df['date du 1er diagnostic'], errors='coerce')
+    df['age of onset'] = df.apply(lambda row: (row['date du 1er diagnostic'].year - row['date de naissance'].year 
+                                           - ((row['date du 1er diagnostic'].month, row['date du 1er diagnostic'].day) 
+                                              < (row['date de naissance'].month, row['date de naissance'].day))) 
+                              if pd.notna(row['date du 1er diagnostic']) else pd.NA, axis=1)
+    earlyonsetthreshold = 35 # to be confirmed
+    early_df = df[df['age of onset']<earlyonsetthreshold]
+    late_df = df[df['age of onset']>=earlyonsetthreshold]
+    indices_to_drop = pd.concat([early_df, late_df]).index
+    unknown_df = df.drop(indices_to_drop)
+    #
+    AFe_among, ACe = compute_AFAC_inpop(early_df)
+    AFl_among, ACl = compute_AFAC_inpop(late_df)
+    AFo_among, ACo = compute_AFAC_inpop(unknown_df)
+    #
+    AFe = get_round_af(ACe, df)
+    AFl = get_round_af(ACl, df)
+    AFo = get_round_af(ACo, df)
+    #
+    return AFe, AFl, AFo, ACe, ACl, ACo
 
 if __name__ == "__main__":
     print("This script is intended to be used as a module.")
