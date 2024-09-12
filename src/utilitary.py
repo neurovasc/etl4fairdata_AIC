@@ -41,25 +41,35 @@ female = (
     '##INFO=<ID=AF_female,Number=A,Type=Float,Description="Allele Frequency of AIC females">\n'
     '##INFO=<ID=AC_female,Number=A,Type=Integer,Description="Allele Count of AIC females">\n'
 )
-familialcase_certain = (
-    '##INFO=<ID=AF_familial-certain,Number=A,Type=Float,Description="Allele Frequency of AIC familial cases (certain)">\n'
-    '##INFO=<ID=AC_familial-certain,Number=A,Type=Integer,Description="Allele Count of AIC familail cases (certain)">\n'
+familialcase = (
+    '##INFO=<ID=AF_familial,Number=A,Type=Float,Description="Allele Frequency of AIC familial cases">\n'
+    '##INFO=<ID=AC_familial,Number=A,Type=Integer,Description="Allele Count of AIC familail cases">\n'
 )
-familialcase_uncertain = (
-    '##INFO=<ID=AF_familail-uncertain,Number=A,Type=Float,Description="Allele Frequency of AIC familial cases (uncertain)">\n'
-    '##INFO=<ID=AC_familial-uncertain,Number=A,Type=Integer,Description="Allele Count of AIC familial cases (uncertain)">\n'
+uncertaincase = (
+    '##INFO=<ID=AF_uncertain,Number=A,Type=Float,Description="Allele Frequency of AIC uncertain cases, neither familial nor sporadic">\n'
+    '##INFO=<ID=AC_uncertain,Number=A,Type=Integer,Description="Allele Count of AIC uncertain cases, neither familial nor sporadic">\n'
 )
 sporadiccase = (
     '##INFO=<ID=AF_sporadic,Number=A,Type=Float,Description="Allele Frequency of AIC sporadic cases">\n'
     '##INFO=<ID=AC_sporadic,Number=A,Type=Integer,Description="Allele Count of AIC sporadic cases">\n'
 )
+earlyonset = (
+    '##INFO=<ID=AF_earlyonset,Number=A,Type=Float,Description="Allele Frequency of AIC early onset cases">\n'
+    '##INFO=<ID=AC_earlyonset,Number=A,Type=Integer,Description="Allele Count of AIC early onset cases">\n'
+)
+lateonset = (
+    '##INFO=<ID=AF_lateonset,Number=A,Type=Float,Description="Allele Frequency of AIC late onset cases">\n'
+    '##INFO=<ID=AC_lateonset,Number=A,Type=Integer,Description="Allele Count of AIC late onset cases">\n'
+)
 info_headerchunk = { 
     'whole' : whole,
     'male' : male, 
     'female' : female,
-    'familialcase_certain' : familialcase_certain,
-    'familailcase_uncertain' : familialcase_uncertain,
-    'sporadiccase' : sporadiccase
+    'familialcase' : familialcase,
+    'uncertaincase' : uncertaincase,
+    'sporadiccase' : sporadiccase, 
+    'earlyonset' : earlyonset, 
+    'lateonset' : lateonset 
 }
 #
 def write_headervcf(info, contigfile):
@@ -207,8 +217,8 @@ def compute_AFAC_byonset(df):
     Si moins de 35 ans, early onset.
     See: 
     '''
-    df['date de naissance'] = pd.to_datetime(df['date de naissance'])
-    df['date du 1er diagnostic'] = pd.to_datetime(df['date du 1er diagnostic'], errors='coerce')
+    df['date de naissance'] = pd.to_datetime(df['date de naissance'], dayfirst=True)
+    df['date du 1er diagnostic'] = pd.to_datetime(df['date du 1er diagnostic'], errors='coerce', dayfirst=True)
     df['age of onset'] = df.apply(lambda row: (row['date du 1er diagnostic'].year - row['date de naissance'].year 
                                            - ((row['date du 1er diagnostic'].month, row['date du 1er diagnostic'].day) 
                                               < (row['date de naissance'].month, row['date de naissance'].day))) 
