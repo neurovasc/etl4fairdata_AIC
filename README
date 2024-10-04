@@ -10,6 +10,8 @@ The pipeline is developed using the Snakemake workflow management system.
  conda export --from-history > ~/Devlopment/etl4fairdata_AIC/conda/environement-etl4fair.yml
  https://www.youtube.com/watch?v=r9PWnEmz_tc
  snakemake --dag targets | dot -Tpng > dag.png
+ python scripts starting with xxx are not meant to be executed, but are ressources for other scripts
+ because i like fragmenting my code a lot.
 
 # Git pushing
 git push --set-upstream origin --all
@@ -25,9 +27,19 @@ contamination.
 # TODOs
 - For variants that do not have a gnomad frequency, should the frequency be set to 0 
 in the rdf file or simply not included? Now it appears as "NaN"^^xsd:float
-- Add logger and verbose argument for vcfaggregate3rdf.py
+[x 13092024] Add logger and verbose argument for vcfaggregate3rdf.py 
 - Add custom check function that prevents the usage of both --limit and (--chunk or --threads)
 - Add custom adaptation of chunksize according to the number of variants in the vcf file
 - Maybe add function in vcfaggregate3rdf.py that checks if the number of variants
 is the same in the vcf and in the final rdf -> it is also a sanity check in the snakemake pipeline
 - Issue with clean up function -> I want to keep the intermediate merged file, but it is deleted. why?
+- Add tests
+[x 13092024] - Multithread computeallelefrequency.py
+- Lower the complexity of computeallelefrequency.py : loop over genotyped df as little
+as possible
+- Build rdf in vcfaggregate2rdf in a prettier way: now it is spaghetti code with rdflib
+
+# What happens after the Snakemake pipeline ?
+ 1) Setting up beacon with the BFF files
+ 2) Setting up a fuseki server for sparql queries
+ >fuseki-server --file=/home/bodrug-a/Devlopment/etl4fairdata_AIC/data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.ttl /ican

@@ -125,18 +125,20 @@ rule vcf2querygenotype:
         query="data-intermediate/aicdataset-querygenotype.tsv"
     shell:
         "bcftools norm -a {input.bcf} | bcftools view --min-ac=1 | \
-        bcftools query -H -f '%CHROM\t%POS\t%REF\t%ALT\t[%GT,]\n' > {output.query}"
+        bcftools query -H -f '%CHROM\t%POS\t%REF\t%ALT\t[%GT,]\t%INFO\n' > {output.query}"
 # # # #
 #
 #
-# Extract vcf header contigs
-rule extractvcfheadercontigs:
+# Extract vcf header contigs and info tags
+rule extractvcfheader:
     input:
         bcf="data-intermediate/aicdataset-QCed.VEP.AFctrls.GND.CADD.bcf"
     output:
-        contigs="data-intermediate/aicdataset-contigs.txt"
+        contigs="data-intermediate/aicdataset-contigs.txt",
+        info="data-intermediate/aicdataset-info.txt"
     shell:
-        "bcftools view -h {input.bcf} | grep '^##contig'  > {output.contigs}"
+        "bcftools view -h {input.bcf} | grep '^##contig'  > {output.contigs} ; \
+        bcftools view -h {input.bcf} | grep '^##INFO'  > {output.info}"
 # # # #
 #
 #

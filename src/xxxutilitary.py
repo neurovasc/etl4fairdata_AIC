@@ -17,82 +17,36 @@
 import sys
 import logging
 import fireducks.pandas as pd
+import xxxvcfheaderinfo as vhi
 
 # Logger 
 logger = logging.getLogger(__name__)
 logging.basicConfig(filename='utilitary.log', encoding='utf-8', level=logging.DEBUG)
 
-# Header for the VCF file
-#
-fileformat = ("##fileformat=VCFv4.2\n")
-reference = ('##reference=file:///LAB-DATA/BiRD/resources/species/human/cng.fr/hs38me/dragen_cnv//reference.bin\n')
-columns = (
-   "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n"
-) # no FORMAT column needed, because no individual level data
-whole = (
-    '##INFO=<ID=AF_whole,Number=A,Type=Float,Description="Allele Frequency in AIC population">\n'
-    '##INFO=<ID=AC_whole,Number=A,Type=Integer,Description="Allele Count in AIC population">\n'
-    )
-male = (
-    '##INFO=<ID=AF_male,Number=A,Type=Float,Description="Allele Frequency of AIC males">\n'
-    '##INFO=<ID=AC_male,Number=A,Type=Integer,Description="Allele Count of AIC males">\n'
-)
-female = (
-    '##INFO=<ID=AF_female,Number=A,Type=Float,Description="Allele Frequency of AIC females">\n'
-    '##INFO=<ID=AC_female,Number=A,Type=Integer,Description="Allele Count of AIC females">\n'
-)
-familialcase = (
-    '##INFO=<ID=AF_familial,Number=A,Type=Float,Description="Allele Frequency of AIC familial cases">\n'
-    '##INFO=<ID=AC_familial,Number=A,Type=Integer,Description="Allele Count of AIC familail cases">\n'
-)
-uncertaincase = (
-    '##INFO=<ID=AF_uncertain,Number=A,Type=Float,Description="Allele Frequency of AIC uncertain cases, neither familial nor sporadic">\n'
-    '##INFO=<ID=AC_uncertain,Number=A,Type=Integer,Description="Allele Count of AIC uncertain cases, neither familial nor sporadic">\n'
-)
-sporadiccase = (
-    '##INFO=<ID=AF_sporadic,Number=A,Type=Float,Description="Allele Frequency of AIC sporadic cases">\n'
-    '##INFO=<ID=AC_sporadic,Number=A,Type=Integer,Description="Allele Count of AIC sporadic cases">\n'
-)
-earlyonset = (
-    '##INFO=<ID=AF_earlyonset,Number=A,Type=Float,Description="Allele Frequency of AIC early onset cases">\n'
-    '##INFO=<ID=AC_earlyonset,Number=A,Type=Integer,Description="Allele Count of AIC early onset cases">\n'
-)
-lateonset = (
-    '##INFO=<ID=AF_lateonset,Number=A,Type=Float,Description="Allele Frequency of AIC late onset cases">\n'
-    '##INFO=<ID=AC_lateonset,Number=A,Type=Integer,Description="Allele Count of AIC late onset cases">\n'
-)
-info_headerchunk = { 
-    'whole' : whole,
-    'male' : male, 
-    'female' : female,
-    'familialcase' : familialcase,
-    'uncertaincase' : uncertaincase,
-    'sporadiccase' : sporadiccase, 
-    'earlyonset' : earlyonset, 
-    'lateonset' : lateonset 
-}
-#
-def write_headervcf(info, contigfile):
+def write_headervcf(info, contigfile, infofile):
     ''' Write the header for the VCF file
+    Contig file contains the header portion of the input VCF with config information
+    Info file contains the header portion of the input VCF with info fields, among them
+    frequencies and functionnal annotations.
     '''
-    headervcf = fileformat # starts with the file format
+    headervcf = vhi.fileformat # starts with the file format
     contig = open(contigfile, 'r').read()
     headervcf += contig
-    headervcf += reference
+    headervcf += vhi.reference
     for i in info:
         try:
-            headervcf += info_headerchunk[i]
+            headervcf += vhi.info_headerchunk[i]
         except KeyError as e:
             print(f"KeyError: {e} not found in dictionary.")
             sys.exit(1)
-    headervcf += columns # header ends with columns CHR POS ID REF ALT QUAL FILTER INFO
+    headervcf += vhi.columns # header ends with columns CHR POS ID REF ALT QUAL FILTER INFO
     return headervcf
 #
 def write_headervcf_info(type):
     ''' Write the header for the VCF file: INFO field
     '''
     try:
-        headervcf = info_headerchunk[type]
+        headervcf = vhi.info_headerchunk[type]
     except KeyError as e:
         print(f"KeyError: {e} not found in dictionary.")
         sys.exit(1) 
@@ -238,6 +192,26 @@ def compute_AFAC_byonset(df):
     AFo = get_round_af(ACo, df)
     #
     return AFe, AFl, AFo, ACe, ACl, ACo
+
+def reshape_infofield(info):
+    ''' Reshape the INFO field to be compatible with the VCF format
+    '''
+    # Keep only certain fields from the original INFO field of the input vcf file
+    # Original annotated file: QCed.VEP.AFctrls.GND.CADD.vcf.gz by R Blanchet
+    return info
+
+def compute_frequencies(df):
+    ''' df is a clinical dataframe with the genotypes for a given variant
+    Here we compute frequencies and counts for one variant according to
+    different clinical traits.
+    female, male, familial case, sporadic case, early onset, late onset
+    Exemple: what is the frequency of the alternative allele within the subset of
+    the cohort that has a familial case of aneurysm? How many people does this represent?
+    '''
+    frequencies = [0,5]
+    counts = [15]
+    infofields = [('AF_whole', 'AC_whole')]
+    return frequencies, counts, infofields
 
 if __name__ == "__main__":
     print("This script is intended to be used as a module.")

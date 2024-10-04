@@ -85,7 +85,7 @@ def initiate_rdf_from_vcf(bcf, varrdf):
         df = pd.read_csv(queryvcf, sep='\t', \
                         names=['chromosome', 'position', 'reference', 'alternate', 'info'], \
                         nrows=args.limit)
-        rowg = build_rdfgraph(g1, df) # this functions modified the graph
+        rowg = build_rdfgraph(g1, df) # this functions modifies the graph
         g1.serialize(destination=varrdf, format="turtle")
     # Multithreading : sometimes not worth it
     else:
@@ -186,6 +186,12 @@ def build_rdfgraph(g, df):
         #print(chromosome, position, reference, alternate, info)
         fq_gnomad = calculate_fqgnomad(chromosome, position, reference, alternate)
         fq_ican_AF_whole = info.split(';')[0].split('=')[1]
+        fq_ican_AF_female = info.split(';')[2].split('=')[1]
+        fq_ican_AF_male = info.split(';')[4].split('=')[1]
+        fq_ican_AF_familial = info.split(';')[6].split('=')[1]
+        fq_ican_AF_sporadic = info.split(';')[8].split('=')[1]
+        fq_ican_AF_earlyonset = info.split(';')[12].split('=')[1]
+        fq_ican_AF_lateonset = info.split(';')[14].split('=')[1]
         rsid = get_rsids_fromdbsnp(chromosome, position, reference, alternate)
 
         # Define the variant URI
@@ -198,8 +204,18 @@ def build_rdfgraph(g, df):
         # Define the variant frequency URIs
         variant_fq_gnomad_uri = ican["variantAlternate/"+'fq/gnomad/'+variant_alternate_id]
         variant_fq_ican_uri = ican["variantAlternate/"+'fq/ican/'+variant_alternate_id]
+        variant_fq_ican_uri_female = ican["variantAlternate/"+'fq/ican/female/'+variant_alternate_id]
+        variant_fq_ican_uri_male = ican["variantAlternate/"+'fq/ican/male/'+variant_alternate_id]
 
         # Add variant triplets
+        # ex:Variant1 a ex:Variant ;
+        #    ex:hasChromosome [
+        #        a go:0005694 ;                  # This specifies that it is a chromosome
+        #        rdfs:label "Chromosome 1" ;      # Label for readability
+        #        ex:chromosomeValue "chr1"        # The value of the chromosome (chr1)
+        #    ] .
+        #
+        #
         g.add((variant_uri, RDF.type, so["0001060"]))
         g.add((variant_uri, sio["SIO_000061"], Literal(chromosome, datatype=XSD.string))) # is located in
         g.add((variant_uri, sio["SIO_000791"], Literal(position, datatype=XSD.integer))) # at position
@@ -219,6 +235,8 @@ def build_rdfgraph(g, df):
         g.add((variant_alternate_uri, rdfs['label'], Literal("Alternate allele for the variant "+variant_id + ' [ dbspn:'+rsid+' ]', datatype=XSD.string)))
         g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_gnomad_uri)) # alternate allele frequencies
         g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_ican_uri))
+        g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_ican_uri_female))
+        g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_ican_uri_male))
         # Add alternate allele info with frequencies
         # gnomad
         g.add((variant_fq_gnomad_uri, RDF.type, sio["SIO_001367"]))
@@ -228,9 +246,24 @@ def build_rdfgraph(g, df):
         g.add((variant_fq_ican_uri, RDF.type, sio["SIO_001367"]))
         g.add((variant_fq_ican_uri, sio["000253"], ican['cohort/ican']))
         g.add((variant_fq_ican_uri, sio["000300"], Literal(fq_ican_AF_whole, datatype=XSD.float)))
+        # ican females
+        g.add((variant_fq_ican_uri_female, RDF.type, sio["SIO_001367"]))
+        g.add((variant_fq_ican_uri_female, sio["000253"], ican['cohort/ican/female']))
+        g.add((variant_fq_ican_uri_female, sio["000300"], Literal(fq_ican_AF_female, datatype=XSD.float)))
+        g.add((variant_fq_ican_uri_female, sio["000628"], sio["SIO_010052"]))
+        # ican males
+        g.add((variant_fq_ican_uri_male, RDF.type, sio["SIO_001367"]))
+        g.add((variant_fq_ican_uri_male, sio["000253"], ican['cohort/ican/male']))
+        g.add((variant_fq_ican_uri_male, sio["000300"], Literal(fq_ican_AF_male, datatype=XSD.float)))
+        g.add((variant_fq_ican_uri_male, sio["000628"], sio["SIO_010048"]))
+
+        #
+
     return g
 #
 def calculate_fqgnomad(chromosome, position, reference, alternate):
+    '''
+    '''
     gnomadfile = args.gnomad
     fq = 'nan'
     output = os.popen("bcftools query -r "+str(chromosome)+":"+str(position)+" -f'%CHROM\t%POS\t%REF\t%ALT\t%AF\n' "  +
