@@ -23,13 +23,20 @@ import xxxvcfheaderinfo as vhi
 logger = logging.getLogger(__name__)
 logging.basicConfig(filename='utilitary.log', encoding='utf-8', level=logging.DEBUG)
 
+#################################
+# Write header for the VCF file #
+#################################
 def write_headervcf(info, contigfile, infofile):
     ''' Write the header for the VCF file
     Contig file contains the header portion of the input VCF with config information
     Info file contains the header portion of the input VCF with info fields, among them
     frequencies and functionnal annotations.
+    Alter, possible confusion: info contains the info fields to add to the new vcf, according
+    to new phenotypic traits, and infofile contains the info fields from the input vcf.
     '''
+    # file format
     headervcf = vhi.fileformat # starts with the file format
+    # contigs
     contig = open(contigfile, 'r').read()
     headervcf += contig
     headervcf += vhi.reference
@@ -37,20 +44,84 @@ def write_headervcf(info, contigfile, infofile):
         try:
             headervcf += vhi.info_headerchunk[i]
         except KeyError as e:
-            print(f"KeyError: {e} not found in dictionary.")
+            print(f"KeyError: {i} not found in dictionary for INFO field of vcf header.")
+            print(f"KeyError: {e} not found in dictionary .")
             sys.exit(1)
+    # annotations in the INFO field of the input VCF
+    annotation = open(infofile, 'r').read().split("\n")
+    tokeep = ['##INFO=<ID=CADD_RAW', '##INFO=<ID=PHRED', '##INFO=<ID=gnomad_AF', '##INFO=<ID=CSQ']
+    #
+    for a in annotation:
+        if any(keep in a for keep in tokeep):
+            headervcf += a+"\n"
+    # final line in VCF header
     headervcf += vhi.columns # header ends with columns CHR POS ID REF ALT QUAL FILTER INFO
     return headervcf
 #
-def write_headervcf_info(type):
-    ''' Write the header for the VCF file: INFO field
+#################################
+# Reshape existing INFO field ###
+#################################
+def reshape_infofield(info):
+    ''' Reshape the INFO field to be compatible with the VCF format
     '''
-    try:
-        headervcf = vhi.info_headerchunk[type]
-    except KeyError as e:
-        print(f"KeyError: {e} not found in dictionary.")
-        sys.exit(1) 
-    return headervcf
+    # Keep only certain fields from the original INFO field of the input vcf file
+    # Original annotated file: QCed.VEP.AFctrls.GND.CADD.vcf.gz by R Blanchet
+    fields = info.split(';')
+    csq = 'CSQ=nan'
+    gnomad_AF = 'gnomad_AF=nan'
+    gnomad_AF_AFR = 'gnomad_AF_AFR=nan'
+    gnomad_AF_EAS = 'gnomad_AF_EAS=nan'
+    gnomad_AF_NFE = 'gnomad_AF_NFE=nan'
+    cadd_raw = 'CADD_RAW=nan'
+    cadd_phred = 'PHRED=nan'
+
+    for field in fields:
+        if 'CSQ' in field:
+            csq = field
+        if 'gnomad_AF=' in field:
+            gnomad_AF = field
+        if 'gnomad_AF_AFR=' in field:
+            gnomad_AF_AFR = field
+        if 'gnomad_AF_EAS=' in field:
+            gnomad_AF_EAS = field
+        if 'gnomad_AF_NFE=' in field:
+            gnomad_AF_NFE = field
+        if 'CADD_RAW=' in field:
+            cadd_raw = field
+        if 'PHRED=' in field:
+            cadd_phred = field
+    reshaped = ";".join([gnomad_AF, gnomad_AF_AFR, gnomad_AF_EAS, gnomad_AF_NFE, cadd_raw, cadd_phred, csq])
+    return reshaped
+#
+##################################
+# Compute frequencies and counts #
+##################################
+def compute_frequencies(df, group):
+    ''' df is a clinical dataframe with the genotypes for a given variant
+    Here we compute frequencies and counts for one variant according to
+    different clinical traits.
+    female, male, familial case, sporadic case, early onset, late onset
+    Exemple: what is the frequency of the alternative allele within the subset of
+    the cohort that has a familial case of aneurysm? How many people does this represent?
+    In group (array),there are all the types of frequencies and counts to compute.
+    The output of this function is as follows:
+    frequencies : array : floats : len N : definition - frequency of a variant ALLELE in a given group
+    counts : array : str(integer/integegrs) : len N : definition - count of a variant ALLELE in a given group (/total)
+    labels : array of tuples : (str, str) : len N : definition - labels for the frequencies and counts in the INFO field
+    '''
+    for g in group:
+        try:
+            label = vhi.info_headerchunk[g]
+        except KeyError as e:
+            print(f"KeyError: {g} not found in dictionary for INFO field of vcf header.")
+            print(f"KeyError: {e}")
+            sys.exit(1)
+        print(label)
+    frequencies = [0,5]
+    counts = [15]
+    infofields = [('AF_whole', 'AC_whole')]
+    return frequencies, counts, infofields
+
 #
 def calcfreq(count_dict):
     ''' Calculate the allele frequency from a dictionary with counts of alleles
@@ -193,25 +264,6 @@ def compute_AFAC_byonset(df):
     #
     return AFe, AFl, AFo, ACe, ACl, ACo
 
-def reshape_infofield(info):
-    ''' Reshape the INFO field to be compatible with the VCF format
-    '''
-    # Keep only certain fields from the original INFO field of the input vcf file
-    # Original annotated file: QCed.VEP.AFctrls.GND.CADD.vcf.gz by R Blanchet
-    return info
-
-def compute_frequencies(df):
-    ''' df is a clinical dataframe with the genotypes for a given variant
-    Here we compute frequencies and counts for one variant according to
-    different clinical traits.
-    female, male, familial case, sporadic case, early onset, late onset
-    Exemple: what is the frequency of the alternative allele within the subset of
-    the cohort that has a familial case of aneurysm? How many people does this represent?
-    '''
-    frequencies = [0,5]
-    counts = [15]
-    infofields = [('AF_whole', 'AC_whole')]
-    return frequencies, counts, infofields
 
 if __name__ == "__main__":
     print("This script is intended to be used as a module.")

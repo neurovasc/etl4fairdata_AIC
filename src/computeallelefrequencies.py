@@ -50,7 +50,7 @@ agp.add_argument('-s', '--sequences', type=str, help='Contig name',\
                 default='data-intermediate/aicdataset-contigs.txt')
 agp.add_argument('-i', '--info', type=str, help='Path to the file holding info field of the OG input vcf',\
                 required=False,\
-                default='data-intermediate/aicdataset-infofields.txt')
+                default='data-intermediate/aicdataset-info.txt')
 agp.add_argument('-c', '--clinical', type=str, help='Path to the phenotype file csv',\
                 required=True,\
                 default='data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.reordered.csv')
@@ -80,7 +80,7 @@ def build_phenotypedf_for_variant(clinical, genotypes):
     clinical['genotypes'] = genotypesarray
     return clinical
 #
-def process_batchlines(lines):
+def process_batchlines(lines, group):
     ''' Process a genotype line from the VCF
     One line per thread. For parallelization purposes.
     '''
@@ -97,7 +97,7 @@ def process_batchlines(lines):
         #
         # Getting frequencies and info fields
         
-        frequencies, counts, infofields = ut.compute_frequencies(clinicalgenotyped)
+        frequencies, counts, infofields = ut.compute_frequencies(clinicalgenotyped, group)
         #logging.debug(f'frequencies: {frequencies}')
         #logging.debug(f'counts: {counts}')
         #logging.debug(f'infofields: {infofields}')
@@ -139,13 +139,16 @@ if __name__ == "__main__":
     # Choosing which frequencies to add to VCF:
     group = ['whole', 'male', 'female']
 
-    # Write the variant positions
+    # We open the input file: the query genotype file created with bcftools query
     with open(args.genotypes, 'r') as genotypes_file, open(vcfout, 'w') as outvcf_file:
+        # We prepare the header, that is dependant on the OG vcffile for sequence and some
+        # info fields, but also on the info fields for frequencies that we wish to add
         # write header in output file (vcf.gz) 
         outvcf_file.write(ut.write_headervcf(group, args.sequences, args.info))
+        # We process the query genotype file line by line now
         # skip header in input file (bcftools query)
         next(genotypes_file) 
-        # process each line in a separate thread
+        # process each batch of lines in a separate thread
         with ProcessPoolExecutor(max_workers=args.threads) as executor:
             futures = []
             batchcount = 0
@@ -154,28 +157,26 @@ if __name__ == "__main__":
                 # Read the next batch of X lines
                 lines = [genotypes_file.readline() for _ in range(args.batchsize)]
                 # Stop if we reached the end of the file
-                #print(f"lines: {lines}")
-                #print(f"lines[0]: {lines[0]}")
-                # End of file was reached, there is nothing more p
                 if any(line == '' for line in lines):
                     non_empty_lines = [line for line in lines if line != '']
                     if len(non_empty_lines) > 0:
                         print("\nEnd of file reached, there are a couple of lines to submit to processing.\n")
-                        futures.append(executor.submit(process_batchlines, non_empty_lines))
+                        futures.append(executor.submit(process_batchlines, non_empty_lines, group))
                     else:
                         print("\nEnd of file reached.\n")
                     break
 
                 # Submit each batch of lines for processing in parallel
-                futures.append(executor.submit(process_batchlines, lines))
+                # Info in group will tell which frequencies to compute
+                futures.append(executor.submit(process_batchlines, lines, group))
                 batchcount += 1
                 linecount += args.batchsize # in batchsize, we have the number of lines
                 print(f"linecount: {linecount}\r", end='')
             # 
             print("\nChecking completed batched: \n")
             completed_lines = 0
+
             # Loop through completed futures and track progress
-            
             for future in as_completed(futures):
                 # The results variable is a string
                 # It is a concatenation of all the vcf like
@@ -187,11 +188,12 @@ if __name__ == "__main__":
                 # write to output file
                 outvcf_file.write(results)
 
-
                 # Print progress
                 print(f"Progress: {completed_lines}/{linecount} lines completed\r", end='')
             
     # Compress the file using bgzip
+    # The output file should be a bgzipped vcf file
+    # At which point do we index the vcf file? Coordiantes should be in order.
     try:
         subprocess.run(['bgzip', '-f', vcfout], check=True)
         print(f"File compressed successfully to {args.outfile}")
