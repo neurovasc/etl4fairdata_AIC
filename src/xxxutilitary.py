@@ -109,19 +109,138 @@ def compute_frequencies(df, group):
     counts : array : str(integer/integegrs) : len N : definition - count of a variant ALLELE in a given group (/total)
     labels : array of tuples : (str, str) : len N : definition - labels for the frequencies and counts in the INFO field
     '''
+    frequencies = ['nan']*len(group)
+    counts = ['nan']*len(group)
+    infofields = get_infofieldslabels(group)
+    #
+    for i, g in enumerate(group):
+        if 'whole' == g: # whole population in the OC vcf file
+            genotypes = ''.join(df['genotypes'].tolist())
+            refc, altc, unkc = genotypes.count('0'), genotypes.count('1'), genotypes.count('.')
+            frequencies[i] = calcfreq({'0': refc, '1': altc})
+            counts[i] = f"{altc}/{refc+altc}"
+        if "female" == g: # female population in the OC vcf file
+            femalesex_list = ['F', 'female', 'femme']
+            female_df = df[df['sexe'].isin(femalesex_list)]
+            female_genotypes = ''.join(female_df['genotypes'].tolist())
+            female_refc, female_altc, female_unkc = female_genotypes.count('0'), female_genotypes.count('1'), female_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': female_refc, '1': female_altc})
+            counts[i] = f"{female_altc}/{female_refc+female_altc}"
+        if "male" == g: # male population in the OC vcf file
+            malesex_list = ['M', 'male', 'homme', 'H']
+            male_df = df[df['sexe'].isin(malesex_list)]
+            male_genotypes = ''.join(male_df['genotypes'].tolist())
+            male_refc, male_altc, male_unkc = male_genotypes.count('0'), male_genotypes.count('1'), male_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': male_refc, '1': male_altc})
+            counts[i] = f"{male_altc}/{male_refc+male_altc}"
+        if "earlyonset" in g: # early onset population in the OC vcf file
+            df = add_age_of_onset(df)
+            earlyonset_df = df[df['age of onset']<35]
+            earlyonset_genotypes = ''.join(earlyonset_df['genotypes'].tolist())
+            earlyonset_refc, earlyonset_altc, earlyonset_unkc = earlyonset_genotypes.count('0'), earlyonset_genotypes.count('1'), earlyonset_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': earlyonset_refc, '1': earlyonset_altc})
+            counts[i] = f"{earlyonset_altc}/{earlyonset_refc+earlyonset_altc}"
+        if "obese" in g:
+            df['imc'] = pd.to_numeric(df['imc'], errors='coerce')
+            obese_df = df[(df['imc'] >= 30) & (df['imc'] < 100)]
+            obese_genotypes = ''.join(obese_df['genotypes'].tolist())
+            obese_refc, obese_altc, obese_unkc = obese_genotypes.count('0'), obese_genotypes.count('1'), obese_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': obese_refc, '1': obese_altc})
+            counts[i] = f"{obese_altc}/{obese_refc+obese_altc}"
+        if "overweight" in g:
+            df['imc'] = pd.to_numeric(df['imc'], errors='coerce')
+            overweight_df = df[(df['imc'] >= 25) & (df['imc'] < 30)]
+            overweight_genotypes = ''.join(overweight_df['genotypes'].tolist())
+            overweight_refc, overweight_altc, overweight_unkc = overweight_genotypes.count('0'), overweight_genotypes.count('1'), overweight_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': overweight_refc, '1': overweight_altc})
+            counts[i] = f"{overweight_altc}/{overweight_refc+overweight_altc}"
+        if "familialcase" in g:
+            familial_df = df[(df['ATCD familial d\'AIC (1er degré)'] == 'Oui certain')]
+            familial_genotypes = ''.join(familial_df['genotypes'].tolist())
+            familial_refc, familial_altc, familial_unkc = familial_genotypes.count('0'), familial_genotypes.count('1'), familial_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': familial_refc, '1': familial_altc})
+            counts[i] = f"{familial_altc}/{familial_refc+familial_altc}"
+        if "sporadiccase" in g:
+            sporadic_df = df[(df['cas sporadique'] == 'Oui')]
+            sporadic_genotypes = ''.join(sporadic_df['genotypes'].tolist())
+            sporadic_refc, sporadic_altc, sporadic_unkc = sporadic_genotypes.count('0'), sporadic_genotypes.count('1'), sporadic_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': sporadic_refc, '1': sporadic_altc})
+            counts[i] = f"{sporadic_altc}/{sporadic_refc+sporadic_altc}"
+        if "discoveryincidental" in g:
+            discovery_df = df[(df['circonstances de decouverte'] == 'Fortuite')]
+            discovery_genotypes = ''.join(discovery_df['genotypes'].tolist())
+            discovery_refc, discovery_altc, discovery_unkc = discovery_genotypes.count('0'), discovery_genotypes.count('1'), discovery_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': discovery_refc, '1': discovery_altc})
+            counts[i] = f"{discovery_altc}/{discovery_refc+discovery_altc}"
+        if "discoveryfamilialscreening" in g:
+            discovery_df = df[(df['circonstances de decouverte'] == 'Dépistage familial')]
+            discovery_genotypes = ''.join(discovery_df['genotypes'].tolist())
+            discovery_refc, discovery_altc, discovery_unkc = discovery_genotypes.count('0'), discovery_genotypes.count('1'), discovery_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': discovery_refc, '1': discovery_altc})
+            counts[i] = f"{discovery_altc}/{discovery_refc+discovery_altc}"
+        if "discoveryruptured" in g:
+            discovery_df = df[(df['circonstances de decouverte'] == 'Rupture AIC')]
+            discovery_genotypes = ''.join(discovery_df['genotypes'].tolist())
+            discovery_refc, discovery_altc, discovery_unkc = discovery_genotypes.count('0'), discovery_genotypes.count('1'), discovery_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': discovery_refc, '1': discovery_altc})
+            counts[i] = f"{discovery_altc}/{discovery_refc+discovery_altc}"
+        if "discoveryischemic" in g:
+            discovery_df = df[(df['circonstances de decouverte'] == 'Compressif ou ischémique')]
+            discovery_genotypes = ''.join(discovery_df['genotypes'].tolist())
+            discovery_refc, discovery_altc, discovery_unkc = discovery_genotypes.count('0'), discovery_genotypes.count('1'), discovery_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': discovery_refc, '1': discovery_altc})
+            counts[i] = f"{discovery_altc}/{discovery_refc+discovery_altc}"
+        if "ruptured" in g:
+            ruptured_df = df[((df['AIC 1 Rompu'] == 'Oui')) | ((df['AIC 2 Rompu'] == 'Oui')) | ((df['AIC 3 Rompu'] == 'Oui'))
+                             | ((df['AIC 4 Rompu'] == 'Oui')) | ((df['AIC 5 Rompu'] == 'Oui'))]
+            ruptured_genotypes = ''.join(ruptured_df['genotypes'].tolist())
+            ruptured_refc, ruptured_altc, ruptured_unkc = ruptured_genotypes.count('0'), ruptured_genotypes.count('1'), ruptured_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': ruptured_refc, '1': ruptured_altc})
+            counts[i] = f"{ruptured_altc}/{ruptured_refc+ruptured_altc}"
+        if "multipleica" in g:
+            multipleica_df = df[(df['nb d anevrismes'] > 1)]
+            multipleica_genotypes = ''.join(multipleica_df['genotypes'].tolist())
+            multipleica_refc, multipleica_altc, multipleica_unkc = multipleica_genotypes.count('0'), multipleica_genotypes.count('1'), multipleica_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': multipleica_refc, '1': multipleica_altc})
+            counts[i] = f"{multipleica_altc}/{multipleica_refc+multipleica_altc}"
+        if "aht" in g:
+            aht_df = df[(df['hypertension arterielle'] ==  'HTA traitée') | (df['hypertension arterielle'] == 'HTA non traitée')]
+            aht_genotypes = ''.join(aht_df['genotypes'].tolist())
+            aht_refc, aht_altc, aht_unkc = aht_genotypes.count('0'), aht_genotypes.count('1'), aht_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': aht_refc, '1': aht_altc})
+            counts[i] = f"{aht_altc}/{aht_refc+aht_altc}"
+        if "diabetes" in g:
+            diabetes_df = df[(df['diabete'] == 'Oui')]
+            diabetes_genotypes = ''.join(diabetes_df['genotypes'].tolist())
+            diabetes_refc, diabetes_altc, diabetes_unkc = diabetes_genotypes.count('0'), diabetes_genotypes.count('1'), diabetes_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': diabetes_refc, '1': diabetes_altc})
+            counts[i] = f"{diabetes_altc}/{diabetes_refc+diabetes_altc}"
+        if "dyslipidemia" in g:
+            dyslipidemia_df = df[(df['dyslipidemie'] == 'Oui')]
+            dyslipidemia_genotypes = ''.join(dyslipidemia_df['genotypes'].tolist())
+            dyslipidemia_refc, dyslipidemia_altc, dyslipidemia_unkc = dyslipidemia_genotypes.count('0'), dyslipidemia_genotypes.count('1'), dyslipidemia_genotypes.count('.')
+            frequencies[i] = calcfreq({'0': dyslipidemia_refc, '1': dyslipidemia_altc})
+            counts[i] = f"{dyslipidemia_altc}/{dyslipidemia_refc+dyslipidemia_altc}"
+        #
+    return frequencies, counts, infofields
+#
+def get_infofieldslabels(group):
+    infofields = []
     for g in group:
+        # the labels
         try:
-            label = vhi.info_headerchunk[g]
+            # here we split the vcf header info fields corresponding to the group
+            # of interest, and extract only the labels for the frequencies and counts
+            # to appear in the line of the variant in the VCF file
+            labels = vhi.info_headerchunk[g].split('\n')
+            l1 = labels[0].split('ID=')[1].split(',')[0]
+            l2 = labels[1].split('ID=')[1].split(',')[0]
+            infofields.append((l1, l2))   
         except KeyError as e:
             print(f"KeyError: {g} not found in dictionary for INFO field of vcf header.")
             print(f"KeyError: {e}")
             sys.exit(1)
-        print(label)
-    frequencies = [0,5]
-    counts = [15]
-    infofields = [('AF_whole', 'AC_whole')]
-    return frequencies, counts, infofields
-
+    return infofields
 #
 def calcfreq(count_dict):
     ''' Calculate the allele frequency from a dictionary with counts of alleles
@@ -141,29 +260,18 @@ def calcfreq(count_dict):
         AF = 0
     except KeyError:
         AF = 0
-    return AF
+    return round(AF,6)
 #
-def compute_AFAC_inpop(df):
-    ''' Input phenotype data with a column 'genotypes' that contains the genotypes
-    for a given variant. The genotypes are in 0/1 or 0|1 format. Biallelic sites split.
+def add_age_of_onset(df):
     '''
-    genotypes = df['genotypes'].tolist()
-    count_dict = {}
-    for genotype in genotypes:
-        for char in genotype:
-            if char != '/' and char != '|': 
-                if char in count_dict:
-                    count_dict[char] += 1
-                else:
-                    count_dict[char] = 1
-    AF = round(calcfreq(count_dict), 8)
-    try:
-        AC = count_dict['1']
-    except:
-        #print(f"No alternative allele for selection.")
-        AC = 0
-    return AF, AC
-#
+    '''
+    df['date de naissance'] = pd.to_datetime(df['date de naissance'], dayfirst=True)
+    df['date du 1er diagnostic'] = pd.to_datetime(df['date du 1er diagnostic'], errors='coerce', dayfirst=True)
+    df['age of onset'] = df.apply(lambda row: (row['date du 1er diagnostic'].year - row['date de naissance'].year 
+                                           - ((row['date du 1er diagnostic'].month, row['date du 1er diagnostic'].day) 
+                                              < (row['date de naissance'].month, row['date de naissance'].day))) 
+                              if pd.notna(row['date du 1er diagnostic']) else pd.NA, axis=1)
+    return df
 def check_values_equal(val1, val2):
     '''
     '''
@@ -171,35 +279,6 @@ def check_values_equal(val1, val2):
         print(f"Values are not equal: {val1} != {val2}")
         sys.exit(1)
     print("Values are equal.")
-#
-def get_round_af(count, df):
-    '''
-    '''
-    AF = round(count / (len(df)*2), 8)
-    return AF
-#
-def compute_AFAC_bysex(df):
-    ''' Compute allele frequencies by sex. 
-    The output is the allele frequency of the alternative allele occuring in females/males
-    The AFf_among keeps track of the allele frequency of the alternative allele 
-    among females i.e. answers the questions: how frequent is the allele in the female
-    population. It's not quite what we want for the aggregate file, but we keep it in mind
-    because it may be an useful metric down the line.
-    '''
-    femalesex_list = ['F', 'female', 'femme']
-    malesex_list = ['M', 'male', 'homme', 'H']
-    female_df = df[df['sexe'].isin(femalesex_list)]
-    male_df = df[df['sexe'].isin(malesex_list)]
-    AFf_among, ACf = compute_AFAC_inpop(female_df)
-    AFm_among, ACm = compute_AFAC_inpop(male_df)
-    AFf = get_round_af(ACf, df)
-    AFm = get_round_af(ACm, df)
-    #print('females: ',female_df['genotypes'].tolist())
-    #print('males: ',male_df['genotypes'].tolist())
-    #print('AFm, AFf, ACm, ACf',AFm, AFf, ACm, ACf)
-    #print(len(df), len(female_df), len(male_df))
-    
-    return AFm, AFf, ACm, ACf
 #
 def compute_AFAC_bytype(df):
     ''' Compute allele frequency by type: familial, sporadic, uncertain

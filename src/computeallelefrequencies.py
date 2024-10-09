@@ -137,7 +137,18 @@ if __name__ == "__main__":
     
     # Allele frequencies and allele counts should be specified in the vcf header
     # Choosing which frequencies to add to VCF:
-    group = ['whole', 'male', 'female']
+    # possibilities: 
+    # whole, male, female, 
+    # earlyonset, obese, overweight, familialcase, sporadiccase 
+    # discoveryincidental, dicoveryfamilialscreening, discoveryruptured, discoveryischemic
+    # ruptured, multipleica
+    group = ['whole', 'male', 'female', 
+             'earlyonset',
+             'aht', 'diabetes', 'dyslipidemia',
+             'obese', 'overweight', 
+             'familialcase', 'sporadiccase', 
+             'discoveryincidental', 'discoveryfamilialscreening', 'discoveryruptured', 'discoveryischemic',
+             'ruptured', 'multipleica']
 
     # We open the input file: the query genotype file created with bcftools query
     with open(args.genotypes, 'r') as genotypes_file, open(vcfout, 'w') as outvcf_file:

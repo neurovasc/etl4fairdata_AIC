@@ -150,12 +150,13 @@ rule computeallelefrequencies:
     input:
         code="src/computeallelefrequencies.py",
         query="data-intermediate/aicdataset-querygenotype.tsv",
-        csv="data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.reordered.csv",
+        clinical="data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.reordered.csv",
         sequences="data-intermediate/aicdataset-contigs.txt"
+        info="data-intermediate/aicdataset-info.txt"
     output:
         aggregatevcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz"
     shell:
-        "python3 {input.code} -g {input.query} -c {input.csv} -o {output.aggregatevcf} -s {input.sequences}"
+        "python3 {input.code} -g {input.query} -c {input.clinical} -o {output.aggregatevcf} -s {input.sequences} -i {input.info}"
 # # # #
 #
 #
