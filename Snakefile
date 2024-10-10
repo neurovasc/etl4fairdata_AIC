@@ -4,6 +4,7 @@ import os
 # real dataset
 global_true_bcf = "data-input/QCed.VEP.AFctrls.GND.CADD.bcf"
 global_true_phenotype = "data-input/extraction_GAIA_ICAN_26-09-2023.csv"
+# fake dataset
 global_fake_bcf = "test-data-input/fakegenotyped.vcf.gz"
 global_fake_phenotype = "test-data-input/fake-GAIA-extraction-clean.csv"
 #

@@ -16,7 +16,7 @@
 
 import sys
 import logging
-import fireducks.pandas as pd
+import pandas as pd
 import xxxvcfheaderinfo as vhi
 
 # Logger 
