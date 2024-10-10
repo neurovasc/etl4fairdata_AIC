@@ -1,14 +1,24 @@
 import os
 # # # #
 #
+# real dataset
+global_true_bcf = "data-input/QCed.VEP.AFctrls.GND.CADD.bcf"
+global_true_phenotype = "data-input/extraction_GAIA_ICAN_26-09-2023.csv"
+global_fake_bcf = "test-data-input/fakegenotyped.vcf.gz"
+global_fake_phenotype = "test-data-input/fake-GAIA-extraction-clean.csv"
 #
+global_bcf = global_fake_bcf
+global_phenotype = global_fake_phenotype
+intermediate_dir = "test-data-intermediate"
+deliverable_dir = "test-data-deliverable"
+input_dir = "test-data-input"
 # Extract biosample IDs from the VCF file
 # Some biosamples in the VCF are a merge of two biosamples in the phenotype file
 rule get_biosamples_in_vcf:
     input:
-        bcf="data-input/QCed.VEP.AFctrls.GND.CADD.bcf"
+        bcf=global_bcf
     output:
-        list="data-intermediate/biosamplesinvcf.lst"
+        list=intermediate_dir+"/biosamplesinvcf.lst"
     shell:
         "bcftools query -l {input} | tr '_' '\n'> {output}"
 # # # #
@@ -21,11 +31,11 @@ rule get_biosamples_in_vcf:
 rule sample_selection:
     input:
         code="src/sampleselection.py",
-        csv="data-input/extraction_GAIA_ICAN_26-09-2023.csv",
-        vcfsamples="data-intermediate/biosamplesinvcf.lst"
+        csv=global_phenotype,
+        vcfsamples=intermediate_dir+"/biosamplesinvcf.lst"
     output:
-        csvsamples="data-intermediate/aicdataset-samplelist.lst",
-        csvfilt="data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.csv"
+        csvsamples=intermediate_dir+"/aicdataset-samplelist.lst",
+        csvfilt=intermediate_dir+"/aicdataset-extraction_GAIA_ICAN_26-09-2023.csv"
     shell: 
         "python3 {input.code} -c {input.csv} -s {input.vcfsamples} -o {output.csvsamples} -f {output.csvfilt}"
 # # # #
@@ -38,10 +48,10 @@ rule sample_selection:
 # but this does not occur in the ICAN cohort as far as i've seen
 rule vcf_sample_selection:
     input:
-        samples="data-intermediate/aicdataset-samplelist.lst",
-        bcf="data-input/QCed.VEP.AFctrls.GND.CADD.bcf"
+        samples=intermediate_dir+"/aicdataset-samplelist.lst",
+        bcf=global_bcf
     output:
-        bcf="data-intermediate/aicdataset-QCed.VEP.AFctrls.GND.CADD.bcf"
+        bcf=intermediate_dir+"/aicdataset-QCed.VEP.AFctrls.GND.CADD.bcf"
     shell:
         "bcftools view -S {input.samples} {input.bcf} -c1:alt1 -O b -o {output.bcf}"
 # # # #
@@ -51,10 +61,10 @@ rule vcf_sample_selection:
 # Delete duplicate rows in phenotype file
 rule reorder_samples_in_phenotypefile:
     input:
-        csv="data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.csv",
-        samples="data-intermediate/aicdataset-samplelist.lst"
+        csv=intermediate_dir+"/aicdataset-extraction_GAIA_ICAN_26-09-2023.csv",
+        samples=intermediate_dir+"/aicdataset-samplelist.lst"
     output:
-        csv="data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.reordered.csv"
+        csv=intermediate_dir+"/aicdataset-extraction_GAIA_ICAN_26-09-2023.reordered.csv"
     run:
         import pandas as pd
         def reorder_csv(phenotypes, samples, output):
@@ -84,8 +94,8 @@ rule reorder_samples_in_phenotypefile:
 # The same samples are present in both files.
 rule sanity_check_samples:
     input:
-        csv="data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.reordered.csv",
-        bcf="data-intermediate/aicdataset-QCed.VEP.AFctrls.GND.CADD.bcf"
+        csv=intermediate_dir+"/aicdataset-extraction_GAIA_ICAN_26-09-2023.reordered.csv",
+        bcf=intermediate_dir+"/aicdataset-QCed.VEP.AFctrls.GND.CADD.bcf"
     run:
         import pandas as pd
         import subprocess
@@ -120,9 +130,9 @@ rule sanity_check_samples:
 # https://stackoverflow.com/questions/73611363/better-splitting-of-mutliallelic-sites-then-bcftools-norm-m-any
 rule vcf2querygenotype:
     input:
-        bcf="data-intermediate/aicdataset-QCed.VEP.AFctrls.GND.CADD.bcf"
+        bcf=intermediate_dir+"/aicdataset-QCed.VEP.AFctrls.GND.CADD.bcf"
     output:
-        query="data-intermediate/aicdataset-querygenotype.tsv"
+        query=intermediate_dir+"/aicdataset-querygenotype.tsv"
     shell:
         "bcftools norm -a {input.bcf} | bcftools view --min-ac=1 | \
         bcftools query -H -f '%CHROM\t%POS\t%REF\t%ALT\t[%GT,]\t%INFO\n' > {output.query}"
@@ -132,10 +142,10 @@ rule vcf2querygenotype:
 # Extract vcf header contigs and info tags
 rule extractvcfheader:
     input:
-        bcf="data-intermediate/aicdataset-QCed.VEP.AFctrls.GND.CADD.bcf"
+        bcf=intermediate_dir+"/aicdataset-QCed.VEP.AFctrls.GND.CADD.bcf"
     output:
-        contigs="data-intermediate/aicdataset-contigs.txt",
-        info="data-intermediate/aicdataset-info.txt"
+        contigs=intermediate_dir+"/aicdataset-contigs.txt",
+        info=intermediate_dir+"/aicdataset-info.txt"
     shell:
         "bcftools view -h {input.bcf} | grep '^##contig'  > {output.contigs} ; \
         bcftools view -h {input.bcf} | grep '^##INFO'  > {output.info}"
@@ -149,12 +159,12 @@ rule extractvcfheader:
 rule computeallelefrequencies:
     input:
         code="src/computeallelefrequencies.py",
-        query="data-intermediate/aicdataset-querygenotype.tsv",
-        clinical="data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.reordered.csv",
-        sequences="data-intermediate/aicdataset-contigs.txt"
-        info="data-intermediate/aicdataset-info.txt"
+        query=intermediate_dir+"/aicdataset-querygenotype.tsv",
+        clinical=intermediate_dir+"/aicdataset-extraction_GAIA_ICAN_26-09-2023.reordered.csv",
+        sequences=intermediate_dir+"/aicdataset-contigs.txt",
+        info=intermediate_dir+"/aicdataset-info.txt"
     output:
-        aggregatevcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz"
+        aggregatevcf=deliverable_dir+"/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz"
     shell:
         "python3 {input.code} -g {input.query} -c {input.clinical} -o {output.aggregatevcf} -s {input.sequences} -i {input.info}"
 # # # #
@@ -163,7 +173,7 @@ rule computeallelefrequencies:
 # Sanity check: is the bgziped VCF file valid?
 rule sanity_check_vcfvalidity:
     input:
-        vcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz"
+        vcf=deliverable_dir+"/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz"
     run:
         import subprocess
         def check_vcf_validity(vcf):
@@ -186,14 +196,14 @@ rule sanity_check_vcfvalidity:
 rule vcfaggregate2rdf:
     input:
         code="src/vcfaggregate2rdf.py",
-        vcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz"
+        vcf=deliverable_dir+"/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz"
         #vcf="temp/small.bcf"
     params:
         #limit=100,
         threads=15,
         chunksize=500
     output:
-        rdf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.ttl"
+        rdf=deliverable_dir+"/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.ttl"
     shell:
         "python3 {input.code} -b {input.vcf} -r {output.rdf} \
          -t {params.threads} -k {params.chunksize}"
@@ -203,7 +213,7 @@ rule vcfaggregate2rdf:
 # Sanity check: is the RDF file valid? turtle format
 rule sanity_check_ttlvalidity:
     input:
-        rdf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.ttl"
+        rdf=deliverable_dir+"/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.ttl"
     run:
         import rdflib
         def check_turtle(file):
@@ -227,8 +237,8 @@ rule sanity_check_ttlvalidity:
 # Sanity check: are there as many variants in the VCF and as in the RDF file?
 rule sanity_check_nbvariantsinttlandrdf:
     input:
-        vcf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz",
-        rdf="data-deliverable/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.ttl"
+        vcf=deliverable_dir+"/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.vcf.gz",
+        rdf=deliverable_dir+"/aicdataset-QCed.VEP.AFctrls.GND.CADD.aggregate.ttl"
     run:
         import subprocess
         #
