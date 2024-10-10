@@ -44,10 +44,10 @@ stream = io.BytesIO()
 # Custom
 ican = Namespace("http://ican.ressource.org/")
 # Bio
-so = Namespace("http://www.sequenceontology.org/miso/current_svn/term/SO:")
-sio = Namespace("http://semanticscience.org/resource/")
+so = Namespace("http://purl.obolibrary.org/obo/SO_")
+sio = Namespace("http://semanticscience.org/resource/SIO_")
 dbsnp = Namespace("http://bio2rdf.org/dbsnp:")
-geno = Namespace("http://example.org/geno/GENO_")
+geno = Namespace("http://purl.obolibrary.org/obo/GENO_")
 # Semantics
 rdf = Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 rdfs = Namespace("http://www.w3.org/2000/01/rdf-schema#")
@@ -184,52 +184,121 @@ def build_rdfgraph(g, df):
         alternate = row['alternate']
         info = row['info']
         #print(chromosome, position, reference, alternate, info)
-        fq_gnomad = calculate_fqgnomad(chromosome, position, reference, alternate)
-        fq_ican_AF_whole = info.split(';')[0].split('=')[1]
-        fq_ican_AF_female = info.split(';')[2].split('=')[1]
-        fq_ican_AF_male = info.split(';')[4].split('=')[1]
-        fq_ican_AF_familial = info.split(';')[6].split('=')[1]
-        fq_ican_AF_sporadic = info.split(';')[8].split('=')[1]
-        fq_ican_AF_earlyonset = info.split(';')[12].split('=')[1]
-        fq_ican_AF_lateonset = info.split(';')[14].split('=')[1]
+        annotations = info.split(';')
+        fq_gnomad = 'nan'
+        fq_ican_AF_whole = 'nan'
+        fq_ican_AF_female = 'nan'
+        fq_ican_AF_male = 'nan'
+        fq_ican_AF_aht = 'nan'
+        fq_ican_AF_diabetes = 'nan'
+        fq_ican_AF_dyslipidemia = 'nan'
+        fq_ican_AF_obese = 'nan'
+        fq_ican_AF_overweight = 'nan'
+        fq_ican_AF_sporadic = 'nan'
+        fq_ican_AF_familial = 'nan'
+        fq_ican_AF_ruptured = 'nan'
+        fq_ican_AF_multipleica = 'nan'
+        csq = 'nan'
+        caddraw = 'nan'
+        caddphred = 'nan'
+        for a in annotations:
+            if 'gnomad_AF=' in a:
+                fq_gnomad = a.split('=')[1]
+            if 'AF_whole=' in a:
+                fq_ican_AF_whole = a.split('=')[1]
+            if 'AF_female=' in a:
+                fq_ican_AF_female = a.split('=')[1]
+            if 'AF_male=' in a:
+                fq_ican_AF_male = a.split('=')[1]
+            if 'AF_aht=' in a:
+                fq_ican_AF_aht = a.split('=')[1]
+            if 'AF_diabetes=' in a:
+                fq_ican_AF_diabetes = a.split('=')[1]
+            if 'AF_dyslipidemia=' in a:
+                fq_ican_AF_dyslipidemia = a.split('=')[1]
+            if 'AF_obese=' in a:
+                fq_ican_AF_obese = a.split('=')[1]
+            if 'AF_overweight=' in a:
+                fq_ican_AF_overweight = a.split('=')[1]
+            if 'AF_sporadic=' in a:
+                fq_ican_AF_sporadic = a.split('=')[1]
+            if 'AF_familial=' in a:
+                fq_ican_AF_familial = a.split('=')[1]
+            if 'AF_ruptured=' in a:
+                fq_ican_AF_ruptured = a.split('=')[1]
+            if 'AF_multipleica=' in a:
+                fq_ican_AF_multipleica = a.split('=')[1]
+            if 'CSQ=' in a :
+                consequences = a.split('=')[1]
+            if 'CADD_RAW=' in a:
+                caddraw = a.split('=')[1]
+            if 'PHRED=' in a:
+                caddphred = a.split('=')[1]
+                
         rsid = get_rsids_fromdbsnp(chromosome, position, reference, alternate)
 
         # Define the variant URI
-        variant_id = f"ican_hg38-{chromosome}-{position}-{reference}-{alternate}"
-        variant_reference_id = f"ican_hg38-{chromosome}-{position}-{reference}-{alternate}"
-        variant_alternate_id = f"ican_hg38-{chromosome}-{position}-{reference}-{alternate}"
+        lilprefix = 'icanexomehg38' 
+        variant_id = f"{lilprefix}-{chromosome}-{position}-{reference}-{alternate}"
+        variant_reference_id = f"{lilprefix}-{chromosome}-{position}-{reference}-{alternate}"
+        variant_alternate_id = f"{lilprefix}-{chromosome}-{position}-{reference}-{alternate}"
+        chromosome_id = f"{lilprefix}-{chromosome}"
+        position_id = f"{lilprefix}-{chromosome}-{position}"
+        # variant, ref and alt
         variant_uri = ican["variantId/"+variant_id]
         variant_reference_uri = ican["variantReference/"+variant_reference_id]
         variant_alternate_uri = ican["variantAlternate/"+variant_alternate_id]
+        # chromosome and position
+        chromosome_uri = ican["chromosome/"+chromosome_id]
+        position_uri = ican["chromosome/"+chromosome_id+"/position/"+position_id]
         # Define the variant frequency URIs
         variant_fq_gnomad_uri = ican["variantAlternate/"+'fq/gnomad/'+variant_alternate_id]
-        variant_fq_ican_uri = ican["variantAlternate/"+'fq/ican/'+variant_alternate_id]
+        variant_fq_ican_uri = ican["variantAlternate/"+'fq/ican/cohort/'+variant_alternate_id]
         variant_fq_ican_uri_female = ican["variantAlternate/"+'fq/ican/female/'+variant_alternate_id]
         variant_fq_ican_uri_male = ican["variantAlternate/"+'fq/ican/male/'+variant_alternate_id]
+        variant_fq_ican_uri_ruptured = ican["variantAlternate/"+'fq/ican/ruptured/'+variant_alternate_id]
+        variant_fq_ican_uri_multipleica = ican["variantAlternate/"+'fq/ican/multipleica/'+variant_alternate_id]
+        variant_fq_ican_uri_aht = ican["variantAlternate/"+'fq/ican/aht/'+variant_alternate_id]
+        variant_fq_ican_uri_diabetes = ican["variantAlternate/"+'fq/ican/diabetes/'+variant_alternate_id]
+        variant_fq_ican_uri_dyslipidemia = ican["variantAlternate/"+'fq/ican/dyslipidemia/'+variant_alternate_id]
+        variant_fq_ican_uri_obese = ican["variantAlternate/"+'fq/ican/obese/'+variant_alternate_id]
+        variant_fq_ican_uri_overweight = ican["variantAlternate/"+'fq/ican/overweight/'+variant_alternate_id]
+        variant_fq_ican_uri_sporadic = ican["variantAlternate/"+'fq/ican/sporadic/'+variant_alternate_id]
+        variant_fq_ican_uri_familial = ican["variantAlternate/"+'fq/ican/familial/'+variant_alternate_id]
+        # Define the variant annotation URIs
+        variant_annotation_uri = ican["variantAlternate/"+'annotation/'+variant_alternate_id]
+        caddraw_uri = variant_annotation_uri+'/cadd/'
+        caddphred_uri = variant_annotation_uri+'/caddphred/'
 
         # Add variant triplets
-        # ex:Variant1 a ex:Variant ;
-        #    ex:hasChromosome [
-        #        a go:0005694 ;                  # This specifies that it is a chromosome
-        #        rdfs:label "Chromosome 1" ;      # Label for readability
-        #        ex:chromosomeValue "chr1"        # The value of the chromosome (chr1)
-        #    ] .
-        #
-        #
+        # Story telling
+
+        # The variant is a so:variant
         g.add((variant_uri, RDF.type, so["0001060"]))
-        g.add((variant_uri, sio["SIO_000061"], Literal(chromosome, datatype=XSD.string))) # is located in
-        g.add((variant_uri, sio["SIO_000791"], Literal(position, datatype=XSD.integer))) # at position
-        g.add((variant_uri, sio["SIO_000122"], dbsnp[rsid])) # is synonymous to
+        # The variant sio:is_located_in the chromosome
+        g.add((variant_uri, sio["SIO_000061"], chromosome_uri))
+        # The chromosome has a value that is a string
+        g.add((chromosome_uri, sio["SIO_000300"], Literal(chromosome, datatype=XSD.string))) # is located in
+        # The variant has sio:start_position at position
+        g.add((variant_uri, sio["SIO_000791"], position_uri))
+        # The position has a value that is an integer
+        g.add((position_uri, sio["SIO_000300"], Literal(position, datatype=XSD.integer))) # at position
+        # The variant has a sio:synonymous id in dbsnp
+        if rsid != 'nan':
+            g.add((variant_uri, sio["SIO_000122"], dbsnp[rsid])) # is synonymous to
+        # The variant sio:has_attributes that are the reference and alternate alleles
         g.add((variant_uri, sio["SIO_000223"], variant_reference_uri)) # has property
         g.add((variant_uri, sio["SIO_000223"], variant_alternate_uri)) # has property
-
-        # Add reference description triplets
-        g.add((variant_reference_uri, RDF.type, geno["0000152"])) # reference allele
+        # The reference is a geno:reference_allele
+        g.add((variant_reference_uri, RDF.type, geno["0000036"])) # reference allele
+        # The reference has a value that is a string (nucleotide)
         g.add((variant_reference_uri, sio["SIO_000300"], Literal(reference, datatype=XSD.string))) # reference nucleotide
-        g.add((variant_reference_uri, sio["SIO_000253"], ican['cohort.ican'])) # data source
+        # The reference has a source, but we don't add it for now, as we work only with a single sourcr
+        # that is the ican cohort.
+        #g.add((variant_reference_uri, sio["SIO_000253"], ican['cohort.ican'])) # data source
         g.add((variant_reference_uri, rdfs['label'], Literal("Reference allele for the variant "+variant_id + ' [ dbspn:'+rsid+' ]', datatype=XSD.string)))
-        # Add alternate description triplets
-        g.add((variant_alternate_uri, RDF.type, geno["0000476"])) # alternate allele
+        # The alternate is a geno:alternate_allele
+        g.add((variant_alternate_uri, RDF.type, geno["0000002"])) # alternate allele
         g.add((variant_alternate_uri, sio["000300"], Literal(alternate, datatype=XSD.string))) # alternate nucleotide
         g.add((variant_alternate_uri, sio["000253"], ican['cohort.ican'])) # data source
         g.add((variant_alternate_uri, rdfs['label'], Literal("Alternate allele for the variant "+variant_id + ' [ dbspn:'+rsid+' ]', datatype=XSD.string)))
@@ -262,7 +331,8 @@ def build_rdfgraph(g, df):
     return g
 #
 def calculate_fqgnomad(chromosome, position, reference, alternate):
-    '''
+    ''' Not used for now, as the gnomad frequencies are present in
+    the INFO field of the OG VCF I am working with, and I just parse them
     '''
     gnomadfile = args.gnomad
     fq = 'nan'
@@ -278,6 +348,8 @@ def calculate_fqgnomad(chromosome, position, reference, alternate):
     return fq
 #
 def get_rsids_fromdbsnp(chromosome, position, reference, alternate):
+    ''' Apparently not that useful according to R. Blanchet
+    '''
     dbsnpfile = args.dbsnp
     rsid = 'nan'
     dict = {"chr1" : "NC_000001.11", "chr2" : "NC_000002.12", "chr3" : "NC_000003.12", 
@@ -298,15 +370,6 @@ def get_rsids_fromdbsnp(chromosome, position, reference, alternate):
         else:
             return rsid
     return rsid
-#
-def calculate_fqican(genotypes):
-    alternateallele = genotypes.count('1')
-    referenceallele = genotypes.count('0')
-    if (alternateallele+referenceallele) == 0:
-        return 'nan'
-    else:
-        alternate_fq = alternateallele/(alternateallele+referenceallele)
-        return round(alternate_fq, 6)
 #
 def bcf2query(bcf, samples):
     ''' Takes in a bcf file and queries it with bcftools
