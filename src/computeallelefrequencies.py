@@ -29,7 +29,7 @@
 import os
 import subprocess
 import argparse
-import fireducks.pandas as pd
+import pandas as pd
 import xxxutilitary as ut
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import multiprocessing

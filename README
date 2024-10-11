@@ -1,17 +1,13 @@
 # Description
-This repository contains the code for the etl4fairdata_AIC project. 
-The project aims to develop a pipeline to extract, transform, and load data from different sources 
-to a FAIR genomic ecosystem. The final goal is to create the files that will enable the
-deployement of a Beacon (json files for the BeaconFriendlyFormat for mongoDB) and the deployement 
-of a SPARQL endpoint (rdf files of aggregate genomic data). 
-The pipeline is developed using the Snakemake workflow management system.
+This repository contains the code for the etl4fairdata_AIC pipeline. 
+The pipeline extracts, transforms, and loads data from different sources 
+to a FAIR genomic ecosystem. The final goal is to create the files that will enable the deployement of a Beacon (json files for the BeaconFriendlyFormat for mongoDB) and the deployement of a SPARQL endpoint (rdf files of aggregate genomic data). The pipeline is developed using the Snakemake workflow management system.
 
-# General Notes
+# Enviroment
  conda export --from-history > ~/Devlopment/etl4fairdata_AIC/conda/environement-etl4fair.yml
  https://www.youtube.com/watch?v=r9PWnEmz_tc
  snakemake --dag targets | dot -Tpng > dag.png
- python scripts starting with xxx are not meant to be executed, but are ressources for other scripts
- because i like fragmenting my code a lot.
+ python scripts starting with xxx are not meant to be executed, but are ressources for other scripts because I like fragmenting my code a lot.
 
 # Git pushing
 git push --set-upstream origin --all
@@ -23,6 +19,11 @@ QCed.VEP.AFctrls.GND.CADD.bcf
 - has samples that are a merge of two samples in the phenotype file
 signaled like sample1_sample2. These need to be eliminated as this is
 contamination.
+- Quality filtered variants
+- VEP annotation
+- CADD scores
+- exomes
+extraction_GAIA_ICAN_26-09-2023.csv 
 
 # TODOs
 - For variants that do not have a gnomad frequency, should the frequency be set to 0 
