@@ -80,7 +80,7 @@ def build_phenotypedf_for_variant(clinical, genotypes):
     clinical['genotypes'] = genotypesarray
     return clinical
 #
-def process_batchlines(lines, group):
+def process_batchlines(lines, group, clinical):
     ''' Process a genotype line from the VCF
     One line per thread. For parallelization purposes.
     '''
@@ -172,14 +172,14 @@ if __name__ == "__main__":
                     non_empty_lines = [line for line in lines if line != '']
                     if len(non_empty_lines) > 0:
                         print("\nEnd of file reached, there are a couple of lines to submit to processing.\n")
-                        futures.append(executor.submit(process_batchlines, non_empty_lines, group))
+                        futures.append(executor.submit(process_batchlines, non_empty_lines, group, clinical))
                     else:
                         print("\nEnd of file reached.\n")
                     break
 
                 # Submit each batch of lines for processing in parallel
                 # Info in group will tell which frequencies to compute
-                futures.append(executor.submit(process_batchlines, lines, group))
+                futures.append(executor.submit(process_batchlines, lines, group, clinical))
                 batchcount += 1
                 linecount += args.batchsize # in batchsize, we have the number of lines
                 print(f"linecount: {linecount}\r", end='')
