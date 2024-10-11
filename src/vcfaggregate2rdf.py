@@ -178,6 +178,11 @@ def clean_temp_ttlfiles():
 #
 def build_rdfgraph(g, df):
     for index, row in df.iterrows():
+        # variant object
+        '''
+        variant = Variant.from_df(row)
+        '''
+        #
         chromosome = row['chromosome']
         position = int(row['position'])
         reference = row['reference']
@@ -383,7 +388,21 @@ def bcf2query(bcf, samples):
                 " -f'%CHROM\t%POS\t%REF\t%ALT\t%INFO\n' "  +
                 bcf + '>' + queryvcf)
     return queryvcf
-
+#
+'''
+class Variant:
+    def __init__(self, chromosome, position, ref, alt, info):
+        self.chromosome = chromosome
+        self.position = position
+        self.ref = ref
+        self.alt = alt
+        self.info = info
+ 
+    @classmethod
+    def get_frequencies_from_info(self.info):
+        return Variant
+'''
+#
 if __name__ == "__main__":
     # Info about parameters
     print("Script launched with:")

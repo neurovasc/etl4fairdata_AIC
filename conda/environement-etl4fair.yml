@@ -8,4 +8,9 @@ dependencies:
   - graphviz
   - bcftools
   - bioconda::vcftools
+  - rdflib
+  - dask
+  - sparqlwrapper
+  - streamlit
+  - matplotlib
 prefix: /home/bodrug-a/miniconda3/envs/etl4fair
