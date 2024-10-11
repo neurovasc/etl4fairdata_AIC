@@ -1,4 +1,3 @@
-@prefix dbsnp: <http://bio2rdf.org/dbsnp:> .
 @prefix geno: <http://purl.obolibrary.org/obo/GENO_> .
 @prefix ican: <http://ican.ressource.org/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -8,7 +7,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr1-1214017-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr1> ;
-    sio:SIO_000122 dbsnp:rs200983968 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr1-1214017-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr1-1214017-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr1/position/icanexomehg38-chr1-1214017> .
@@ -33,7 +31,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr1-1214100-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr1> ;
-    sio:SIO_000122 dbsnp:rs35304565 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr1-1214100-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr1-1214100-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr1/position/icanexomehg38-chr1-1214100> .
@@ -82,14 +79,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr10-5652864-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr10> ;
-    sio:SIO_000122 dbsnp:rs779980191 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr10-5652864-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr10-5652864-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr10/position/icanexomehg38-chr10-5652864> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr10-5652868-C-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr10> ;
-    sio:SIO_000122 dbsnp:rs1166807457 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr10-5652868-C-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr10-5652868-C-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr10/position/icanexomehg38-chr10-5652868> .
@@ -102,7 +97,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr10-5652898-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr10> ;
-    sio:SIO_000122 dbsnp:rs372477559 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr10-5652898-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr10-5652898-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr10/position/icanexomehg38-chr10-5652898> .
@@ -139,28 +133,24 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr11-607556-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr11> ;
-    sio:SIO_000122 dbsnp:rs376011828 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr11-607556-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr11-607556-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr11/position/icanexomehg38-chr11-607556> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr11-607616-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr11> ;
-    sio:SIO_000122 dbsnp:rs372938068 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr11-607616-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr11-607616-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr11/position/icanexomehg38-chr11-607616> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr11-607680-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr11> ;
-    sio:SIO_000122 dbsnp:rs113889171 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr11-607680-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr11-607680-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr11/position/icanexomehg38-chr11-607680> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr11-607690-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr11> ;
-    sio:SIO_000122 dbsnp:rs759992846 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr11-607690-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr11-607690-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr11/position/icanexomehg38-chr11-607690> .
@@ -179,14 +169,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr11-608009-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr11> ;
-    sio:SIO_000122 dbsnp:rs1034657338 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr11-608009-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr11-608009-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr11/position/icanexomehg38-chr11-608009> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr11-608144-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr11> ;
-    sio:SIO_000122 dbsnp:rs1431844271 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr11-608144-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr11-608144-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr11/position/icanexomehg38-chr11-608144> .
@@ -211,7 +199,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr12-2679578-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr12> ;
-    sio:SIO_000122 dbsnp:rs368281620 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr12-2679578-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr12-2679578-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr12/position/icanexomehg38-chr12-2679578> .
@@ -260,28 +247,24 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr13-24494662-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr13> ;
-    sio:SIO_000122 dbsnp:rs141335603 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24494662-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24494662-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr13/position/icanexomehg38-chr13-24494662> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr13-24494670-A-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr13> ;
-    sio:SIO_000122 dbsnp:rs9318600 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24494670-A-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24494670-A-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr13/position/icanexomehg38-chr13-24494670> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr13-24494704-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr13> ;
-    sio:SIO_000122 dbsnp:rs761476781 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24494704-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24494704-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr13/position/icanexomehg38-chr13-24494704> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr13-24500365-G-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr13> ;
-    sio:SIO_000122 dbsnp:rs61652090 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24500365-G-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24500365-G-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr13/position/icanexomehg38-chr13-24500365> .
@@ -294,14 +277,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr13-24501726-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr13> ;
-    sio:SIO_000122 dbsnp:rs35200240 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24501726-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24501726-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr13/position/icanexomehg38-chr13-24501726> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr13-24501768-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr13> ;
-    sio:SIO_000122 dbsnp:rs745857420 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24501768-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24501768-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr13/position/icanexomehg38-chr13-24501768> .
@@ -314,7 +295,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr13-24501773-TG-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr13> ;
-    sio:SIO_000122 dbsnp:rs763279065 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24501773-TG-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24501773-TG-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr13/position/icanexomehg38-chr13-24501773> .
@@ -339,7 +319,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr14-21018283-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr14> ;
-    sio:SIO_000122 dbsnp:rs1243446 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr14-21018283-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr14-21018283-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr14/position/icanexomehg38-chr14-21018283> .
@@ -358,21 +337,18 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr14-21018378-G-GC> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr14> ;
-    sio:SIO_000122 dbsnp:rs1878080093 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr14-21018378-G-GC>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr14-21018378-G-GC> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr14/position/icanexomehg38-chr14-21018378> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr14-21018406-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr14> ;
-    sio:SIO_000122 dbsnp:rs372594815 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr14-21018406-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr14-21018406-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr14/position/icanexomehg38-chr14-21018406> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr14-21018512-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr14> ;
-    sio:SIO_000122 dbsnp:rs35076247 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr14-21018512-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr14-21018512-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr14/position/icanexomehg38-chr14-21018512> .
@@ -403,7 +379,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr15-29704163-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr15> ;
-    sio:SIO_000122 dbsnp:rs546621604 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr15-29704163-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr15-29704163-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr15/position/icanexomehg38-chr15-29704163> .
@@ -422,7 +397,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr15-29708672-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr15> ;
-    sio:SIO_000122 dbsnp:rs199584481 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr15-29708672-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr15-29708672-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr15/position/icanexomehg38-chr15-29708672> .
@@ -447,14 +421,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr15-29710871-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr15> ;
-    sio:SIO_000122 dbsnp:rs369354122 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr15-29710871-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr15-29710871-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr15/position/icanexomehg38-chr15-29710871> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr16-553024-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr16> ;
-    sio:SIO_000122 dbsnp:rs759920136 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr16-553024-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr16-553024-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr16/position/icanexomehg38-chr16-553024> .
@@ -467,7 +439,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr16-563294-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr16> ;
-    sio:SIO_000122 dbsnp:rs2142109586 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr16-563294-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr16-563294-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr16/position/icanexomehg38-chr16-563294> .
@@ -498,7 +469,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr16-563380-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr16> ;
-    sio:SIO_000122 dbsnp:rs778929660 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr16-563380-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr16-563380-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr16/position/icanexomehg38-chr16-563380> .
@@ -511,21 +481,18 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr16-563580-T-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr16> ;
-    sio:SIO_000122 dbsnp:rs189489979 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr16-563580-T-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr16-563580-T-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr16/position/icanexomehg38-chr16-563580> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr17-1732743-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr17> ;
-    sio:SIO_000122 dbsnp:rs541876277 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr17-1732743-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr17-1732743-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr17/position/icanexomehg38-chr17-1732743> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr17-1732809-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr17> ;
-    sio:SIO_000122 dbsnp:rs1023657615 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr17-1732809-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr17-1732809-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr17/position/icanexomehg38-chr17-1732809> .
@@ -550,7 +517,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr17-1733627-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr17> ;
-    sio:SIO_000122 dbsnp:rs377328201 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr17-1733627-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr17-1733627-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr17/position/icanexomehg38-chr17-1733627> .
@@ -575,28 +541,24 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr17-1733651-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr17> ;
-    sio:SIO_000122 dbsnp:rs146469235 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr17-1733651-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr17-1733651-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr17/position/icanexomehg38-chr17-1733651> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr18-6947169-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr18> ;
-    sio:SIO_000122 dbsnp:rs767561363 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr18-6947169-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6947169-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr18/position/icanexomehg38-chr18-6947169> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr18-6947178-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr18> ;
-    sio:SIO_000122 dbsnp:rs781305997 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr18-6947178-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6947178-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr18/position/icanexomehg38-chr18-6947178> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr18-6947188-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr18> ;
-    sio:SIO_000122 dbsnp:rs755439582 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr18-6947188-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6947188-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr18/position/icanexomehg38-chr18-6947188> .
@@ -615,7 +577,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr18-6947271-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr18> ;
-    sio:SIO_000122 dbsnp:rs78279255 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr18-6947271-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6947271-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr18/position/icanexomehg38-chr18-6947271> .
@@ -628,14 +589,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr18-6948519-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr18> ;
-    sio:SIO_000122 dbsnp:rs776476332 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr18-6948519-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6948519-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr18/position/icanexomehg38-chr18-6948519> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr18-6950779-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr18> ;
-    sio:SIO_000122 dbsnp:rs1172655961 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr18-6950779-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6950779-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr18/position/icanexomehg38-chr18-6950779> .
@@ -648,7 +607,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr19-875380-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr19> ;
-    sio:SIO_000122 dbsnp:rs111940149 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr19-875380-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr19-875380-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr19/position/icanexomehg38-chr19-875380> .
@@ -667,7 +625,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr19-875395-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr19> ;
-    sio:SIO_000122 dbsnp:rs61755331 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr19-875395-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr19-875395-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr19/position/icanexomehg38-chr19-875395> .
@@ -686,7 +643,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr19-876989-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr19> ;
-    sio:SIO_000122 dbsnp:rs150192510 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr19-876989-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr19-876989-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr19/position/icanexomehg38-chr19-876989> .
@@ -711,14 +667,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr2-9374882-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr2> ;
-    sio:SIO_000122 dbsnp:rs150871096 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr2-9374882-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9374882-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr2/position/icanexomehg38-chr2-9374882> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr2-9374917-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr2> ;
-    sio:SIO_000122 dbsnp:rs139367850 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr2-9374917-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9374917-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr2/position/icanexomehg38-chr2-9374917> .
@@ -731,21 +685,18 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr2-9376922-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr2> ;
-    sio:SIO_000122 dbsnp:rs777377388 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr2-9376922-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9376922-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr2/position/icanexomehg38-chr2-9376922> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr2-9376937-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr2> ;
-    sio:SIO_000122 dbsnp:rs34464740 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr2-9376937-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9376937-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr2/position/icanexomehg38-chr2-9376937> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr2-9380745-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr2> ;
-    sio:SIO_000122 dbsnp:rs11888409 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr2-9380745-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9380745-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr2/position/icanexomehg38-chr2-9380745> .
@@ -770,28 +721,24 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr2-9388307-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr2> ;
-    sio:SIO_000122 dbsnp:rs754786610 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr2-9388307-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9388307-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr2/position/icanexomehg38-chr2-9388307> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr20-2484182-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr20> ;
-    sio:SIO_000122 dbsnp:rs75847265 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr20-2484182-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr20-2484182-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr20/position/icanexomehg38-chr20-2484182> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr20-2484217-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr20> ;
-    sio:SIO_000122 dbsnp:rs528671879 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr20-2484217-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr20-2484217-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr20/position/icanexomehg38-chr20-2484217> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr20-2484229-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr20> ;
-    sio:SIO_000122 dbsnp:rs373546923 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr20-2484229-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr20-2484229-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr20/position/icanexomehg38-chr20-2484229> .
@@ -846,28 +793,24 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr21-29651234-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr21> ;
-    sio:SIO_000122 dbsnp:rs750909442 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr21-29651234-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29651234-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr21/position/icanexomehg38-chr21-29651234> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr21-29651249-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr21> ;
-    sio:SIO_000122 dbsnp:rs201996873 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr21-29651249-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29651249-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr21/position/icanexomehg38-chr21-29651249> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr21-29651285-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr21> ;
-    sio:SIO_000122 dbsnp:rs183497233 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr21-29651285-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29651285-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr21/position/icanexomehg38-chr21-29651285> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr21-29673054-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr21> ;
-    sio:SIO_000122 dbsnp:rs547379262 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr21-29673054-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29673054-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr21/position/icanexomehg38-chr21-29673054> .
@@ -892,14 +835,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr21-29689776-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr21> ;
-    sio:SIO_000122 dbsnp:rs201060192 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr21-29689776-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29689776-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr21/position/icanexomehg38-chr21-29689776> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr21-29689839-A-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr21> ;
-    sio:SIO_000122 dbsnp:rs771961861 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr21-29689839-A-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29689839-A-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr21/position/icanexomehg38-chr21-29689839> .
@@ -912,7 +853,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr22-19383643-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr22> ;
-    sio:SIO_000122 dbsnp:rs20550 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr22-19383643-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr22-19383643-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr22/position/icanexomehg38-chr22-19383643> .
@@ -931,7 +871,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr22-19387722-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr22> ;
-    sio:SIO_000122 dbsnp:rs1005125088 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr22-19387722-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr22-19387722-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr22/position/icanexomehg38-chr22-19387722> .
@@ -956,7 +895,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr22-19392094-G-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr22> ;
-    sio:SIO_000122 dbsnp:rs145774676 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr22-19392094-G-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr22-19392094-G-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr22/position/icanexomehg38-chr22-19392094> .
@@ -969,14 +907,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr3-9064570-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr3> ;
-    sio:SIO_000122 dbsnp:rs1398102043 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr3-9064570-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9064570-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr3/position/icanexomehg38-chr3-9064570> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr3-9124814-A-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr3> ;
-    sio:SIO_000122 dbsnp:rs138801402 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr3-9124814-A-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9124814-A-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr3/position/icanexomehg38-chr3-9124814> .
@@ -989,7 +925,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr3-9180738-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr3> ;
-    sio:SIO_000122 dbsnp:rs964780946 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr3-9180738-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9180738-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr3/position/icanexomehg38-chr3-9180738> .
@@ -1008,14 +943,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr3-9180760-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr3> ;
-    sio:SIO_000122 dbsnp:rs550366070 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr3-9180760-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9180760-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr3/position/icanexomehg38-chr3-9180760> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr3-9236156-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr3> ;
-    sio:SIO_000122 dbsnp:rs770961934 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr3-9236156-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9236156-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr3/position/icanexomehg38-chr3-9236156> .
@@ -1028,7 +961,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr3-9248901-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr3> ;
-    sio:SIO_000122 dbsnp:rs144344273 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr3-9248901-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9248901-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr3/position/icanexomehg38-chr3-9248901> .
@@ -1047,7 +979,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr4-1025059-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr4> ;
-    sio:SIO_000122 dbsnp:rs61734883 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr4-1025059-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr4-1025059-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr4/position/icanexomehg38-chr4-1025059> .
@@ -1060,7 +991,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr4-1025092-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr4> ;
-    sio:SIO_000122 dbsnp:rs201785648 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr4-1025092-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr4-1025092-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr4/position/icanexomehg38-chr4-1025092> .
@@ -1109,7 +1039,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr5-1244310-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr5> ;
-    sio:SIO_000122 dbsnp:rs4073918 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr5-1244310-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr5-1244310-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr5/position/icanexomehg38-chr5-1244310> .
@@ -1122,14 +1051,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr5-1244351-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr5> ;
-    sio:SIO_000122 dbsnp:rs199799722 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr5-1244351-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr5-1244351-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr5/position/icanexomehg38-chr5-1244351> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr5-1244363-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr5> ;
-    sio:SIO_000122 dbsnp:rs147278493 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr5-1244363-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr5-1244363-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr5/position/icanexomehg38-chr5-1244363> .
@@ -1160,14 +1087,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr6-7229988-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr6> ;
-    sio:SIO_000122 dbsnp:rs149965547 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr6-7229988-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr6-7229988-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr6/position/icanexomehg38-chr6-7229988> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr6-7230091-C-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr6> ;
-    sio:SIO_000122 dbsnp:rs147892331 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr6-7230091-C-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr6-7230091-C-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr6/position/icanexomehg38-chr6-7230091> .
@@ -1180,7 +1105,6 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr6-7230328-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr6> ;
-    sio:SIO_000122 dbsnp:rs149393874 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr6-7230328-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr6-7230328-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr6/position/icanexomehg38-chr6-7230328> .
@@ -1223,14 +1147,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr7-1472300-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr7> ;
-    sio:SIO_000122 dbsnp:rs369921390 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1472300-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1472300-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr7/position/icanexomehg38-chr7-1472300> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr7-1472307-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr7> ;
-    sio:SIO_000122 dbsnp:rs112658175 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1472307-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1472307-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr7/position/icanexomehg38-chr7-1472307> .
@@ -1243,14 +1165,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr7-1472318-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr7> ;
-    sio:SIO_000122 dbsnp:rs199728337 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1472318-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1472318-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr7/position/icanexomehg38-chr7-1472318> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr7-1473084-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr7> ;
-    sio:SIO_000122 dbsnp:rs201873966 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1473084-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1473084-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr7/position/icanexomehg38-chr7-1473084> .
@@ -1263,14 +1183,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr7-1473187-G-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr7> ;
-    sio:SIO_000122 dbsnp:rs111256568 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1473187-G-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1473187-G-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr7/position/icanexomehg38-chr7-1473187> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr7-1473579-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr7> ;
-    sio:SIO_000122 dbsnp:rs749474268 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1473579-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1473579-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr7/position/icanexomehg38-chr7-1473579> .
@@ -1283,14 +1201,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr7-1473609-G-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr7> ;
-    sio:SIO_000122 dbsnp:rs1781575915 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1473609-G-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1473609-G-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr7/position/icanexomehg38-chr7-1473609> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr8-3613276-C-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr8> ;
-    sio:SIO_000122 dbsnp:rs776470599 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr8-3613276-C-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr8-3613276-C-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr8/position/icanexomehg38-chr8-3613276> .
@@ -1327,14 +1243,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr8-3708436-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr8> ;
-    sio:SIO_000122 dbsnp:rs375398749 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr8-3708436-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr8-3708436-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr8/position/icanexomehg38-chr8-3708436> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr8-3708439-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr8> ;
-    sio:SIO_000122 dbsnp:rs369387669 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr8-3708439-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr8-3708439-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr8/position/icanexomehg38-chr8-3708439> .
@@ -1353,21 +1267,18 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr9-4841265-C-T> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr9> ;
-    sio:SIO_000122 dbsnp:rs775339027 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4841265-C-T>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4841265-C-T> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr9/position/icanexomehg38-chr9-4841265> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr9-4841295-C-A> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr9> ;
-    sio:SIO_000122 dbsnp:rs759622170 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4841295-C-A>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4841295-C-A> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr9/position/icanexomehg38-chr9-4841295> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr9-4841333-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr9> ;
-    sio:SIO_000122 dbsnp:rs1240954413 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4841333-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4841333-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr9/position/icanexomehg38-chr9-4841333> .
@@ -1380,14 +1291,12 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr9-4844517-A-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr9> ;
-    sio:SIO_000122 dbsnp:rs746060826 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4844517-A-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4844517-A-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr9/position/icanexomehg38-chr9-4844517> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr9-4844546-A-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr9> ;
-    sio:SIO_000122 dbsnp:rs768781834 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4844546-A-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4844546-A-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr9/position/icanexomehg38-chr9-4844546> .
@@ -1400,21 +1309,18 @@
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr9-4844591-G-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr9> ;
-    sio:SIO_000122 dbsnp:rs372638131 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4844591-G-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4844591-G-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr9/position/icanexomehg38-chr9-4844591> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr9-4844659-T-G> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr9> ;
-    sio:SIO_000122 dbsnp:rs150048896 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4844659-T-G>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4844659-T-G> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr9/position/icanexomehg38-chr9-4844659> .
 
 <http://ican.ressource.org/variantId/icanexomehg38-chr9-4849515-T-C> a so:0001060 ;
     sio:SIO_000061 <http://ican.ressource.org/chromosome/icanexomehg38-chr9> ;
-    sio:SIO_000122 dbsnp:rs35815255 ;
     sio:SIO_000223 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4849515-T-C>,
         <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4849515-T-C> ;
     sio:SIO_000791 <http://ican.ressource.org/chromosome/icanexomehg38-chr9/position/icanexomehg38-chr9-4849515> .
@@ -5812,7 +5718,7 @@
     sio:000628 sio:SIO_010048 .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr1-1214017-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr1-1214017-G-A [ dbspn:rs200983968 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr1-1214017-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr1-1214017-G-A>,
@@ -5848,7 +5754,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr1-1214099-C-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr1-1214100-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr1-1214100-G-A [ dbspn:rs35304565 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr1-1214100-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr1-1214100-G-A>,
@@ -5920,7 +5826,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr10-5651331-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr10-5652864-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr10-5652864-T-C [ dbspn:rs779980191 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr10-5652864-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr10-5652864-T-C>,
@@ -5929,7 +5835,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr10-5652864-T-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr10-5652868-C-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr10-5652868-C-A [ dbspn:rs1166807457 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr10-5652868-C-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr10-5652868-C-A>,
@@ -5947,7 +5853,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr10-5652876-G-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr10-5652898-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr10-5652898-G-A [ dbspn:rs372477559 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr10-5652898-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr10-5652898-G-A>,
@@ -6001,7 +5907,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr11-607552-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr11-607556-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr11-607556-C-T [ dbspn:rs376011828 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr11-607556-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr11-607556-C-T>,
@@ -6010,7 +5916,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr11-607556-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr11-607616-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr11-607616-C-T [ dbspn:rs372938068 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr11-607616-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr11-607616-C-T>,
@@ -6019,7 +5925,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr11-607616-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr11-607680-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr11-607680-G-A [ dbspn:rs113889171 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr11-607680-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr11-607680-G-A>,
@@ -6028,7 +5934,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr11-607680-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr11-607690-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr11-607690-C-T [ dbspn:rs759992846 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr11-607690-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr11-607690-C-T>,
@@ -6055,7 +5961,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr11-607955-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr11-608009-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr11-608009-C-T [ dbspn:rs1034657338 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr11-608009-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr11-608009-C-T>,
@@ -6064,7 +5970,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr11-608009-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr11-608144-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr11-608144-C-T [ dbspn:rs1431844271 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr11-608144-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr11-608144-C-T>,
@@ -6100,7 +6006,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr12-2679566-C-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr12-2679578-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr12-2679578-G-A [ dbspn:rs368281620 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr12-2679578-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr12-2679578-G-A>,
@@ -6172,7 +6078,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr12-2679750-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24494662-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24494662-A-G [ dbspn:rs141335603 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24494662-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr13-24494662-A-G>,
@@ -6181,7 +6087,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr13-24494662-A-G> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24494670-A-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24494670-A-T [ dbspn:rs9318600 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24494670-A-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr13-24494670-A-T>,
@@ -6190,7 +6096,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr13-24494670-A-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24494704-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24494704-T-C [ dbspn:rs761476781 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24494704-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr13-24494704-T-C>,
@@ -6199,7 +6105,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr13-24494704-T-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24500365-G-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24500365-G-C [ dbspn:rs61652090 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24500365-G-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr13-24500365-G-C>,
@@ -6217,7 +6123,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr13-24501721-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24501726-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24501726-T-C [ dbspn:rs35200240 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24501726-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr13-24501726-T-C>,
@@ -6226,7 +6132,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr13-24501726-T-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24501768-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24501768-T-C [ dbspn:rs745857420 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24501768-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr13-24501768-T-C>,
@@ -6244,7 +6150,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr13-24501772-T-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr13-24501773-TG-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24501773-TG-T [ dbspn:rs763279065 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr13-24501773-TG-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr13-24501773-TG-T>,
@@ -6280,7 +6186,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr14-21018228-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr14-21018283-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr14-21018283-A-G [ dbspn:rs1243446 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr14-21018283-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr14-21018283-A-G>,
@@ -6307,7 +6213,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr14-21018356-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr14-21018378-G-GC> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr14-21018378-G-GC [ dbspn:rs1878080093 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr14-21018378-G-GC [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "GC"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr14-21018378-G-GC>,
@@ -6316,7 +6222,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr14-21018378-G-GC> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr14-21018406-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr14-21018406-T-C [ dbspn:rs372594815 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr14-21018406-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr14-21018406-T-C>,
@@ -6325,7 +6231,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr14-21018406-T-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr14-21018512-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr14-21018512-A-G [ dbspn:rs35076247 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr14-21018512-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr14-21018512-A-G>,
@@ -6370,7 +6276,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr15-29269668-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr15-29704163-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr15-29704163-C-T [ dbspn:rs546621604 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr15-29704163-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr15-29704163-C-T>,
@@ -6397,7 +6303,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr15-29708628-G-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr15-29708672-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr15-29708672-A-G [ dbspn:rs199584481 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr15-29708672-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr15-29708672-A-G>,
@@ -6433,7 +6339,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr15-29709003-A-G> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr15-29710871-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr15-29710871-G-A [ dbspn:rs369354122 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr15-29710871-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr15-29710871-G-A>,
@@ -6442,7 +6348,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr15-29710871-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr16-553024-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr16-553024-C-T [ dbspn:rs759920136 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr16-553024-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr16-553024-C-T>,
@@ -6460,7 +6366,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr16-553510-G-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr16-563294-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr16-563294-C-T [ dbspn:rs2142109586 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr16-563294-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr16-563294-C-T>,
@@ -6505,7 +6411,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr16-563378-G-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr16-563380-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr16-563380-G-A [ dbspn:rs778929660 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr16-563380-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr16-563380-G-A>,
@@ -6523,7 +6429,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr16-563480-G-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr16-563580-T-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr16-563580-T-G [ dbspn:rs189489979 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr16-563580-T-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr16-563580-T-G>,
@@ -6532,7 +6438,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr16-563580-T-G> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr17-1732743-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr17-1732743-C-T [ dbspn:rs541876277 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr17-1732743-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr17-1732743-C-T>,
@@ -6541,7 +6447,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr17-1732743-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr17-1732809-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr17-1732809-C-T [ dbspn:rs1023657615 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr17-1732809-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr17-1732809-C-T>,
@@ -6577,7 +6483,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr17-1733614-G-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr17-1733627-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr17-1733627-C-T [ dbspn:rs377328201 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr17-1733627-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr17-1733627-C-T>,
@@ -6613,7 +6519,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr17-1733645-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr17-1733651-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr17-1733651-C-T [ dbspn:rs146469235 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr17-1733651-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr17-1733651-C-T>,
@@ -6622,7 +6528,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr17-1733651-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr18-6947169-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr18-6947169-G-A [ dbspn:rs767561363 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr18-6947169-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr18-6947169-G-A>,
@@ -6631,7 +6537,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr18-6947169-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr18-6947178-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr18-6947178-C-T [ dbspn:rs781305997 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr18-6947178-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr18-6947178-C-T>,
@@ -6640,7 +6546,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr18-6947178-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr18-6947188-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr18-6947188-A-G [ dbspn:rs755439582 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr18-6947188-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr18-6947188-A-G>,
@@ -6667,7 +6573,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr18-6947236-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr18-6947271-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr18-6947271-T-C [ dbspn:rs78279255 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr18-6947271-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr18-6947271-T-C>,
@@ -6685,7 +6591,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr18-6948477-G-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr18-6948519-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr18-6948519-G-A [ dbspn:rs776476332 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr18-6948519-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr18-6948519-G-A>,
@@ -6694,7 +6600,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr18-6948519-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr18-6950779-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr18-6950779-T-C [ dbspn:rs1172655961 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr18-6950779-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr18-6950779-T-C>,
@@ -6712,7 +6618,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr18-6950810-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr19-875380-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr19-875380-G-A [ dbspn:rs111940149 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr19-875380-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr19-875380-G-A>,
@@ -6739,7 +6645,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr19-875389-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr19-875395-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr19-875395-C-T [ dbspn:rs61755331 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr19-875395-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr19-875395-C-T>,
@@ -6766,7 +6672,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr19-876980-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr19-876989-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr19-876989-G-A [ dbspn:rs150192510 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr19-876989-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr19-876989-G-A>,
@@ -6802,7 +6708,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr19-877041-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr2-9374882-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr2-9374882-T-C [ dbspn:rs150871096 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr2-9374882-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr2-9374882-T-C>,
@@ -6811,7 +6717,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr2-9374882-T-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr2-9374917-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr2-9374917-G-A [ dbspn:rs139367850 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr2-9374917-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr2-9374917-G-A>,
@@ -6829,7 +6735,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr2-9374953-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr2-9376922-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr2-9376922-G-A [ dbspn:rs777377388 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr2-9376922-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr2-9376922-G-A>,
@@ -6838,7 +6744,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr2-9376922-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr2-9376937-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr2-9376937-A-G [ dbspn:rs34464740 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr2-9376937-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr2-9376937-A-G>,
@@ -6847,7 +6753,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr2-9376937-A-G> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr2-9380745-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr2-9380745-C-T [ dbspn:rs11888409 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr2-9380745-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr2-9380745-C-T>,
@@ -6883,7 +6789,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr2-9385337-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr2-9388307-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr2-9388307-G-A [ dbspn:rs754786610 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr2-9388307-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr2-9388307-G-A>,
@@ -6892,7 +6798,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr2-9388307-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr20-2484182-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr20-2484182-G-A [ dbspn:rs75847265 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr20-2484182-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr20-2484182-G-A>,
@@ -6901,7 +6807,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr20-2484182-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr20-2484217-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr20-2484217-C-T [ dbspn:rs528671879 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr20-2484217-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr20-2484217-C-T>,
@@ -6910,7 +6816,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr20-2484217-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr20-2484229-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr20-2484229-T-C [ dbspn:rs373546923 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr20-2484229-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr20-2484229-T-C>,
@@ -6991,7 +6897,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr21-29651192-T-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr21-29651234-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr21-29651234-A-G [ dbspn:rs750909442 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr21-29651234-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr21-29651234-A-G>,
@@ -7000,7 +6906,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr21-29651234-A-G> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr21-29651249-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr21-29651249-C-T [ dbspn:rs201996873 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr21-29651249-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr21-29651249-C-T>,
@@ -7009,7 +6915,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr21-29651249-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr21-29651285-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr21-29651285-A-G [ dbspn:rs183497233 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr21-29651285-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr21-29651285-A-G>,
@@ -7018,7 +6924,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr21-29651285-A-G> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr21-29673054-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr21-29673054-T-C [ dbspn:rs547379262 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr21-29673054-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr21-29673054-T-C>,
@@ -7054,7 +6960,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr21-29689772-T-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr21-29689776-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr21-29689776-G-A [ dbspn:rs201060192 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr21-29689776-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr21-29689776-G-A>,
@@ -7063,7 +6969,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr21-29689776-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr21-29689839-A-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr21-29689839-A-C [ dbspn:rs771961861 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr21-29689839-A-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr21-29689839-A-C>,
@@ -7081,7 +6987,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr22-19378076-AG-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr22-19383643-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr22-19383643-G-A [ dbspn:rs20550 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr22-19383643-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr22-19383643-G-A>,
@@ -7108,7 +7014,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr22-19385685-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr22-19387722-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr22-19387722-C-T [ dbspn:rs1005125088 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr22-19387722-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr22-19387722-C-T>,
@@ -7144,7 +7050,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr22-19388560-AG-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr22-19392094-G-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr22-19392094-G-C [ dbspn:rs145774676 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr22-19392094-G-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr22-19392094-G-C>,
@@ -7162,7 +7068,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr22-19392106-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr3-9064570-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr3-9064570-G-A [ dbspn:rs1398102043 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr3-9064570-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr3-9064570-G-A>,
@@ -7171,7 +7077,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr3-9064570-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr3-9124814-A-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr3-9124814-A-C [ dbspn:rs138801402 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr3-9124814-A-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr3-9124814-A-C>,
@@ -7189,7 +7095,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr3-9180734-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr3-9180738-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr3-9180738-T-C [ dbspn:rs964780946 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr3-9180738-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr3-9180738-T-C>,
@@ -7216,7 +7122,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr3-9180744-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr3-9180760-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr3-9180760-G-A [ dbspn:rs550366070 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr3-9180760-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr3-9180760-G-A>,
@@ -7225,7 +7131,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr3-9180760-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr3-9236156-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr3-9236156-A-G [ dbspn:rs770961934 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr3-9236156-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr3-9236156-A-G>,
@@ -7243,7 +7149,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr3-9236165-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr3-9248901-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr3-9248901-A-G [ dbspn:rs144344273 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr3-9248901-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr3-9248901-A-G>,
@@ -7270,7 +7176,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr4-1025008-C-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr4-1025059-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr4-1025059-G-A [ dbspn:rs61734883 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr4-1025059-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr4-1025059-G-A>,
@@ -7288,7 +7194,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr4-1025078-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr4-1025092-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr4-1025092-G-A [ dbspn:rs201785648 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr4-1025092-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr4-1025092-G-A>,
@@ -7360,7 +7266,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr5-1244290-C-CTG> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr5-1244310-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr5-1244310-C-T [ dbspn:rs4073918 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr5-1244310-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr5-1244310-C-T>,
@@ -7378,7 +7284,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr5-1244350-C-CGTTTATGTTTATGGAATG> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr5-1244351-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr5-1244351-G-A [ dbspn:rs199799722 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr5-1244351-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr5-1244351-G-A>,
@@ -7387,7 +7293,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr5-1244351-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr5-1244363-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr5-1244363-G-A [ dbspn:rs147278493 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr5-1244363-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr5-1244363-G-A>,
@@ -7432,7 +7338,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr5-1244636-G-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr6-7229988-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr6-7229988-C-T [ dbspn:rs149965547 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr6-7229988-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr6-7229988-C-T>,
@@ -7441,7 +7347,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr6-7229988-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr6-7230091-C-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr6-7230091-C-A [ dbspn:rs147892331 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr6-7230091-C-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr6-7230091-C-A>,
@@ -7459,7 +7365,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr6-7230326-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr6-7230328-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr6-7230328-G-A [ dbspn:rs149393874 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr6-7230328-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr6-7230328-G-A>,
@@ -7522,7 +7428,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr6-7230451-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1472300-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1472300-G-A [ dbspn:rs369921390 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1472300-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr7-1472300-G-A>,
@@ -7531,7 +7437,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr7-1472300-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1472307-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1472307-G-A [ dbspn:rs112658175 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1472307-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr7-1472307-G-A>,
@@ -7549,7 +7455,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr7-1472308-T-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1472318-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1472318-T-C [ dbspn:rs199728337 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1472318-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr7-1472318-T-C>,
@@ -7558,7 +7464,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr7-1472318-T-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1473084-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1473084-C-T [ dbspn:rs201873966 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1473084-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr7-1473084-C-T>,
@@ -7576,7 +7482,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr7-1473175-G-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1473187-G-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1473187-G-A [ dbspn:rs111256568 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1473187-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr7-1473187-G-A>,
@@ -7585,7 +7491,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr7-1473187-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1473579-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1473579-C-T [ dbspn:rs749474268 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1473579-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr7-1473579-C-T>,
@@ -7603,7 +7509,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr7-1473591-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr7-1473609-G-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1473609-G-C [ dbspn:rs1781575915 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr7-1473609-G-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr7-1473609-G-C>,
@@ -7612,7 +7518,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr7-1473609-G-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr8-3613276-C-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr8-3613276-C-G [ dbspn:rs776470599 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr8-3613276-C-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr8-3613276-C-G>,
@@ -7666,7 +7572,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr8-3616766-G-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr8-3708436-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr8-3708436-A-G [ dbspn:rs375398749 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr8-3708436-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr8-3708436-A-G>,
@@ -7675,7 +7581,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr8-3708436-A-G> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr8-3708439-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr8-3708439-C-T [ dbspn:rs369387669 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr8-3708439-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr8-3708439-C-T>,
@@ -7702,7 +7608,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr8-3753921-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4841265-C-T> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4841265-C-T [ dbspn:rs775339027 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4841265-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "T"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr9-4841265-C-T>,
@@ -7711,7 +7617,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr9-4841265-C-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4841295-C-A> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4841295-C-A [ dbspn:rs759622170 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4841295-C-A [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "A"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr9-4841295-C-A>,
@@ -7720,7 +7626,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr9-4841295-C-A> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4841333-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4841333-A-G [ dbspn:rs1240954413 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4841333-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr9-4841333-A-G>,
@@ -7738,7 +7644,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr9-4841335-A-G> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4844517-A-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4844517-A-G [ dbspn:rs746060826 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4844517-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr9-4844517-A-G>,
@@ -7747,7 +7653,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr9-4844517-A-G> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4844546-A-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4844546-A-C [ dbspn:rs768781834 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4844546-A-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr9-4844546-A-C>,
@@ -7765,7 +7671,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr9-4844549-G-T> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4844591-G-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4844591-G-C [ dbspn:rs372638131 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4844591-G-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr9-4844591-G-C>,
@@ -7774,7 +7680,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr9-4844591-G-C> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4844659-T-G> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4844659-T-G [ dbspn:rs150048896 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4844659-T-G [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "G"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr9-4844659-T-G>,
@@ -7783,7 +7689,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr9-4844659-T-G> .
 
 <http://ican.ressource.org/variantAlternate/icanexomehg38-chr9-4849515-T-C> a geno:0000002 ;
-    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4849515-T-C [ dbspn:rs35815255 ]"^^xsd:string ;
+    rdfs:label "Alternate allele for the variant icanexomehg38-chr9-4849515-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:000253 ican:cohort.ican ;
     sio:000300 "C"^^xsd:string ;
     sio:SIO_000900 <http://ican.ressource.org/variantAlternate/fq/gnomad/icanexomehg38-chr9-4849515-T-C>,
@@ -7792,7 +7698,7 @@
         <http://ican.ressource.org/variantAlternate/fq/ican/male/icanexomehg38-chr9-4849515-T-C> .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr1-1214017-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr1-1214017-G-A [ dbspn:rs200983968 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr1-1214017-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr1-1214092-C-T> a geno:0000036 ;
@@ -7808,7 +7714,7 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr1-1214100-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr1-1214100-G-A [ dbspn:rs35304565 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr1-1214100-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr1-1214109-G-A> a geno:0000036 ;
@@ -7840,11 +7746,11 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr10-5652864-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr10-5652864-T-C [ dbspn:rs779980191 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr10-5652864-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr10-5652868-C-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr10-5652868-C-A [ dbspn:rs1166807457 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr10-5652868-C-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr10-5652876-G-T> a geno:0000036 ;
@@ -7852,7 +7758,7 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr10-5652898-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr10-5652898-G-A [ dbspn:rs372477559 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr10-5652898-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr10-5652971-G-A> a geno:0000036 ;
@@ -7876,19 +7782,19 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr11-607556-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr11-607556-C-T [ dbspn:rs376011828 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr11-607556-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr11-607616-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr11-607616-C-T [ dbspn:rs372938068 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr11-607616-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr11-607680-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr11-607680-G-A [ dbspn:rs113889171 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr11-607680-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr11-607690-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr11-607690-C-T [ dbspn:rs759992846 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr11-607690-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr11-607954-C-T> a geno:0000036 ;
@@ -7900,11 +7806,11 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr11-608009-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr11-608009-C-T [ dbspn:rs1034657338 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr11-608009-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr11-608144-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr11-608144-C-T [ dbspn:rs1431844271 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr11-608144-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr11-608149-C-T> a geno:0000036 ;
@@ -7920,7 +7826,7 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr12-2679578-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr12-2679578-G-A [ dbspn:rs368281620 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr12-2679578-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr12-2679587-C-T> a geno:0000036 ;
@@ -7952,19 +7858,19 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24494662-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24494662-A-G [ dbspn:rs141335603 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24494662-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24494670-A-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24494670-A-T [ dbspn:rs9318600 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24494670-A-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24494704-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24494704-T-C [ dbspn:rs761476781 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24494704-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24500365-G-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24500365-G-C [ dbspn:rs61652090 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24500365-G-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24501721-C-T> a geno:0000036 ;
@@ -7972,11 +7878,11 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24501726-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24501726-T-C [ dbspn:rs35200240 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24501726-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24501768-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24501768-T-C [ dbspn:rs745857420 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24501768-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24501772-T-C> a geno:0000036 ;
@@ -7984,7 +7890,7 @@
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24501773-TG-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24501773-TG-T [ dbspn:rs763279065 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr13-24501773-TG-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "TG"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr13-24501776-A-T> a geno:0000036 ;
@@ -8000,7 +7906,7 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr14-21018283-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr14-21018283-A-G [ dbspn:rs1243446 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr14-21018283-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr14-21018324-C-A> a geno:0000036 ;
@@ -8012,15 +7918,15 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr14-21018378-G-GC> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr14-21018378-G-GC [ dbspn:rs1878080093 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr14-21018378-G-GC [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr14-21018406-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr14-21018406-T-C [ dbspn:rs372594815 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr14-21018406-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr14-21018512-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr14-21018512-A-G [ dbspn:rs35076247 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr14-21018512-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr14-21018770-T-A> a geno:0000036 ;
@@ -8040,7 +7946,7 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr15-29704163-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr15-29704163-C-T [ dbspn:rs546621604 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr15-29704163-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr15-29704217-C-T> a geno:0000036 ;
@@ -8052,7 +7958,7 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr15-29708672-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr15-29708672-A-G [ dbspn:rs199584481 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr15-29708672-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr15-29708679-G-A> a geno:0000036 ;
@@ -8068,11 +7974,11 @@
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr15-29710871-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr15-29710871-G-A [ dbspn:rs369354122 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr15-29710871-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr16-553024-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr16-553024-C-T [ dbspn:rs759920136 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr16-553024-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr16-553510-G-T> a geno:0000036 ;
@@ -8080,7 +7986,7 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr16-563294-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr16-563294-C-T [ dbspn:rs2142109586 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr16-563294-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr16-563320-G-A> a geno:0000036 ;
@@ -8100,7 +8006,7 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr16-563380-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr16-563380-G-A [ dbspn:rs778929660 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr16-563380-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr16-563480-G-C> a geno:0000036 ;
@@ -8108,15 +8014,15 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr16-563580-T-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr16-563580-T-G [ dbspn:rs189489979 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr16-563580-T-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr17-1732743-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr17-1732743-C-T [ dbspn:rs541876277 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr17-1732743-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr17-1732809-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr17-1732809-C-T [ dbspn:rs1023657615 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr17-1732809-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr17-1732823-G-A> a geno:0000036 ;
@@ -8132,7 +8038,7 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr17-1733627-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr17-1733627-C-T [ dbspn:rs377328201 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr17-1733627-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr17-1733639-C-T> a geno:0000036 ;
@@ -8148,19 +8054,19 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr17-1733651-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr17-1733651-C-T [ dbspn:rs146469235 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr17-1733651-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6947169-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr18-6947169-G-A [ dbspn:rs767561363 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr18-6947169-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6947178-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr18-6947178-C-T [ dbspn:rs781305997 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr18-6947178-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6947188-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr18-6947188-A-G [ dbspn:rs755439582 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr18-6947188-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6947230-T-C> a geno:0000036 ;
@@ -8172,7 +8078,7 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6947271-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr18-6947271-T-C [ dbspn:rs78279255 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr18-6947271-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6948477-G-T> a geno:0000036 ;
@@ -8180,11 +8086,11 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6948519-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr18-6948519-G-A [ dbspn:rs776476332 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr18-6948519-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6950779-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr18-6950779-T-C [ dbspn:rs1172655961 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr18-6950779-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr18-6950810-G-A> a geno:0000036 ;
@@ -8192,7 +8098,7 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr19-875380-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr19-875380-G-A [ dbspn:rs111940149 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr19-875380-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr19-875385-C-T> a geno:0000036 ;
@@ -8204,7 +8110,7 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr19-875395-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr19-875395-C-T [ dbspn:rs61755331 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr19-875395-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr19-875441-C-T> a geno:0000036 ;
@@ -8216,7 +8122,7 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr19-876989-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr19-876989-G-A [ dbspn:rs150192510 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr19-876989-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr19-877009-C-T> a geno:0000036 ;
@@ -8232,11 +8138,11 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9374882-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr2-9374882-T-C [ dbspn:rs150871096 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr2-9374882-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9374917-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr2-9374917-G-A [ dbspn:rs139367850 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr2-9374917-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9374953-G-A> a geno:0000036 ;
@@ -8244,15 +8150,15 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9376922-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr2-9376922-G-A [ dbspn:rs777377388 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr2-9376922-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9376937-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr2-9376937-A-G [ dbspn:rs34464740 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr2-9376937-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9380745-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr2-9380745-C-T [ dbspn:rs11888409 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr2-9380745-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9380790-C-T> a geno:0000036 ;
@@ -8268,19 +8174,19 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr2-9388307-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr2-9388307-G-A [ dbspn:rs754786610 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr2-9388307-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr20-2484182-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr20-2484182-G-A [ dbspn:rs75847265 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr20-2484182-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr20-2484217-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr20-2484217-C-T [ dbspn:rs528671879 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr20-2484217-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr20-2484229-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr20-2484229-T-C [ dbspn:rs373546923 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr20-2484229-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr20-2484248-A-G> a geno:0000036 ;
@@ -8316,19 +8222,19 @@
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29651234-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr21-29651234-A-G [ dbspn:rs750909442 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr21-29651234-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29651249-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr21-29651249-C-T [ dbspn:rs201996873 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr21-29651249-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29651285-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr21-29651285-A-G [ dbspn:rs183497233 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr21-29651285-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29673054-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr21-29673054-T-C [ dbspn:rs547379262 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr21-29673054-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29673162-G-A> a geno:0000036 ;
@@ -8344,11 +8250,11 @@
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29689776-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr21-29689776-G-A [ dbspn:rs201060192 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr21-29689776-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr21-29689839-A-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr21-29689839-A-C [ dbspn:rs771961861 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr21-29689839-A-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr22-19378076-AG-A> a geno:0000036 ;
@@ -8356,7 +8262,7 @@
     sio:SIO_000300 "AG"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr22-19383643-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr22-19383643-G-A [ dbspn:rs20550 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr22-19383643-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr22-19385644-G-C> a geno:0000036 ;
@@ -8368,7 +8274,7 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr22-19387722-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr22-19387722-C-T [ dbspn:rs1005125088 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr22-19387722-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr22-19387759-G-C> a geno:0000036 ;
@@ -8384,7 +8290,7 @@
     sio:SIO_000300 "AG"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr22-19392094-G-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr22-19392094-G-C [ dbspn:rs145774676 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr22-19392094-G-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr22-19392106-C-T> a geno:0000036 ;
@@ -8392,11 +8298,11 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9064570-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr3-9064570-G-A [ dbspn:rs1398102043 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr3-9064570-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9124814-A-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr3-9124814-A-C [ dbspn:rs138801402 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr3-9124814-A-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9180734-G-A> a geno:0000036 ;
@@ -8404,7 +8310,7 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9180738-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr3-9180738-T-C [ dbspn:rs964780946 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr3-9180738-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9180743-T-C> a geno:0000036 ;
@@ -8416,11 +8322,11 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9180760-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr3-9180760-G-A [ dbspn:rs550366070 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr3-9180760-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9236156-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr3-9236156-A-G [ dbspn:rs770961934 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr3-9236156-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9236165-C-T> a geno:0000036 ;
@@ -8428,7 +8334,7 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr3-9248901-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr3-9248901-A-G [ dbspn:rs144344273 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr3-9248901-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr4-1024987-C-T> a geno:0000036 ;
@@ -8440,7 +8346,7 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr4-1025059-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr4-1025059-G-A [ dbspn:rs61734883 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr4-1025059-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr4-1025078-G-A> a geno:0000036 ;
@@ -8448,7 +8354,7 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr4-1025092-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr4-1025092-G-A [ dbspn:rs201785648 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr4-1025092-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr4-1025098-G-A> a geno:0000036 ;
@@ -8480,7 +8386,7 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr5-1244310-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr5-1244310-C-T [ dbspn:rs4073918 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr5-1244310-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr5-1244350-C-CGTTTATGTTTATGGAATG> a geno:0000036 ;
@@ -8488,11 +8394,11 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr5-1244351-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr5-1244351-G-A [ dbspn:rs199799722 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr5-1244351-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr5-1244363-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr5-1244363-G-A [ dbspn:rs147278493 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr5-1244363-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr5-1244614-C-A> a geno:0000036 ;
@@ -8512,11 +8418,11 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr6-7229988-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr6-7229988-C-T [ dbspn:rs149965547 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr6-7229988-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr6-7230091-C-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr6-7230091-C-A [ dbspn:rs147892331 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr6-7230091-C-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr6-7230326-G-A> a geno:0000036 ;
@@ -8524,7 +8430,7 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr6-7230328-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr6-7230328-G-A [ dbspn:rs149393874 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr6-7230328-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr6-7230342-T-C> a geno:0000036 ;
@@ -8552,11 +8458,11 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1472300-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1472300-G-A [ dbspn:rs369921390 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1472300-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1472307-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1472307-G-A [ dbspn:rs112658175 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1472307-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1472308-T-A> a geno:0000036 ;
@@ -8564,11 +8470,11 @@
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1472318-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1472318-T-C [ dbspn:rs199728337 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1472318-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1473084-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1473084-C-T [ dbspn:rs201873966 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1473084-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1473175-G-C> a geno:0000036 ;
@@ -8576,11 +8482,11 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1473187-G-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1473187-G-A [ dbspn:rs111256568 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1473187-G-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1473579-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1473579-C-T [ dbspn:rs749474268 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1473579-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1473591-G-A> a geno:0000036 ;
@@ -8588,11 +8494,11 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr7-1473609-G-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1473609-G-C [ dbspn:rs1781575915 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr7-1473609-G-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr8-3613276-C-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr8-3613276-C-G [ dbspn:rs776470599 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr8-3613276-C-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr8-3616711-T-G> a geno:0000036 ;
@@ -8616,11 +8522,11 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr8-3708436-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr8-3708436-A-G [ dbspn:rs375398749 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr8-3708436-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr8-3708439-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr8-3708439-C-T [ dbspn:rs369387669 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr8-3708439-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr8-3708498-G-A> a geno:0000036 ;
@@ -8632,15 +8538,15 @@
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4841265-C-T> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4841265-C-T [ dbspn:rs775339027 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4841265-C-T [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4841295-C-A> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4841295-C-A [ dbspn:rs759622170 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4841295-C-A [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "C"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4841333-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4841333-A-G [ dbspn:rs1240954413 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4841333-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4841335-A-G> a geno:0000036 ;
@@ -8648,11 +8554,11 @@
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4844517-A-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4844517-A-G [ dbspn:rs746060826 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4844517-A-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4844546-A-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4844546-A-C [ dbspn:rs768781834 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4844546-A-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "A"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4844549-G-T> a geno:0000036 ;
@@ -8660,15 +8566,15 @@
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4844591-G-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4844591-G-C [ dbspn:rs372638131 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4844591-G-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "G"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4844659-T-G> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4844659-T-G [ dbspn:rs150048896 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4844659-T-G [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/variantReference/icanexomehg38-chr9-4849515-T-C> a geno:0000036 ;
-    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4849515-T-C [ dbspn:rs35815255 ]"^^xsd:string ;
+    rdfs:label "Reference allele for the variant icanexomehg38-chr9-4849515-T-C [ dbspn:nan ]"^^xsd:string ;
     sio:SIO_000300 "T"^^xsd:string .
 
 <http://ican.ressource.org/chromosome/icanexomehg38-chr1/position/icanexomehg38-chr1-1217524> sio:SIO_000300 1217524 .

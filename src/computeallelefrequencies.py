@@ -43,21 +43,21 @@ logging.basicConfig(filename='computeallelefrequency.log', encoding='utf-8', lev
 # Argument parser
 agp = argparse.ArgumentParser(description='Compute allele frequencies')
 agp.add_argument('-g', '--genotypes', type=str, help='Path to the query genotype file',\
-                required=True,\
-                default='data-intermediate/aicdataset-querygenotype.tsv')
+                required=True)
+                #default='data-intermediate/aicdataset-querygenotype.tsv')
 agp.add_argument('-s', '--sequences', type=str, help='Contig name',\
-                required=True,\
-                default='data-intermediate/aicdataset-contigs.txt')
+                required=True,)
+                #default='data-intermediate/aicdataset-contigs.txt')
 agp.add_argument('-i', '--info', type=str, help='Path to the file holding info field of the OG input vcf',\
-                required=False,\
-                default='data-intermediate/aicdataset-info.txt')
+                required=False)
+                #default='data-intermediate/aicdataset-info.txt')
 agp.add_argument('-c', '--clinical', type=str, help='Path to the phenotype file csv',\
-                required=True,\
-                default='data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.reordered.csv')
+                required=True)
+                #default='data-intermediate/aicdataset-extraction_GAIA_ICAN_26-09-2023.reordered.csv')
 agp.add_argument('-o', '--outfile', type=str,\
                 help='Path to the output file (should end with .vcf.gz as it will be a bgzipeed vcf file)',\
-                required=True,\
-                default='data-intermediate/aicdataset-aggregate-testing.vcf.gz')
+                required=True)
+                #default='data-intermediate/aicdataset-aggregate-testing.vcf.gz')
 agp.add_argument('-t', '--threads', type=int,\
                 help='Number of threads to use (one thread per batch of lines)',\
                 default=8)

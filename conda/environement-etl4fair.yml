@@ -13,4 +13,3 @@ dependencies:
   - sparqlwrapper
   - streamlit
   - matplotlib
-prefix: /home/bodrug-a/miniconda3/envs/etl4fair
