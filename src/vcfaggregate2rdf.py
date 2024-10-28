@@ -4,6 +4,9 @@
 # Unithread processing is (should be) limited to 100 variants
 # Multithreading is used for processing more than 100 variants
 
+# Schema tries to follow the mapping done for the swat4hls project
+# https://gitlab.univ-nantes.fr/bodrug-a/sparqlqueries4odmtpxbeacon/-/blob/main/rmlTripleMaps/beaconMaps.ttl?ref_type=heads
+
 import os
 import io
 import glob
@@ -48,6 +51,7 @@ so = Namespace("http://purl.obolibrary.org/obo/SO_")
 sio = Namespace("http://semanticscience.org/resource/SIO_")
 dbsnp = Namespace("http://bio2rdf.org/dbsnp:")
 geno = Namespace("http://purl.obolibrary.org/obo/GENO_")
+faldo = Namespace("http://biohackathon.org/resource/faldo#")
 # Semantics
 rdf = Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 rdfs = Namespace("http://www.w3.org/2000/01/rdf-schema#")
@@ -182,83 +186,53 @@ def build_rdfgraph(g, df):
         '''
         variant = Variant.from_df(row)
         '''
-        #
+        # Variant chromosome, position, ref, alt, info
         chromosome = row['chromosome']
         position = int(row['position'])
         reference = row['reference']
         alternate = row['alternate']
         info = row['info']
-        #print(chromosome, position, reference, alternate, info)
+
+        # Variant annotations
         annotations = info.split(';')
-        fq_gnomad = 'nan'
-        fq_ican_AF_whole = 'nan'
-        fq_ican_AF_female = 'nan'
-        fq_ican_AF_male = 'nan'
-        fq_ican_AF_aht = 'nan'
-        fq_ican_AF_diabetes = 'nan'
-        fq_ican_AF_dyslipidemia = 'nan'
-        fq_ican_AF_obese = 'nan'
-        fq_ican_AF_overweight = 'nan'
-        fq_ican_AF_sporadic = 'nan'
-        fq_ican_AF_familial = 'nan'
-        fq_ican_AF_ruptured = 'nan'
-        fq_ican_AF_multipleica = 'nan'
-        csq = 'nan'
-        caddraw = 'nan'
-        caddphred = 'nan'
+        # Array of dictionnaries. One dict per annotation.
+        annotations_aod = []
+        # Annotatio names
+        annotations_labels = ['gnomad_AF', 'gnomad_AF_AFR', 'gnomad_AF_EAS', 'gnomad_AF_NFE', 
+                              'AF_whole', 'AF_female', 'AF_male', 'AF_aht', 'AF_diabetes',
+                              'AF_dyslipidemia', 'AF_obese', 'AF_overweight', 'AF_sporadic',
+                              'AF_familial', 'AF_ruptured', 'AF_multipleica', 'CSQ', 'CADD_RAW', 'PHRED']
+        # Organize the annotations
         for a in annotations:
-            if 'gnomad_AF=' in a:
-                fq_gnomad = a.split('=')[1]
-            if 'AF_whole=' in a:
-                fq_ican_AF_whole = a.split('=')[1]
-            if 'AF_female=' in a:
-                fq_ican_AF_female = a.split('=')[1]
-            if 'AF_male=' in a:
-                fq_ican_AF_male = a.split('=')[1]
-            if 'AF_aht=' in a:
-                fq_ican_AF_aht = a.split('=')[1]
-            if 'AF_diabetes=' in a:
-                fq_ican_AF_diabetes = a.split('=')[1]
-            if 'AF_dyslipidemia=' in a:
-                fq_ican_AF_dyslipidemia = a.split('=')[1]
-            if 'AF_obese=' in a:
-                fq_ican_AF_obese = a.split('=')[1]
-            if 'AF_overweight=' in a:
-                fq_ican_AF_overweight = a.split('=')[1]
-            if 'AF_sporadic=' in a:
-                fq_ican_AF_sporadic = a.split('=')[1]
-            if 'AF_familial=' in a:
-                fq_ican_AF_familial = a.split('=')[1]
-            if 'AF_ruptured=' in a:
-                fq_ican_AF_ruptured = a.split('=')[1]
-            if 'AF_multipleica=' in a:
-                fq_ican_AF_multipleica = a.split('=')[1]
-            if 'CSQ=' in a :
-                consequences = a.split('=')[1]
-            if 'CADD_RAW=' in a:
-                caddraw = a.split('=')[1]
-            if 'PHRED=' in a:
-                caddphred = a.split('=')[1]
+            for l in annotations_labels:
+                if l+'=' in a:
+                    annotations_aod.append({"label": l, 'value': a.split('=')[1]})
+
         
         # Get the rsid from dbsnp
         rsid = get_rsids_fromdbsnp(chromosome, position, reference, alternate)
 
         # Define the variant URI
         lilprefix = 'icanexomehg38' 
-        variant_id = f"{lilprefix}-{chromosome}-{position}-{reference}-{alternate}"
-        variant_reference_id = f"{lilprefix}-{chromosome}-{position}-{reference}-{alternate}"
-        variant_alternate_id = f"{lilprefix}-{chromosome}-{position}-{reference}-{alternate}"
-        chromosome_id = f"{lilprefix}-{chromosome}"
-        position_id = f"{lilprefix}-{chromosome}-{position}"
+        variant_id =           f"{lilprefix}"+"/variantid/"+f"{chromosome}-{position}-{reference}-{alternate}"
+        variant_reference_id = f"{lilprefix}"+"/reference/"+f"{chromosome}-{position}-{reference}-{alternate}"
+        variant_alternate_id = f"{lilprefix}"+"/alternate/"+f"{chromosome}-{position}-{reference}-{alternate}"
+        chromosome_id =        f"{lilprefix}"+"/sequence/"+f"{chromosome}"
+        position_id =          f"{lilprefix}"+"/sequence/"+f"{chromosome}"+"/position/"+f"{position}"
         # variant, ref and alt
-        variant_uri = ican["variantId/"+variant_id]
-        variant_reference_uri = ican["variantReference/"+variant_reference_id]
-        variant_alternate_uri = ican["variantAlternate/"+variant_alternate_id]
+        variant_uri = ican[variant_id]
+        variant_reference_uri = ican[variant_reference_id]
+        variant_alternate_uri = ican[variant_alternate_id]
         # chromosome and position
-        chromosome_uri = ican["chromosome/"+chromosome_id]
-        position_uri = ican["chromosome/"+chromosome_id+"/position/"+position_id]
+        chromosome_uri = ican[chromosome_id]
+        position_uri = ican[position_id]
         # Define the variant frequency URIs
-        variant_fq_gnomad_uri = ican["variantAlternate/"+'fq/gnomad/'+variant_alternate_id]
+        # gnomad
+        variant_fq_gnomad_uri = ican[variant_alternate_id+"/fq/gnomad/all"]
+        variant_fs_gnomad_afr_uri = ican[variant_alternate_id+'/fq/gnomad/afr']
+        variant_fs_gnomad_eas_uri = ican[variant_alternate_id+'/fq/gnomad/eas']
+        variant_fs_gnomad_nfe_uri = ican[variant_alternate_id+'/fq/gnomad/nfe']
+        # ican
         variant_fq_ican_uri = ican["variantAlternate/"+'fq/ican/cohort/'+variant_alternate_id]
         variant_fq_ican_uri_female = ican["variantAlternate/"+'fq/ican/female/'+variant_alternate_id]
         variant_fq_ican_uri_male = ican["variantAlternate/"+'fq/ican/male/'+variant_alternate_id]
@@ -277,60 +251,74 @@ def build_rdfgraph(g, df):
         caddphred_uri = variant_annotation_uri+'/caddphred/'
 
         # Add variant triplets
-        # Story telling
-
-        # The variant is a so:variant
-        g.add((variant_uri, RDF.type, so["0001060"]))
-        # The variant sio:is_located_in the chromosome
-        g.add((variant_uri, sio["SIO_000061"], chromosome_uri))
-        # The chromosome has a value that is a string
-        g.add((chromosome_uri, sio["SIO_000300"], Literal(chromosome, datatype=XSD.string))) # is located in
-        # The variant has sio:start_position at position
-        g.add((variant_uri, sio["SIO_000791"], position_uri))
-        # The position has a value that is an integer
+        # Story time
+        #
+        #   | variant_uri |--is_a-->| so:variant |
+        #   | variant_uri |--is_located_in-->| chromosome_uri |
+        #   | chromosome_uri |--has_value-->| xsd:string |
+        #   | variant_uri |--has_start_position-->| position_uri |
+        #   | position_uri |--has_value-->| xsd:integer |
+        #   OPTIONAL: | variant_uri |--is_synonymous_to-->| dbsnp[rsid] |
+        #
+        g.add((variant_uri, RDF.type, so["0001059"])) # sequence_alteration
+        g.add((variant_uri, sio["SIO_000061"], chromosome_uri)) # is_located_in
+        g.add((chromosome_uri, RDF.type, so["0000353"])) # sequence_assembly
+        g.add((chromosome_uri, sio["SIO_000300"], Literal(chromosome, datatype=XSD.string))) # has_value
+        g.add((variant_uri, sio["SIO_000791"], position_uri)) # sequence_start_position
         g.add((position_uri, sio["SIO_000300"], Literal(position, datatype=XSD.integer))) # at position
-        # The variant has a sio:synonymous id in dbsnp
         if rsid != 'nan':
             g.add((variant_uri, sio["SIO_000122"], dbsnp[rsid])) # is synonymous to
-        # The variant sio:has_attributes that are the reference and alternate alleles
-        g.add((variant_uri, sio["SIO_000223"], variant_reference_uri)) # has property
-        g.add((variant_uri, sio["SIO_000223"], variant_alternate_uri)) # has property
-        # The reference is a geno:reference_allele
+        #
+        #   | variant_uri |--has_attribute-->| variant_reference_uri |
+        #   | variant_reference_uri |--is_a-->| geno:reference_allele |
+        #   | variant_reference_uri |--has_value-->| xsd:string |
+        #
+        #   | variant_uri |--has_attribute-->| variant_alternate_uri |
+        #   | variant_alternate_uri |--is_a-->| geno:alternate_allele |
+        #   | variant_alternate_uri |--has_value-->| xsd:string |
+        #
+        #   | variant_alternate_uri |--has_frequency-->| variant_fq_gnomad_uri |
+        #
+        # reference allele 
+        g.add((variant_uri, sio["SIO_000223"], variant_reference_uri))
         g.add((variant_reference_uri, RDF.type, geno["0000036"])) # reference allele
-        # The reference has a value that is a string (nucleotide)
         g.add((variant_reference_uri, sio["SIO_000300"], Literal(reference, datatype=XSD.string))) # reference nucleotide
-        # The reference has a source, but we don't add it for now, as we work only with a single sourcr
-        # that is the ican cohort.
-        #g.add((variant_reference_uri, sio["SIO_000253"], ican['cohort.ican'])) # data source
-        g.add((variant_reference_uri, rdfs['label'], Literal("Reference allele for the variant "+variant_id + ' [ dbspn:'+rsid+' ]', datatype=XSD.string)))
-        # The alternate is a geno:alternate_allele
+        #
+        # alternate allele
+        g.add((variant_uri, sio["SIO_000223"], variant_alternate_uri)) 
         g.add((variant_alternate_uri, RDF.type, geno["0000002"])) # alternate allele
         g.add((variant_alternate_uri, sio["000300"], Literal(alternate, datatype=XSD.string))) # alternate nucleotide
-        g.add((variant_alternate_uri, sio["000253"], ican['cohort.ican'])) # data source
-        g.add((variant_alternate_uri, rdfs['label'], Literal("Alternate allele for the variant "+variant_id + ' [ dbspn:'+rsid+' ]', datatype=XSD.string)))
-        g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_gnomad_uri)) # alternate allele frequencies
-        g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_ican_uri))
-        g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_ican_uri_female))
-        g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_ican_uri_male))
+        #
+        # alternate allele frequencies: gnomad
+        # g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_gnomad_uri))
+        # g.add((variant_fq_gnomad_uri, RDF.type, sio["SIO_001367"]))
+        # g.add((variant_fq_gnomad_uri, sio["SIO_000300"], fq_gnomad)) # had value
+        # g.add((variant_fq_gnomad_uri, sio["SIO_000628"], gnomad_cohort_uri)) # refers to 
+        #
+        # alternate allele frequencies: ican
+        # g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_ican_uri))
+        # g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_ican_uri_female))
+        # g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_ican_uri_male))
+        # alternate allele annotations
         # Add alternate allele info with frequencies
         # gnomad
-        g.add((variant_fq_gnomad_uri, RDF.type, sio["SIO_001367"]))
-        g.add((variant_fq_gnomad_uri, sio["000253"], ican['cohort/gnomad']))
-        g.add((variant_fq_gnomad_uri, sio["000300"], Literal(fq_gnomad, datatype=XSD.float)))
+        # g.add((variant_fq_gnomad_uri, RDF.type, sio["SIO_001367"]))
+        # g.add((variant_fq_gnomad_uri, sio["000253"], ican['cohort/gnomad']))
+        # g.add((variant_fq_gnomad_uri, sio["000300"], Literal(fq_gnomad, datatype=XSD.float)))
         # ican
-        g.add((variant_fq_ican_uri, RDF.type, sio["SIO_001367"]))
-        g.add((variant_fq_ican_uri, sio["000253"], ican['cohort/ican']))
-        g.add((variant_fq_ican_uri, sio["000300"], Literal(fq_ican_AF_whole, datatype=XSD.float)))
+        # g.add((variant_fq_ican_uri, RDF.type, sio["SIO_001367"]))
+        # g.add((variant_fq_ican_uri, sio["000253"], ican['cohort/ican']))
+        # g.add((variant_fq_ican_uri, sio["000300"], Literal(fq_ican_AF_whole, datatype=XSD.float)))
         # ican females
-        g.add((variant_fq_ican_uri_female, RDF.type, sio["SIO_001367"]))
-        g.add((variant_fq_ican_uri_female, sio["000253"], ican['cohort/ican/female']))
-        g.add((variant_fq_ican_uri_female, sio["000300"], Literal(fq_ican_AF_female, datatype=XSD.float)))
-        g.add((variant_fq_ican_uri_female, sio["000628"], sio["SIO_010052"]))
+        # g.add((variant_fq_ican_uri_female, RDF.type, sio["SIO_001367"]))
+        # g.add((variant_fq_ican_uri_female, sio["000253"], ican['cohort/ican/female']))
+        # g.add((variant_fq_ican_uri_female, sio["000300"], Literal(fq_ican_AF_female, datatype=XSD.float)))
+        # g.add((variant_fq_ican_uri_female, sio["000628"], sio["SIO_010052"]))
         # ican males
-        g.add((variant_fq_ican_uri_male, RDF.type, sio["SIO_001367"]))
-        g.add((variant_fq_ican_uri_male, sio["000253"], ican['cohort/ican/male']))
-        g.add((variant_fq_ican_uri_male, sio["000300"], Literal(fq_ican_AF_male, datatype=XSD.float)))
-        g.add((variant_fq_ican_uri_male, sio["000628"], sio["SIO_010048"]))
+        # g.add((variant_fq_ican_uri_male, RDF.type, sio["SIO_001367"]))
+        # g.add((variant_fq_ican_uri_male, sio["000253"], ican['cohort/ican/male']))
+        # g.add((variant_fq_ican_uri_male, sio["000300"], Literal(fq_ican_AF_male, datatype=XSD.float)))
+        # g.add((variant_fq_ican_uri_male, sio["000628"], sio["SIO_010048"]))
 
         #
 
