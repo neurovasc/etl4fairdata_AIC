@@ -67,6 +67,7 @@ def create_rdfgraph_namespace():
     g.bind("sio", sio)
     g.bind("dbsnp", dbsnp)
     g.bind("geno", geno)
+    g.bind("faldo", faldo)
     g.bind("rdf", rdf)
     g.bind("rdfs", rdfs)
     g.bind("xsd", xsd)
@@ -226,35 +227,12 @@ def build_rdfgraph(g, df):
         # chromosome and position
         chromosome_uri = ican[chromosome_id]
         position_uri = ican[position_id]
-        # Define the variant frequency URIs
-        # gnomad
-        variant_fq_gnomad_uri = ican[variant_alternate_id+"/fq/gnomad/all"]
-        variant_fs_gnomad_afr_uri = ican[variant_alternate_id+'/fq/gnomad/afr']
-        variant_fs_gnomad_eas_uri = ican[variant_alternate_id+'/fq/gnomad/eas']
-        variant_fs_gnomad_nfe_uri = ican[variant_alternate_id+'/fq/gnomad/nfe']
-        # ican
-        variant_fq_ican_uri = ican["variantAlternate/"+'fq/ican/cohort/'+variant_alternate_id]
-        variant_fq_ican_uri_female = ican["variantAlternate/"+'fq/ican/female/'+variant_alternate_id]
-        variant_fq_ican_uri_male = ican["variantAlternate/"+'fq/ican/male/'+variant_alternate_id]
-        variant_fq_ican_uri_ruptured = ican["variantAlternate/"+'fq/ican/ruptured/'+variant_alternate_id]
-        variant_fq_ican_uri_multipleica = ican["variantAlternate/"+'fq/ican/multipleica/'+variant_alternate_id]
-        variant_fq_ican_uri_aht = ican["variantAlternate/"+'fq/ican/aht/'+variant_alternate_id]
-        variant_fq_ican_uri_diabetes = ican["variantAlternate/"+'fq/ican/diabetes/'+variant_alternate_id]
-        variant_fq_ican_uri_dyslipidemia = ican["variantAlternate/"+'fq/ican/dyslipidemia/'+variant_alternate_id]
-        variant_fq_ican_uri_obese = ican["variantAlternate/"+'fq/ican/obese/'+variant_alternate_id]
-        variant_fq_ican_uri_overweight = ican["variantAlternate/"+'fq/ican/overweight/'+variant_alternate_id]
-        variant_fq_ican_uri_sporadic = ican["variantAlternate/"+'fq/ican/sporadic/'+variant_alternate_id]
-        variant_fq_ican_uri_familial = ican["variantAlternate/"+'fq/ican/familial/'+variant_alternate_id]
-        # Define the variant annotation URIs
-        variant_annotation_uri = ican["variantAlternate/"+'annotation/'+variant_alternate_id]
-        caddraw_uri = variant_annotation_uri+'/cadd/'
-        caddphred_uri = variant_annotation_uri+'/caddphred/'
 
         # Add variant triplets
-        # Story time
         #
         #   | variant_uri |--is_a-->| so:variant |
         #   | variant_uri |--is_located_in-->| chromosome_uri |
+        #   | chromosome_uri |--is_a-->| sequence_assembly |
         #   | chromosome_uri |--has_value-->| xsd:string |
         #   | variant_uri |--has_start_position-->| position_uri |
         #   | position_uri |--has_value-->| xsd:integer |
@@ -265,7 +243,8 @@ def build_rdfgraph(g, df):
         g.add((chromosome_uri, RDF.type, so["0000353"])) # sequence_assembly
         g.add((chromosome_uri, sio["SIO_000300"], Literal(chromosome, datatype=XSD.string))) # has_value
         g.add((variant_uri, sio["SIO_000791"], position_uri)) # sequence_start_position
-        g.add((position_uri, sio["SIO_000300"], Literal(position, datatype=XSD.integer))) # at position
+        g.add((position_uri, RDF.type, faldo["region"])) # position is a faldo region
+        g.add((position_uri, faldo["start"], Literal(position, datatype=XSD.integer))) # position has start as integer
         if rsid != 'nan':
             g.add((variant_uri, sio["SIO_000122"], dbsnp[rsid])) # is synonymous to
         #
@@ -289,6 +268,30 @@ def build_rdfgraph(g, df):
         g.add((variant_alternate_uri, RDF.type, geno["0000002"])) # alternate allele
         g.add((variant_alternate_uri, sio["000300"], Literal(alternate, datatype=XSD.string))) # alternate nucleotide
         #
+
+        # Define the variant frequency URIs
+        # gnomad
+        # variant_fq_gnomad_uri = ican[variant_alternate_id+"/fq/gnomad/all"]
+        # variant_fs_gnomad_afr_uri = ican[variant_alternate_id+'/fq/gnomad/afr']
+        # variant_fs_gnomad_eas_uri = ican[variant_alternate_id+'/fq/gnomad/eas']
+        # variant_fs_gnomad_nfe_uri = ican[variant_alternate_id+'/fq/gnomad/nfe']
+        # ican
+        # variant_fq_ican_uri = ican["variantAlternate/"+'fq/ican/cohort/'+variant_alternate_id]
+        # variant_fq_ican_uri_female = ican["variantAlternate/"+'fq/ican/female/'+variant_alternate_id]
+        # variant_fq_ican_uri_male = ican["variantAlternate/"+'fq/ican/male/'+variant_alternate_id]
+        # variant_fq_ican_uri_ruptured = ican["variantAlternate/"+'fq/ican/ruptured/'+variant_alternate_id]
+        # variant_fq_ican_uri_multipleica = ican["variantAlternate/"+'fq/ican/multipleica/'+variant_alternate_id]
+        # variant_fq_ican_uri_aht = ican["variantAlternate/"+'fq/ican/aht/'+variant_alternate_id]
+        # variant_fq_ican_uri_diabetes = ican["variantAlternate/"+'fq/ican/diabetes/'+variant_alternate_id]
+        # variant_fq_ican_uri_dyslipidemia = ican["variantAlternate/"+'fq/ican/dyslipidemia/'+variant_alternate_id]
+        # variant_fq_ican_uri_obese = ican["variantAlternate/"+'fq/ican/obese/'+variant_alternate_id]
+        # variant_fq_ican_uri_overweight = ican["variantAlternate/"+'fq/ican/overweight/'+variant_alternate_id]
+        # variant_fq_ican_uri_sporadic = ican["variantAlternate/"+'fq/ican/sporadic/'+variant_alternate_id]
+        # variant_fq_ican_uri_familial = ican["variantAlternate/"+'fq/ican/familial/'+variant_alternate_id]
+        # Define the variant annotation URIs
+        # variant_annotation_uri = ican["variantAlternate/"+'annotation/'+variant_alternate_id]
+        # caddraw_uri = variant_annotation_uri+'/cadd/'
+        # caddphred_uri = variant_annotation_uri+'/caddphred/'
         # alternate allele frequencies: gnomad
         # g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_gnomad_uri))
         # g.add((variant_fq_gnomad_uri, RDF.type, sio["SIO_001367"]))
