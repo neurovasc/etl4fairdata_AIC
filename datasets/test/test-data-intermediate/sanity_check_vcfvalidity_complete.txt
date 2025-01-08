@@ -1,0 +1,1 @@
+OK : Sanity check passed successfully: aggregated vcf is a valid vcf.

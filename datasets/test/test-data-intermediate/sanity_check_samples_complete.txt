@@ -1,0 +1,3 @@
+Sanity check passed successfully: same number of samples, in the same order.
+datasets/test/test-data-intermediate/genopheno-pheno-sampled-reordered.csv: 83 biosample ids 
+datasets/test/test-data-intermediate/genopheno-geno-sampled.vcf.gz: 83 biosample ids 
