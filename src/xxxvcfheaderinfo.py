@@ -8,26 +8,39 @@ columns = (
 whole = (
     '##INFO=<ID=AF_whole,Number=A,Type=Float,Description="Alt Allele Frequency in the cohort (ICAN)">\n'
     '##INFO=<ID=AC_whole,Number=A,Type=Integer,Description="Alt Allele Count in the cohort (ICAN)">\n'
+    '##INFO=<ID=AC_whole_hom,Number=1,Type=Integer,Description="Alt Allele Count in the cohort (ICAN) in homozygous genotypes">\n'
+    '##INFO=<ID=AC_whole_het,Number=1,Type=Integer,Description="Alt Allele Count in the cohort (ICAN) in heterozygous genotypes">\n'
     )
 male = (
     '##INFO=<ID=AF_male,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with male sex [NCIT:00000]">\n'
     '##INFO=<ID=AC_male,Number=A,Type=Integer,Description="Alt Allele Count in individuals with male sex [NCIT:00000]">\n'
-)
+    '##INFO=<ID=AC_male_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals with male sex [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_male_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals with male sex [NCIT:00000] with heterozygous genotypes">\n'
+    )
 female = (
     '##INFO=<ID=AF_female,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with female sex [NCIT:00000]">\n'
     '##INFO=<ID=AC_female,Number=A,Type=Integer,Description="Alt Allele Count in individuals with female sex [NCIT:00000]">\n'
-)
+    '##INFO=<ID=AC_female_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals with female sex [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_female_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals with female sex [NCIT:00000] with heterozygous genotypes">\n'
+    )
+
 earlyonset = (
     '##INFO=<ID=AF_earlyonset,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with early onset [NCIT:00000]">\n'
     '##INFO=<ID=AC_earlyonset,Number=A,Type=Integer,Description="Alt Allele Count in individuals with early onset [NCIT:00000]">\n'
+    '##INFO=<ID=AC_earlyonset_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals with early onset [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_earlyonset_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals with early onset [NCIT:00000] with heterozygous genotypes">\n'
 )
 obese = (
     '##INFO=<ID=AF_obese,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with obesity class I & II & III [NCIT:00000]">\n'
     '##INFO=<ID=AC_obese,Number=A,Type=Integer,Description="Alt Allele Count in individuals with obesity class I & II & III [NCIT:00000]">\n'
+    '##INFO=<ID=AC_obese_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals with obesity class I & II & III [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_obese_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals with obesity class I & II & III [NCIT:00000] with heterozygous genotypes">\n'
 )
 overweight = (
     '##INFO=<ID=AF_overweight,Number=A,Type=Float,Description="Alt Allele Frequency within individuals that are overweight [NCIT:00000]">\n'
     '##INFO=<ID=AC_overweight,Number=A,Type=Integer,Description="Alt Allele Count in individuals that are overweight [NCIT:00000]">\n'
+    '##INFO=<ID=AC_overweight_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals that are overweight [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_overweight_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals that are overweight [NCIT:00000] with heterozygous genotypes">\n'
 )
 familialcase = (
     '##INFO=<ID=AF_familial,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with at least one 1st degree relative carrying an IC aneurysm [NCIT:00000]">\n'

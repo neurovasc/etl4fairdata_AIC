@@ -107,10 +107,24 @@ def process_batchlines(lines, group, clinical):
         for i in range(0, len(infofields)):
             af_field = infofields[i][0] # frequency label
             ac_field = infofields[i][1] # count label
-            af = frequencies[i] # frequency value
-            ac = counts[i] # count value 
+            ac_field_hom = infofields[i][2] # count label for homozygous genotypes
+            ac_field_het = infofields[i][3] # count label for heterozygous genotypes
+            try:
+                af = frequencies[i]['allz'] # frequency value
+                af_hom = frequencies[i]['homoz'] # frequency value for homozygous genotypes
+                af_het = frequencies[i]['heteroz'] # frequency value for heterozygous genotypes
+                ac = counts[i]['allz'] # count value
+                ac_hom = counts[i]['homoz'] # count value for homozygous genotypes
+                ac_het = counts[i]['heteroz'] # count value for heterozygous genotypes
+            except KeyError as e:
+                print(f"KeyError: {e}")
+                print(f"Values not found for field : {group[i]}") # group and infofields should have the same order
+                exit()
+                
             info_field_for_variant += f'{af_field}={af};'
             info_field_for_variant += f'{ac_field}={ac};'
+            info_field_for_variant += f'{ac_field_hom}={ac_hom};'
+            info_field_for_variant += f'{ac_field_het}={ac_het};'
         #
         info = ut.reshape_infofield(info)
         info_field_for_variant += info
@@ -120,6 +134,7 @@ def process_batchlines(lines, group, clinical):
         #
         #logging.debug(variant_line)
         #
+    #print(''.join(variant_lines))
     return ''.join(variant_lines)
     
 # Main
@@ -129,7 +144,9 @@ if __name__ == "__main__":
     clinical = pd.read_csv(args.clinical, sep=',')
 
     # Uncompressed vcf 
-    vcfout = args.outfile.replace('.gz', '')
+    vcfout = args.outfile.replace('.gz', '') # vcf
+    vcfoutgz = args.outfile # vcf.gz
+    vcfoutgzsorted = args.outfile.replace('.vcf.gz', '.sorted.vcf.gz') # sorted.vcf.gz
 
     # Read genotype file line by line
     # Do not load it with pandas because the genotypes file is
@@ -142,6 +159,7 @@ if __name__ == "__main__":
     # earlyonset, obese, overweight, familialcase, sporadiccase 
     # discoveryincidental, dicoveryfamilialscreening, discoveryruptured, discoveryischemic
     # ruptured, multipleica
+    '''
     group = ['whole', 'male', 'female', 
              'earlyonset',
              'aht', 'diabetes', 'dyslipidemia',
@@ -149,6 +167,10 @@ if __name__ == "__main__":
              'familialcase', 'sporadiccase', 
              'discoveryincidental', 'discoveryfamilialscreening', 'discoveryruptured', 'discoveryischemic',
              'ruptured', 'multipleica']
+    '''
+    group = ['whole', 'female', 'male', 
+             'earlyonset', 
+             'obese', 'overweight']
 
     # We open the input file: the query genotype file created with bcftools query
     with open(args.genotypes, 'r') as genotypes_file, open(vcfout, 'w') as outvcf_file:
@@ -201,13 +223,16 @@ if __name__ == "__main__":
 
                 # Print progress
                 print(f"Progress: {completed_lines}/{linecount} lines completed\r", end='')
-            
+
     # Compress the file using bgzip
     # The output file should be a bgzipped vcf file
     # At which point do we index the vcf file? Coordiantes should be in order.
     try:
-        subprocess.run(['bgzip', '-f', vcfout], check=True)
-        print(f"File compressed successfully to {args.outfile}")
+        subprocess.run(['bgzip', '-kf', vcfout], check=True)
+        print(f"File compressed successfully to {vcfoutgz}")
+        subprocess.run(["bcftools", "sort", "-Oz", "-o", vcfoutgzsorted, vcfoutgz], check=True)
+        #subprocess.run(["bcftools", "index",  vcfoutgzsorted], check=True)
+        print(f"Sorted VCF saved to {vcfoutgzsorted}")
     except subprocess.CalledProcessError as e:
         print(f"Error compressing file: {e}")
         # Clean up temporary file if compression fails

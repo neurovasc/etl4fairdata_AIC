@@ -52,6 +52,8 @@ sio = Namespace("http://semanticscience.org/resource/SIO_")
 dbsnp = Namespace("http://bio2rdf.org/dbsnp:")
 geno = Namespace("http://purl.obolibrary.org/obo/GENO_")
 faldo = Namespace("http://biohackathon.org/resource/faldo#")
+# Population
+hancestro = Namespace("http://purl.obolibrary.org/obo/HANCESTRO_")
 # Semantics
 rdf = Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 rdfs = Namespace("http://www.w3.org/2000/01/rdf-schema#")
@@ -80,7 +82,7 @@ def initiate_rdf_from_vcf(bcf, varrdf):
     '''
     # Convert vcf.gz or bcf to bcftools query file 
     queryvcf = args.temp + '/temp_vcf.query'
-    os.system('bcftools query'
+    os.system(' query'
                 " -f'%CHROM\t%POS\t%REF\t%ALT\t%INFO\n' "  +
                 bcf + '>' + queryvcf)
     # Read the queryvcf file and build the graph
@@ -196,19 +198,22 @@ def build_rdfgraph(g, df):
 
         # Variant annotations
         annotations = info.split(';')
-        # Array of dictionnaries. One dict per annotation.
-        annotations_aod = []
+        # dictionnary of dictionnaries. One dict per annotation.
+        annotations_dod = {}
         # Annotatio names
+        '''
         annotations_labels = ['gnomad_AF', 'gnomad_AF_AFR', 'gnomad_AF_EAS', 'gnomad_AF_NFE', 
                               'AF_whole', 'AF_female', 'AF_male', 'AF_aht', 'AF_diabetes',
                               'AF_dyslipidemia', 'AF_obese', 'AF_overweight', 'AF_sporadic',
                               'AF_familial', 'AF_ruptured', 'AF_multipleica', 'CSQ', 'CADD_RAW', 'PHRED']
+        '''
+        annotations_labels = [element.split('=')[0] for element in annotations]
         # Organize the annotations
         for a in annotations:
             for l in annotations_labels:
                 if l+'=' in a:
-                    annotations_aod.append({"label": l, 'value': a.split('=')[1]})
-
+                    dict = {l :a.split('=')[1]}
+                    annotations_dod.update(dict)
         
         # Get the rsid from dbsnp
         rsid = get_rsids_fromdbsnp(chromosome, position, reference, alternate)
@@ -256,8 +261,6 @@ def build_rdfgraph(g, df):
         #   | variant_alternate_uri |--is_a-->| geno:alternate_allele |
         #   | variant_alternate_uri |--has_value-->| xsd:string |
         #
-        #   | variant_alternate_uri |--has_frequency-->| variant_fq_gnomad_uri |
-        #
         # reference allele 
         g.add((variant_uri, sio["SIO_000223"], variant_reference_uri))
         g.add((variant_reference_uri, RDF.type, geno["0000036"])) # reference allele
@@ -269,12 +272,18 @@ def build_rdfgraph(g, df):
         g.add((variant_alternate_uri, sio["000300"], Literal(alternate, datatype=XSD.string))) # alternate nucleotide
         #
 
-        # Define the variant frequency URIs
-        # gnomad
-        # variant_fq_gnomad_uri = ican[variant_alternate_id+"/fq/gnomad/all"]
-        # variant_fs_gnomad_afr_uri = ican[variant_alternate_id+'/fq/gnomad/afr']
-        # variant_fs_gnomad_eas_uri = ican[variant_alternate_id+'/fq/gnomad/eas']
-        # variant_fs_gnomad_nfe_uri = ican[variant_alternate_id+'/fq/gnomad/nfe']
+        # Define the variant alternative allele frequencies URIs : gnomad
+        # gnomad: this is external source annotation, it can be done with VEP API (and it's insanely good)
+        variant_fq_gnomad_uri = ican[variant_alternate_id+"/fq/gnomad/all"]
+        variant_fs_gnomad_afr_uri = ican[variant_alternate_id+'/fq/gnomad/afr']
+        variant_fs_gnomad_eas_uri = ican[variant_alternate_id+'/fq/gnomad/eas']
+        variant_fs_gnomad_nfe_uri = ican[variant_alternate_id+'/fq/gnomad/nfe']
+        # add variant alternate allele frequencies to the KG
+        g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_gnomad_uri)) # has_frequency
+        g.add((variant_fq_gnomad_uri, RDF.type, sio["SIO_001367"])) # is_frequency
+        g.add((variant_fq_gnomad_uri, sio["SIO_000300"], Literal(annotations_dod['gnomad_AF'], datatype=XSD.float))) # has_value
+        g.add((variant_fq_gnomad_uri, sio["SIO_000628"], sio["SIO_001061"])) # refers_to
+
         # ican
         # variant_fq_ican_uri = ican["variantAlternate/"+'fq/ican/cohort/'+variant_alternate_id]
         # variant_fq_ican_uri_female = ican["variantAlternate/"+'fq/ican/female/'+variant_alternate_id]
@@ -292,6 +301,9 @@ def build_rdfgraph(g, df):
         # variant_annotation_uri = ican["variantAlternate/"+'annotation/'+variant_alternate_id]
         # caddraw_uri = variant_annotation_uri+'/cadd/'
         # caddphred_uri = variant_annotation_uri+'/caddphred/'
+
+        #   | variant_alternate_uri |--has_frequency-->| variant_fq_gnomad_uri |
+        #
         # alternate allele frequencies: gnomad
         # g.add((variant_alternate_uri, sio["SIO_000900"], variant_fq_gnomad_uri))
         # g.add((variant_fq_gnomad_uri, RDF.type, sio["SIO_001367"]))

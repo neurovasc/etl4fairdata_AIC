@@ -1,136 +1,122 @@
 import os
-# # # #
-#
-# real dataset
-global_true_bcf = "data-input/QCed.VEP.AFctrls.GND.CADD.bcf"
-global_true_phenotype = "data-input/extraction_GAIA_ICAN_26-09-2023.csv"
-real_intermediate_dir = "data-intermediate"
-real_deliverable_dir = "data-deliverable"
-real_input_dir = "data-input"
-real_dataset_name = "aicdataset"
-# fake dataset
-global_fake_bcf = "test-data-input/fakegenotyped.vcf.gz"
-global_fake_phenotype = "test-data-input/fake-GAIA-extraction-clean.csv"
-fake_intermediate_dir = "test-data-intermediate"
-fake_deliverable_dir = "test-data-deliverable"
-fake_input_dir = "test-data-input"
-fake_dataset_name = "fake"
-# Set up
-global_bcf = global_fake_bcf
-global_phenotype = global_fake_phenotype
-intermediate_dir = "test-data-intermediate"
-deliverable_dir = "test-data-deliverable"
-input_dir = "test-data-input"
-dataset_name = fake_dataset_name
-# Extract biosample IDs from the VCF file
-# Some biosamples in the VCF are a merge of two biosamples in the phenotype file
-rule get_biosamples_in_vcf:
-    input:
-        bcf=global_bcf
+import glob
+
+########################################################################################
+# datasets
+datasetdir = "datasets/"
+datasets = {"test" : "test", 
+            "synthetic1" : "synthetic1", 
+            "aic" : "aic"}
+###########################
+dataset = datasets["aic"]# change this to the dataset you want to work with
+###########################
+input_dir = datasetdir + dataset + "/" +  dataset + "-data-input"
+inputcsv = glob.glob(input_dir + "/*.csv")[0]
+inputvcf = glob.glob(input_dir + "/*.vcf.gz")[0]
+intermediate_dir = datasetdir + dataset + "/" +  dataset + "-data-intermediate"
+deliverable_dir = datasetdir + dataset + "/" +  dataset + "-data-deliverable"
+
+
+rule setup:
     output:
-        list=intermediate_dir+"/biosamplesinvcf.lst"
+        directory(intermediate_dir),
+        directory(deliverable_dir)
+    run:
+        os.makedirs(intermediate_dir, exist_ok=True)
+        os.makedirs(deliverable_dir, exist_ok=True)
+        print(f"Directory holding data: {input_dir}")
+        print(f"Files in {input_dir}: ", os.listdir(input_dir))
+        print(f"Setting up directories: {intermediate_dir} and  {deliverable_dir}")
+        print(f"Input csv files: {inputcsv}")
+        print(f"Input vcf files: {inputvcf}")
+#
+# extract biosample ids from genotype vcf file
+rule sample_selection_vcfids:
+    input:
+        vcf = inputvcf
+    output:
+        list1 = intermediate_dir+"/biosample-ids-in-vcf.lst"
     shell:
-        "bcftools query -l {input} | tr '_' '\n'> {output}"
-# # # #
+        "bcftools query -l {input.vcf} | tr '_' '\n'> {output.list1}"
 #
-#
-# Extract biosample IDs from the phenotype file
-# That have a genomic analysis (ID present in VCF)
-# Warning: some biosamples in the phenotype file are merged in the VCF
-# The merged samples are not ADN 1 and ADN 2, but samples from different rows
-rule sample_selection:
+# 1) extract biosample ids from phenotype csv file using the list of biosample 
+# ids from the genotype vcf file
+# 2) write the output to a new phenotype csv file
+# 3) write the list of biosample ids from the genotype vcf 
+# file that also have a phenotype in the phenotype csv file (for rule sample_selection_withgeno)
+rule sample_selection_withpheno:
     input:
-        code="src/sampleselection.py",
-        csv=global_phenotype,
-        vcfsamples=intermediate_dir+"/biosamplesinvcf.lst"
+        csv = inputcsv,
+        list1 = intermediate_dir+"/biosample-ids-in-vcf.lst"
     output:
-        csvsamples=intermediate_dir+"/"+dataset_name+"-samplelist.lst",
-        csvfilt=intermediate_dir+"/"+dataset_name+"-extraction_phenotypes.csv"
-    shell: 
-        "python3 {input.code} -c {input.csv} -s {input.vcfsamples} -o {output.csvsamples} -f {output.csvfilt}"
-# # # #
-#
-#
-# Extract samples with phenotype information and AIC or related from the VCF file
-# Samples are ordered in the order of the file aicdataset-samplelist.lst
-# -c1:alt1 : filters out positions with an allele count lower than 1
-# :alt1 just in case there are positions where all genotypes are alternative
-# but this does not occur in the ICAN cohort as far as i've seen
-rule vcf_sample_selection:
-    input:
-        samples=intermediate_dir+"/"+dataset_name+"-samplelist.lst",
-        bcf=global_bcf
-    output:
-        bcf=intermediate_dir+"/"+dataset_name+"-genotypes.bcf"
+        list2 = intermediate_dir+"/biosample-ids-in-vcf-with-pheno-in-csv.lst",
+        csv = intermediate_dir + "/genopheno-pheno-sampled.csv"
     shell:
-        "bcftools view -S {input.samples} {input.bcf} -c1:alt1 -O b -o {output.bcf}"
-# # # #
+        "python src/sampleselection.py -c {input.csv} -s {input.list1} -o {output.list2} -f {output.csv}"
 #
+# extract the biosamples in the genotype vcf file that also have a phenotype in the phenotype csv file
+rule sample_selection_withgeno:
+    input:
+        vcf = inputvcf,
+        list2 = intermediate_dir+"/biosample-ids-in-vcf-with-pheno-in-csv.lst"
+    output:
+        vcf = intermediate_dir + "/genopheno-geno-sampled.vcf.gz"
+    shell:
+        "bcftools view -S {input.list2} {input.vcf} -c1:alt1 -O b -o {output.vcf}"
 #
 # Reorder samples in phenotype file to match the order in the VCF file
 # Delete duplicate rows in phenotype file
-rule reorder_samples_in_phenotypefile:
+rule reorder_samples_in_phenotypecsv:
     input:
-        csv=intermediate_dir+"/"+dataset_name+"-extraction_phenotypes.csv",
-        samples=intermediate_dir+"/"+dataset_name+"-samplelist.lst"
+        csv = intermediate_dir + "/genopheno-pheno-sampled.csv",
+        list2 = intermediate_dir+"/biosample-ids-in-vcf-with-pheno-in-csv.lst"
     output:
-        csv=intermediate_dir+"/"+dataset_name+"-extraction_phenotypes.reordered.csv"
+        csv = intermediate_dir + "/genopheno-pheno-sampled-reordered.csv",
     run:
         import pandas as pd
+        import csv
         def reorder_csv(phenotypes, samples, output):
-            # Read the CSV file
             df = pd.read_csv(phenotypes)
-            
-            # Read the CSV samples list
             samples_df = pd.read_csv(samples, header=None, names=['identifier'])
             samples_list = samples_df['identifier'].tolist()
-
-            # Identifiers
             identifier_column = 'N°ADN IRT 1' 
-            
-            # Sort phenotype file according to the order of identifiers in samples file
             sorted_df = df.set_index(identifier_column).loc[samples_list].reset_index()
             sorted_df = sorted_df.drop_duplicates(subset=[identifier_column])
-
             return sorted_df
-
-        df = reorder_csv(input.csv, input.samples, output.csv)
-        df.to_csv(output.csv, index=False)
-# # # #
-#
+        df = reorder_csv(input.csv, input.list2, output.csv)
+        df.to_csv(output.csv, index=False, quoting=csv.QUOTE_ALL)
 #
 # Sanity check: there is the same amount of samples in the VCF and the phenotype file
 # The samples are in the same order in both files.
 # The same samples are present in both files.
 rule sanity_check_samples:
     input:
-        csv=intermediate_dir+"/"+dataset_name+"-extraction_phenotypes.csv",
-        bcf=intermediate_dir+"/"+dataset_name+"-genotypes.bcf"
+        csv = intermediate_dir + "/genopheno-pheno-sampled-reordered.csv",
+        vcf = intermediate_dir + "/genopheno-geno-sampled.vcf.gz"
+    output:
+        validation = intermediate_dir + "/sanity_check_samples_complete.txt"
     run:
         import pandas as pd
         import subprocess
-        def check_samples(phenotypes, bcf):
-            # Read the CSV file
+        def check_samples(phenotypes, vcf, output_file):
             df = pd.read_csv(phenotypes, header=0)
-            #print("phenotype df len", len(df))
-            # Read the VCF file
-            bcf_samples = subprocess.check_output("bcftools query -l " + bcf, shell=True)
-            bcf_samples = bcf_samples.decode('utf-8').split("\n")
-            bcf_samples.pop()
-            #print("bcf samples len:", len(bcf_samples))
-            #print("bcf samples:", bcf_samples)
+            vcf_samples = subprocess.check_output("bcftools query -l " + vcf, shell=True)
+            vcf_samples = vcf_samples.decode('utf-8').split("\n")
+            vcf_samples.pop() # Remove the last empty element
             
             # Check if the number of samples is the same
-            if len(df) != len(bcf_samples):
+            if len(df) != len(vcf_samples):
                 raise ValueError("The number of samples in the phenotype file and the VCF file is different.")
             # Check if the samples are in the same order
-            if not all(df['N°ADN IRT 1'] == bcf_samples):
+            if not all(df['N°ADN IRT 1'] == vcf_samples):
                 raise ValueError("The samples are not in the same order in the phenotype file and the VCF file.")
-            return True
+            # Write a success message to the output file
+            with open(output_file, "w") as f:
+                f.write("OK : Sanity check passed successfully: same number of samples, in the same order.\n")
+                f.write(f"{input.csv}: {len(df)} biosample ids \n")
+                f.write(f"{input.vcf}: {len(vcf_samples)} biosample ids \n")
 
-        check_samples(input.csv, input.bcf)
-# # # #
-#
+        check_samples(input.csv, input.vcf, output.validation)
 #
 # Extract minimal genotype information from the VCF file
 # Before extraction: eliminate positions with no alternative alleles (--min-ac=1)
@@ -140,27 +126,18 @@ rule sanity_check_samples:
 # https://stackoverflow.com/questions/73611363/better-splitting-of-mutliallelic-sites-then-bcftools-norm-m-any
 rule vcf2querygenotype:
     input:
-        bcf=intermediate_dir+"/"+dataset_name+"-genotypes.bcf"
+        vcf = intermediate_dir + "/genopheno-geno-sampled.vcf.gz"
     output:
-        query=intermediate_dir+"/"+dataset_name+"-querygenotype.tsv"
+        query = intermediate_dir + "/genopheno-geno-sampled-querygenotype.tsv",
+        contigs = intermediate_dir + "/genopheno-geno-sampled-contigs.txt",
+        info = intermediate_dir + "/genopheno-geno-sampled-info.txt"
     shell:
-        "bcftools norm -a {input.bcf} | bcftools view --min-ac=1 | \
-        bcftools query -H -f '%CHROM\t%POS\t%REF\t%ALT\t[%GT,]\t%INFO\n' > {output.query}"
-# # # #
-#
-#
-# Extract vcf header contigs and info tags
-rule extractvcfheader:
-    input:
-        bcf=intermediate_dir+"/"+dataset_name+"-genotypes.bcf"
-    output:
-        contigs=intermediate_dir+"/"+dataset_name+"-contigs.txt",
-        info=intermediate_dir+"/"+dataset_name+"-info.txt"
-    shell:
-        "bcftools view -h {input.bcf} | grep '^##contig'  > {output.contigs} ; \
-        bcftools view -h {input.bcf} | grep '^##INFO'  > {output.info}"
-# # # #
-#
+        """
+        bcftools norm -a {input.vcf} | bcftools view --min-ac=1 | \
+        bcftools query -H -f '%CHROM\t%POS\t%REF\t%ALT\t[%GT,]\t%INFO\n' > {output.query} && \
+        bcftools view -h {input.vcf} | grep '^##contig'  > {output.contigs} && \
+        bcftools view -h {input.vcf} | grep '^##INFO'  > {output.info}
+        """
 #
 # Build frequencies per variant 
 # Each variant has genotype information, I slap it into the phenotype file, and calculate the 
@@ -168,99 +145,33 @@ rule extractvcfheader:
 # Frequencies should have meaningful names and definitions, preferentially using ontologies
 rule computeallelefrequencies:
     input:
-        code="src/computeallelefrequencies.py",
-        query=intermediate_dir+"/"+dataset_name+"-querygenotype.tsv",
-        clinical=intermediate_dir+"/"+dataset_name+"-extraction_phenotypes.reordered.csv",
-        sequences=intermediate_dir+"/"+dataset_name+"-contigs.txt",
-        info=intermediate_dir+"/"+dataset_name+"-info.txt"
+        query = intermediate_dir + "/genopheno-geno-sampled-querygenotype.tsv",
+        clinical = intermediate_dir + "/genopheno-pheno-sampled-reordered.csv",
+        sequences = intermediate_dir + "/genopheno-geno-sampled-contigs.txt",
+        info = intermediate_dir + "/genopheno-geno-sampled-info.txt"
     output:
-        aggregatevcf=deliverable_dir+"/"+dataset_name+"-genotypes.aggregate.vcf.gz"
+        aggregatevcf = deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.vcf.gz"
     shell:
-        "python3 {input.code} -g {input.query} -c {input.clinical} -o {output.aggregatevcf} -s {input.sequences} -i {input.info}"
-# # # #
-#
+        "python3 src/computeallelefrequencies.py -g {input.query} -c {input.clinical} -o {output.aggregatevcf} -s {input.sequences} -i {input.info}"
 #
 # Sanity check: is the bgziped VCF file valid?
 rule sanity_check_vcfvalidity:
     input:
-        vcf=deliverable_dir+"/"+dataset_name+"-genotypes.aggregate.vcf.gz"
+        vcf=deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.vcf.gz"
+    output:
+        validation = intermediate_dir + "/sanity_check_vcfvalidity_complete.txt"
     run:
         import subprocess
-        def check_vcf_validity(vcf):
+        def check_vcf_validity(vcf, output_file):
             try:
                 subprocess.check_output("bcftools view " + vcf + " > /dev/null", shell=True)
                 subprocess.check_output("vcf-validator " + vcf + " > /dev/null", shell=True)
             except subprocess.CalledProcessError as e:
                 raise ValueError("The bgziped VCF file is not valid.")
-            return True
+            
+            with open(output_file, "w") as f:
+                f.write("OK : Sanity check passed successfully: aggregated vcf is a valid vcf.\n")
 
-        check_vcf_validity(input.vcf)
-# # # #
-#
-#
-# Build RDF from the VCF aggregate
-# This step uses a RDF schema for variant information
-# similar to disgenet
-# This script uses gnomad file and dbsnp file, by default the paths are those
-# on my PC pp-irs1-4071ylt but you can change them with -g and -d parameters
-rule vcfaggregate2rdf:
-    input:
-        code="src/vcfaggregate2rdf.py",
-        vcf=deliverable_dir+"/"+dataset_name+"-genotypes.aggregate.vcf.gz"
-        #vcf="temp/small.bcf"
-    params:
-        #limit=100,
-        threads=15,
-        chunksize=500
-    output:
-        rdf=deliverable_dir+"/"+dataset_name+"-genotypes.aggregate.ttl"
-    shell:
-        "python3 {input.code} -b {input.vcf} -r {output.rdf} \
-         -t {params.threads} -k {params.chunksize}"
-# # # #
-#
-#
-# Sanity check: is the RDF file valid? turtle format
-rule sanity_check_ttlvalidity:
-    input:
-        rdf=deliverable_dir+"/"+dataset_name+"-genotypes.aggregate.ttl"
-    run:
-        import rdflib
-        def check_turtle(file):
-            '''
-            Check if the file is a valid turtle file
-            '''
-            if not os.path.isfile(file):
-                print(f"File does not exist: {file}")
-                return False
-            try:
-                g = Graph()
-                g.parse(file, format='turtle')
-                return True
-            except Exception as e:
-                print(f"Error: {e}")
-                return False
-        check_turtle(input.rdf)
-# # # #
-#
-#
-# Sanity check: are there as many variants in the VCF and as in the RDF file?
-rule sanity_check_nbvariantsinttlandrdf:
-    input:
-        vcf=deliverable_dir+"/"+dataset_name+"-genotypes.aggregate.vcf.gz",
-        rdf=deliverable_dir+"/"+dataset_name+"-genotypes.aggregate.ttl"
-    run:
-        import subprocess
-        #
-        def count_variants_in_vcf(vcf):
-            vcf_variants = subprocess.check_output("bcftools query -f '%CHROM\t%POS' " + vcf + " | wc -l", shell=True)
-            return int(vcf_variants)
-        def count_variants_in_rdf(rdf):
-            rdf_variants = subprocess.check_output("grep -c 'a so:0001060 ' " + rdf, shell=True)
-            return int(rdf_variants)
-        #
-        if count_variants_in_vcf(input.vcf) != count_variants_in_rdf(input.rdf):
-            raise ValueError("The number of variants in the VCF and in the RDF file is different.")
-        else:
-            print("The number of variants in the VCF and in the RDF file is the same.")
-# # # #
+        check_vcf_validity(input.vcf, output.validation)
+
+#snakemake --rulegraph | dot -Tpdf > dag.pdf

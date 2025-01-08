@@ -34,12 +34,14 @@ def write_headervcf(info, contigfile, infofile):
     Alter, possible confusion: info contains the info fields to add to the new vcf, according
     to new phenotypic traits, and infofile contains the info fields from the input vcf.
     '''
-    # file format
+    # VCF HEADER: file format
     headervcf = vhi.fileformat # starts with the file format
-    # contigs
+    # VCF HEADER: contigs
     contig = open(contigfile, 'r').read()
     headervcf += contig
+    # VCF HEADER: reference
     headervcf += vhi.reference
+    # VCF HEADER: info field for the new phenotypic traits to add as frequencies and counts
     for i in info:
         try:
             headervcf += vhi.info_headerchunk[i]
@@ -47,14 +49,14 @@ def write_headervcf(info, contigfile, infofile):
             print(f"KeyError: {i} not found in dictionary for INFO field of vcf header.")
             print(f"KeyError: {e} not found in dictionary .")
             sys.exit(1)
-    # annotations in the INFO field of the input VCF
+    # VCF HEADER: annotations in the INFO field of the original OG input VCF
     annotation = open(infofile, 'r').read().split("\n")
     tokeep = ['##INFO=<ID=CADD_RAW', '##INFO=<ID=PHRED', '##INFO=<ID=gnomad_AF', '##INFO=<ID=CSQ']
     #
     for a in annotation:
         if any(keep in a for keep in tokeep):
             headervcf += a+"\n"
-    # final line in VCF header
+    # VCF HEADER: final line in VCF header
     headervcf += vhi.columns # header ends with columns CHR POS ID REF ALT QUAL FILTER INFO
     return headervcf
 #
@@ -108,6 +110,8 @@ def compute_frequencies(df, group):
     frequencies : array : floats : len N : definition - frequency of a variant ALLELE in a given group
     counts : array : str(integer/integegrs) : len N : definition - count of a variant ALLELE in a given group (/total)
     labels : array of tuples : (str, str) : len N : definition - labels for the frequencies and counts in the INFO field
+    I insist on ALLELES being counted, not individual genotypes. Info about homozygous or heterozygous is not 
+    computed for now.
     '''
     frequencies = ['nan']*len(group)
     counts = ['nan']*len(group)
@@ -115,45 +119,49 @@ def compute_frequencies(df, group):
     #
     for i, g in enumerate(group):
         if 'whole' == g: # whole population in the OC vcf file
-            genotypes = ''.join(df['genotypes'].tolist())
-            refc, altc, unkc = genotypes.count('0'), genotypes.count('1'), genotypes.count('.')
-            frequencies[i] = calcfreq({'0': refc, '1': altc})
-            counts[i] = f"{altc}/{refc+altc}"
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
         if "female" == g: # female population in the OC vcf file
+            # filter based on clinical/phenotypical trait 
             femalesex_list = ['F', 'female', 'femme']
             female_df = df[df['sexe'].isin(femalesex_list)]
-            female_genotypes = ''.join(female_df['genotypes'].tolist())
-            female_refc, female_altc, female_unkc = female_genotypes.count('0'), female_genotypes.count('1'), female_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': female_refc, '1': female_altc})
-            counts[i] = f"{female_altc}/{female_refc+female_altc}"
+            # process 
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(female_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
         if "male" == g: # male population in the OC vcf file
+            # filter based on clinical/phenotypical trait
             malesex_list = ['M', 'male', 'homme', 'H']
             male_df = df[df['sexe'].isin(malesex_list)]
-            male_genotypes = ''.join(male_df['genotypes'].tolist())
-            male_refc, male_altc, male_unkc = male_genotypes.count('0'), male_genotypes.count('1'), male_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': male_refc, '1': male_altc})
-            counts[i] = f"{male_altc}/{male_refc+male_altc}"
+            # process
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(male_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
         if "earlyonset" in g: # early onset population in the OC vcf file
+            # filter based on clinical/phenotypical trait
             df = add_age_of_onset(df)
             earlyonset_df = df[df['age of onset']<35]
-            earlyonset_genotypes = ''.join(earlyonset_df['genotypes'].tolist())
-            earlyonset_refc, earlyonset_altc, earlyonset_unkc = earlyonset_genotypes.count('0'), earlyonset_genotypes.count('1'), earlyonset_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': earlyonset_refc, '1': earlyonset_altc})
-            counts[i] = f"{earlyonset_altc}/{earlyonset_refc+earlyonset_altc}"
+            # process
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(earlyonset_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
         if "obese" in g:
+            # filter based on clinical/phenotypical trait
             df['imc'] = pd.to_numeric(df['imc'], errors='coerce')
             obese_df = df[(df['imc'] >= 30) & (df['imc'] < 100)]
-            obese_genotypes = ''.join(obese_df['genotypes'].tolist())
-            obese_refc, obese_altc, obese_unkc = obese_genotypes.count('0'), obese_genotypes.count('1'), obese_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': obese_refc, '1': obese_altc})
-            counts[i] = f"{obese_altc}/{obese_refc+obese_altc}"
+            # process
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(obese_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
         if "overweight" in g:
+            # filter based on clinical/phenotypical trait
             df['imc'] = pd.to_numeric(df['imc'], errors='coerce')
             overweight_df = df[(df['imc'] >= 25) & (df['imc'] < 30)]
-            overweight_genotypes = ''.join(overweight_df['genotypes'].tolist())
-            overweight_refc, overweight_altc, overweight_unkc = overweight_genotypes.count('0'), overweight_genotypes.count('1'), overweight_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': overweight_refc, '1': overweight_altc})
-            counts[i] = f"{overweight_altc}/{overweight_refc+overweight_altc}"
+            # process
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(overweight_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
         if "familialcase" in g:
             familial_df = df[(df['ATCD familial d\'AIC (1er degré)'] == 'Oui certain')]
             familial_genotypes = ''.join(familial_df['genotypes'].tolist())
@@ -233,9 +241,11 @@ def get_infofieldslabels(group):
             # of interest, and extract only the labels for the frequencies and counts
             # to appear in the line of the variant in the VCF file
             labels = vhi.info_headerchunk[g].split('\n')
-            l1 = labels[0].split('ID=')[1].split(',')[0]
-            l2 = labels[1].split('ID=')[1].split(',')[0]
-            infofields.append((l1, l2))   
+            l1 = labels[0].split('ID=')[1].split(',')[0] # allele frequency
+            l2 = labels[1].split('ID=')[1].split(',')[0] # allele count
+            l3 = labels[2].split('ID=')[1].split(',')[0] # allele count in homozygous states
+            l4 = labels[3].split('ID=')[1].split(',')[0] # allele count in heterozygous states
+            infofields.append((l1, l2, l3, l4))   
         except KeyError as e:
             print(f"KeyError: {g} not found in dictionary for INFO field of vcf header.")
             print(f"KeyError: {e}")
@@ -261,6 +271,36 @@ def calcfreq(count_dict):
     except KeyError:
         AF = 0
     return round(AF,6)
+#
+def process_genotypes(genotypes):
+    ''' Processes a genotype string to count/compute
+    - the number of alternative alleles 
+    - the number of alternative alleles in homozygous state
+    - the number of alternative alleles in heterozygous state
+    - the frequency of the alternative allele
+    - the frequency of the alternative allele in homozygous state
+    - the frequency of the alternative allele in heterozygous state
+    '''
+    # genotypes af and ac regardless of zygosities
+    genotypeslist = genotypes.tolist()
+    refc, altc,  = sum(item.count('0') for item in genotypeslist), sum(item.count('1') for item in genotypeslist)
+    #unkc = sum(item.count('.') for item in genotypeslist)
+    af = calcfreq({'0': refc, '1': altc}) # needs to be FLOAT, as described in the vcf header
+    ac = f"{altc}" # needs to be INTEGER, as described in the vcf header
+    # homozygous genotypes 
+    hom_genotypeslist = [x for x in genotypes if x not in {'0/1', '1/0', './.'}]
+    hom_refc, hom_altc = sum(item.count('0') for item in hom_genotypeslist), sum(item.count('1') for item in hom_genotypeslist)
+    #hom_unkc = sum(item.count('.') for item in hom_genotypeslist)
+    af_hom = calcfreq({'0': hom_refc, '1': hom_altc})
+    ac_hom = f"{hom_altc}" # allele counts, in homozygous status, meaning we get the number of individuals by /2 
+    # heterozygous genotypes 
+    het_genotypeslist = [x for x in genotypes if x not in {'1/1', '0/0', './.'}]
+    het_refc, het_altc = sum(item.count('0') for item in het_genotypeslist), sum(item.count('1') for item in het_genotypeslist)
+    #het_unkc = sum(item.count('.') for item in het_genotypeslist)
+    af_het = calcfreq({'0': het_refc, '1': het_altc})
+    ac_het = f"{het_altc}" 
+    #
+    return af, af_hom, af_het, ac, ac_hom, ac_het
 #
 def add_age_of_onset(df):
     ''' Add the age of onset to the dataframe
