@@ -1,6 +1,13 @@
-id: https://example.org/aiccohortvariants
-name: sequence_alteration
-description: "Schema for describing sequence alterations (SO:0001059) and their relationships."
+id: https://ican.univ-nantes.io/variants-kg
+name: variants-kg
+description: |-
+  Schema for describing sequence alterations (SO:0001059) and their relationships to other elements of a variant catalog format.
+  The ontology aims at describing genomic variations found in patients carrying intracranial aneurysms.
+  The ontology and schema is organized arount variants, their annotations relevant to the study of 
+  intracranial aneurysms, and phenotype frequencies and counts relevant to the study of intracranial aneurysms. 
+
+license: https://creativecommons.org/publicdomain/zero/1.0/
+
 prefixes:
   rdfs: https://www.w3.org/2000/01/rdf-schema#
   linkml: https://w3id.org/linkml/

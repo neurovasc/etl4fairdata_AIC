@@ -1,0 +1,1211 @@
+{
+  "name": "variants-kg",
+  "description": "Schema for describing sequence alterations (SO:0001059) and their relationships to other elements of a variant catalog format.\nThe ontology aims at describing genomic variations found in patients carrying intracranial aneurysms.\nThe ontology and schema is organized arount variants, their annotations relevant to the study of \nintracranial aneurysms, and phenotype frequencies and counts relevant to the study of intracranial aneurysms. ",
+  "id": "https://ican.univ-nantes.io/variants-kg",
+  "imports": [
+    "linkml:types"
+  ],
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "prefixes": [
+    {
+      "prefix_prefix": "rdfs",
+      "prefix_reference": "https://www.w3.org/2000/01/rdf-schema#"
+    },
+    {
+      "prefix_prefix": "linkml",
+      "prefix_reference": "https://w3id.org/linkml/"
+    },
+    {
+      "prefix_prefix": "so",
+      "prefix_reference": "http://purl.obolibrary.org/obo/SO_"
+    },
+    {
+      "prefix_prefix": "faldo",
+      "prefix_reference": "http://biohackathon.org/resource/faldo#"
+    },
+    {
+      "prefix_prefix": "geno",
+      "prefix_reference": "http://purl.obolibrary.org/obo/GENO_"
+    },
+    {
+      "prefix_prefix": "sio",
+      "prefix_reference": "http://semanticscience.org/resource/"
+    },
+    {
+      "prefix_prefix": "owl",
+      "prefix_reference": "http://www.w3.org/2002/07/owl#"
+    },
+    {
+      "prefix_prefix": "aic",
+      "prefix_reference": "https://example.org/aiccohortvariants#"
+    },
+    {
+      "prefix_prefix": "mondo",
+      "prefix_reference": "http://purl.obolibrary.org/obo/MONDO_"
+    },
+    {
+      "prefix_prefix": "hpo",
+      "prefix_reference": "http://purl.obolibrary.org/obo/HP_"
+    },
+    {
+      "prefix_prefix": "ncit",
+      "prefix_reference": "http://purl.obolibrary.org/obo/NCIT_"
+    }
+  ],
+  "default_prefix": "https://ican.univ-nantes.io/variants-kg/",
+  "default_range": "string",
+  "types": [
+    {
+      "name": "string",
+      "definition_uri": "https://w3id.org/linkml/String",
+      "description": "A character string",
+      "notes": [
+        "In RDF serializations, a slot with range of string is treated as a literal or type xsd:string.   If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"string\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:Text"
+      ],
+      "base": "str",
+      "uri": "http://www.w3.org/2001/XMLSchema#string",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "integer",
+      "definition_uri": "https://w3id.org/linkml/Integer",
+      "description": "An integer",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"integer\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:Integer"
+      ],
+      "base": "int",
+      "uri": "http://www.w3.org/2001/XMLSchema#integer",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "boolean",
+      "definition_uri": "https://w3id.org/linkml/Boolean",
+      "description": "A binary (true or false) value",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:Boolean"
+      ],
+      "base": "Bool",
+      "uri": "http://www.w3.org/2001/XMLSchema#boolean",
+      "repr": "bool",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "float",
+      "definition_uri": "https://w3id.org/linkml/Float",
+      "description": "A real number that conforms to the xsd:float specification",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"float\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:Float"
+      ],
+      "base": "float",
+      "uri": "http://www.w3.org/2001/XMLSchema#float",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "double",
+      "definition_uri": "https://w3id.org/linkml/Double",
+      "description": "A real number that conforms to the xsd:double specification",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "close_mappings": [
+        "schema:Float"
+      ],
+      "base": "float",
+      "uri": "http://www.w3.org/2001/XMLSchema#double",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "decimal",
+      "definition_uri": "https://w3id.org/linkml/Decimal",
+      "description": "A real number with arbitrary precision that conforms to the xsd:decimal specification",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"decimal\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "broad_mappings": [
+        "schema:Number"
+      ],
+      "base": "Decimal",
+      "uri": "http://www.w3.org/2001/XMLSchema#decimal",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "time",
+      "definition_uri": "https://w3id.org/linkml/Time",
+      "description": "A time object represents a (local) time of day, independent of any particular day",
+      "notes": [
+        "URI is dateTime because OWL reasoners do not work with straight date or time",
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"time\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:Time"
+      ],
+      "base": "XSDTime",
+      "uri": "http://www.w3.org/2001/XMLSchema#time",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "date",
+      "definition_uri": "https://w3id.org/linkml/Date",
+      "description": "a date (year, month and day) in an idealized calendar",
+      "notes": [
+        "URI is dateTime because OWL reasoners don't work with straight date or time",
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"date\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:Date"
+      ],
+      "base": "XSDDate",
+      "uri": "http://www.w3.org/2001/XMLSchema#date",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "datetime",
+      "definition_uri": "https://w3id.org/linkml/Datetime",
+      "description": "The combination of a date and time",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"datetime\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:DateTime"
+      ],
+      "base": "XSDDateTime",
+      "uri": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "date_or_datetime",
+      "definition_uri": "https://w3id.org/linkml/DateOrDatetime",
+      "description": "Either a date or a datetime",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"date_or_datetime\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "str",
+      "uri": "https://w3id.org/linkml/DateOrDatetime",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "uriorcurie",
+      "definition_uri": "https://w3id.org/linkml/Uriorcurie",
+      "description": "a URI or a CURIE",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"uriorcurie\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "URIorCURIE",
+      "uri": "http://www.w3.org/2001/XMLSchema#anyURI",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "curie",
+      "definition_uri": "https://w3id.org/linkml/Curie",
+      "conforms_to": "https://www.w3.org/TR/curie/",
+      "description": "a compact URI",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"curie\"."
+      ],
+      "comments": [
+        "in RDF serializations this MUST be expanded to a URI",
+        "in non-RDF serializations MAY be serialized as the compact representation"
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "Curie",
+      "uri": "http://www.w3.org/2001/XMLSchema#string",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "uri",
+      "definition_uri": "https://w3id.org/linkml/Uri",
+      "conforms_to": "https://www.ietf.org/rfc/rfc3987.txt",
+      "description": "a complete URI",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"uri\"."
+      ],
+      "comments": [
+        "in RDF serializations a slot with range of uri is treated as a literal or type xsd:anyURI unless it is an identifier or a reference to an identifier, in which case it is translated directly to a node"
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "close_mappings": [
+        "schema:URL"
+      ],
+      "base": "URI",
+      "uri": "http://www.w3.org/2001/XMLSchema#anyURI",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "ncname",
+      "definition_uri": "https://w3id.org/linkml/Ncname",
+      "description": "Prefix part of CURIE",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"ncname\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "NCName",
+      "uri": "http://www.w3.org/2001/XMLSchema#string",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "objectidentifier",
+      "definition_uri": "https://w3id.org/linkml/Objectidentifier",
+      "description": "A URI or CURIE that represents an object in the model.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\"."
+      ],
+      "comments": [
+        "Used for inheritance and type checking"
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "ElementIdentifier",
+      "uri": "http://www.w3.org/ns/shex#iri",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "nodeidentifier",
+      "definition_uri": "https://w3id.org/linkml/Nodeidentifier",
+      "description": "A URI, CURIE or BNODE that represents a node in a model.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"nodeidentifier\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "NodeIdentifier",
+      "uri": "http://www.w3.org/ns/shex#nonLiteral",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "jsonpointer",
+      "definition_uri": "https://w3id.org/linkml/Jsonpointer",
+      "conforms_to": "https://datatracker.ietf.org/doc/html/rfc6901",
+      "description": "A string encoding a JSON Pointer. The value of the string MUST conform to JSON Point syntax and SHOULD dereference to a valid object within the current instance document when encoded in tree form.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"jsonpointer\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "str",
+      "uri": "http://www.w3.org/2001/XMLSchema#string",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "jsonpath",
+      "definition_uri": "https://w3id.org/linkml/Jsonpath",
+      "conforms_to": "https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html",
+      "description": "A string encoding a JSON Path. The value of the string MUST conform to JSON Point syntax and SHOULD dereference to zero or more valid objects within the current instance document when encoded in tree form.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"jsonpath\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "str",
+      "uri": "http://www.w3.org/2001/XMLSchema#string",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "sparqlpath",
+      "definition_uri": "https://w3id.org/linkml/Sparqlpath",
+      "conforms_to": "https://www.w3.org/TR/sparql11-query/#propertypaths",
+      "description": "A string encoding a SPARQL Property Path. The value of the string MUST conform to SPARQL syntax and SHOULD dereference to zero or more valid objects within the current instance document when encoded as RDF.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"sparqlpath\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "str",
+      "uri": "http://www.w3.org/2001/XMLSchema#string",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    }
+  ],
+  "enums": [
+    {
+      "name": "ZygosityType",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/ZygosityType",
+      "description": "Enumeration of zygosity types.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "permissible_values": [
+        {
+          "text": "Homozygous",
+          "description": "Homozygous site.",
+          "meaning": "geno:0000136"
+        },
+        {
+          "text": "Heterozygous",
+          "description": "Heterozygous site.",
+          "meaning": "geno:0000135"
+        },
+        {
+          "text": "Disomic",
+          "description": "Disomic site.",
+          "meaning": "geno:0000391"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "name": "sequenceAlteration__has_identifier",
+      "description": "A unique identifier for the sequence alteration.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://semanticscience.org/resource/000300"
+      ],
+      "slot_uri": "http://semanticscience.org/resource/000300",
+      "alias": "has_identifier",
+      "owner": "SequenceAlteration",
+      "domain_of": [
+        "SequenceAlteration"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "sequenceAlteration__has_reference_allele",
+      "description": "Links the sequence alteration to its reference allele (geno:0000036) using the property geno:0000385.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://purl.obolibrary.org/obo/GENO_0000385"
+      ],
+      "slot_uri": "http://purl.obolibrary.org/obo/GENO_0000385",
+      "alias": "has_reference_allele",
+      "owner": "SequenceAlteration",
+      "domain_of": [
+        "SequenceAlteration"
+      ],
+      "range": "ReferenceAllele",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "sequenceAlteration__has_alternate_allele",
+      "description": "Links the sequence alteration to its alternate allele (geno:0000002) using the property geno:0000382.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://purl.obolibrary.org/obo/GENO_0000382"
+      ],
+      "slot_uri": "http://purl.obolibrary.org/obo/GENO_0000382",
+      "alias": "has_alternate_allele",
+      "owner": "SequenceAlteration",
+      "domain_of": [
+        "SequenceAlteration"
+      ],
+      "range": "AlternateAllele",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "sequenceAlteration__has_location",
+      "description": "Links the sequence alteration to its location using the property faldo:Region.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://biohackathon.org/resource/faldo#location"
+      ],
+      "slot_uri": "http://biohackathon.org/resource/faldo#location",
+      "alias": "has_location",
+      "owner": "SequenceAlteration",
+      "domain_of": [
+        "SequenceAlteration"
+      ],
+      "range": "VariationSite",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "sequenceAlteration__is_associated_with",
+      "description": "Links the sequence alteration to a phenotype (female), clinical trait (diabetes) or grouping (whole cohort).",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://semanticscience.org/resource/001403"
+      ],
+      "slot_uri": "http://semanticscience.org/resource/001403",
+      "alias": "is_associated_with",
+      "owner": "SequenceAlteration",
+      "domain_of": [
+        "SequenceAlteration"
+      ],
+      "range": "AssociatedCharacteristic",
+      "required": true,
+      "multivalued": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "referenceAllele__value",
+      "description": "The value of the reference allele.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://semanticscience.org/resource/000300"
+      ],
+      "slot_uri": "http://semanticscience.org/resource/000300",
+      "alias": "value",
+      "owner": "ReferenceAllele",
+      "domain_of": [
+        "ReferenceAllele"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "alternateAllele__value",
+      "description": "The value of the alternate allele.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://semanticscience.org/resource/000300"
+      ],
+      "slot_uri": "http://semanticscience.org/resource/000300",
+      "alias": "value",
+      "owner": "AlternateAllele",
+      "domain_of": [
+        "AlternateAllele"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "variationSite__begins_at",
+      "description": "The beginning of the location of the sequence alteration.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://biohackathon.org/resource/faldo#begin"
+      ],
+      "slot_uri": "http://biohackathon.org/resource/faldo#begin",
+      "alias": "begins_at",
+      "owner": "VariationSite",
+      "domain_of": [
+        "VariationSite"
+      ],
+      "range": "VariationSiteBegin",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "variationSite__ends_at",
+      "description": "The end of the location of the sequence alteration.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://biohackathon.org/resource/faldo#end"
+      ],
+      "slot_uri": "http://biohackathon.org/resource/faldo#end",
+      "alias": "ends_at",
+      "owner": "VariationSite",
+      "domain_of": [
+        "VariationSite"
+      ],
+      "range": "VariationSiteEnd",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "variationSite__has_reference",
+      "description": "The reference sequence (contig, sequence, chromosome).",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://biohackathon.org/resource/faldo#reference"
+      ],
+      "slot_uri": "http://biohackathon.org/resource/faldo#reference",
+      "alias": "has_reference",
+      "owner": "VariationSite",
+      "domain_of": [
+        "VariationSite"
+      ],
+      "range": "VariationSiteReference",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "variationSiteBegin__position",
+      "description": "The position of the beginning of the location of the sequence alteration.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://biohackathon.org/resource/faldo#position"
+      ],
+      "slot_uri": "http://biohackathon.org/resource/faldo#position",
+      "alias": "position",
+      "owner": "VariationSiteBegin",
+      "domain_of": [
+        "VariationSiteBegin"
+      ],
+      "range": "integer",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "variationSiteEnd__position",
+      "description": "The position of the end of the location of the sequence alteration.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://biohackathon.org/resource/faldo#position"
+      ],
+      "slot_uri": "http://biohackathon.org/resource/faldo#position",
+      "alias": "position",
+      "owner": "VariationSiteEnd",
+      "domain_of": [
+        "VariationSiteEnd"
+      ],
+      "range": "integer",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "variationSiteReference__value",
+      "description": "The value of the reference sequence (ena sequence i.e. https://www.ebi.ac.uk/ena/browser/view/CM000684.2).",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "slot_uri": "https://ican.univ-nantes.io/variants-kg/value",
+      "alias": "value",
+      "owner": "VariationSiteReference",
+      "domain_of": [
+        "VariationSiteReference"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "variationSiteReference__label",
+      "description": "A human-readable label for the reference sequence.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "https://www.w3.org/2000/01/rdf-schema#label"
+      ],
+      "slot_uri": "https://www.w3.org/2000/01/rdf-schema#label",
+      "alias": "label",
+      "owner": "VariationSiteReference",
+      "domain_of": [
+        "VariationSiteReference"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "variationSiteReference__sameAs",
+      "description": "The value of the reference sequence in another database (ncbi sequence i.e. https://www.ncbi.nlm.nih.gov/nuccore/NC_000022.11).",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://www.w3.org/2002/07/owl#sameAs"
+      ],
+      "slot_uri": "http://www.w3.org/2002/07/owl#sameAs",
+      "alias": "sameAs",
+      "owner": "VariationSiteReference",
+      "domain_of": [
+        "VariationSiteReference"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "associatedCharacteristic__has_identifier",
+      "description": "A unique identifier for the associated characteristic.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://semanticscience.org/resource/000300"
+      ],
+      "slot_uri": "http://semanticscience.org/resource/000300",
+      "alias": "has_identifier",
+      "owner": "AssociatedCharacteristic",
+      "domain_of": [
+        "AssociatedCharacteristic"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "associatedCharacteristic__label",
+      "description": "A human-readable label for the associated characteristic.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "https://www.w3.org/2000/01/rdf-schema#label"
+      ],
+      "slot_uri": "https://www.w3.org/2000/01/rdf-schema#label",
+      "alias": "label",
+      "owner": "AssociatedCharacteristic",
+      "domain_of": [
+        "AssociatedCharacteristic"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "associatedCharacteristic__has_zygosity",
+      "description": "The zygocity of the associated characteristic.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://purl.obolibrary.org/obo/GENO_0000608"
+      ],
+      "slot_uri": "http://purl.obolibrary.org/obo/GENO_0000608",
+      "alias": "has_zygosity",
+      "owner": "AssociatedCharacteristic",
+      "domain_of": [
+        "AssociatedCharacteristic"
+      ],
+      "range": "Zygosity",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "zygosity__type",
+      "description": "The type of zygosity.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "https://www.w3.org/2000/01/rdf-schema#type"
+      ],
+      "slot_uri": "https://www.w3.org/2000/01/rdf-schema#type",
+      "alias": "type",
+      "owner": "Zygosity",
+      "domain_of": [
+        "Zygosity"
+      ],
+      "range": "ZygosityType",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "zygosity__has_measurement_value",
+      "description": "Count of alternative alleles in individuals with a certain zygosity.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://semanticscience.org/resource/000216"
+      ],
+      "slot_uri": "http://semanticscience.org/resource/000216",
+      "alias": "has_measurement_value",
+      "owner": "Zygosity",
+      "domain_of": [
+        "Zygosity"
+      ],
+      "range": "Count",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "zygosity__has_frequency",
+      "description": "Frequency of the allele in indibiduals with a certain zygosity.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://semanticscience.org/resource/000900"
+      ],
+      "slot_uri": "http://semanticscience.org/resource/000900",
+      "alias": "has_frequency",
+      "owner": "Zygosity",
+      "domain_of": [
+        "Zygosity"
+      ],
+      "range": "Frequency",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "frequency__value",
+      "description": "The frequency value.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://semanticscience.org/resource/000300"
+      ],
+      "slot_uri": "http://semanticscience.org/resource/000300",
+      "alias": "value",
+      "owner": "Frequency",
+      "domain_of": [
+        "Frequency"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "count__value",
+      "description": "The count value.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "http://semanticscience.org/resource/000300"
+      ],
+      "slot_uri": "http://semanticscience.org/resource/000300",
+      "alias": "value",
+      "owner": "Count",
+      "domain_of": [
+        "Count"
+      ],
+      "range": "integer",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "container__variantcatalog",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "slot_uri": "https://ican.univ-nantes.io/variants-kg/variantcatalog",
+      "alias": "variantcatalog",
+      "owner": "Container",
+      "domain_of": [
+        "Container"
+      ],
+      "range": "SequenceAlteration",
+      "multivalued": true,
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    }
+  ],
+  "classes": [
+    {
+      "name": "SequenceAlteration",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/SequenceAlteration",
+      "description": "A representation of a sequence alteration (so:0001059).",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "so:0001059"
+      ],
+      "slots": [
+        "sequenceAlteration__has_identifier",
+        "sequenceAlteration__has_reference_allele",
+        "sequenceAlteration__has_alternate_allele",
+        "sequenceAlteration__has_location",
+        "sequenceAlteration__is_associated_with"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "has_identifier",
+          "description": "A unique identifier for the sequence alteration.",
+          "slot_uri": "sio:000300",
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "has_reference_allele",
+          "description": "Links the sequence alteration to its reference allele (geno:0000036) using the property geno:0000385.",
+          "slot_uri": "geno:0000385",
+          "range": "ReferenceAllele",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "has_alternate_allele",
+          "description": "Links the sequence alteration to its alternate allele (geno:0000002) using the property geno:0000382.",
+          "slot_uri": "geno:0000382",
+          "range": "AlternateAllele",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "has_location",
+          "description": "Links the sequence alteration to its location using the property faldo:Region.",
+          "slot_uri": "faldo:location",
+          "range": "VariationSite",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "is_associated_with",
+          "description": "Links the sequence alteration to a phenotype (female), clinical trait (diabetes) or grouping (whole cohort).",
+          "slot_uri": "sio:001403",
+          "range": "AssociatedCharacteristic",
+          "required": true,
+          "multivalued": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "http://purl.obolibrary.org/obo/SO_0001059",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ReferenceAllele",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/ReferenceAllele",
+      "description": "Represents the reference allele (geno:0000036).",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "geno:0000036"
+      ],
+      "slots": [
+        "referenceAllele__value"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "value",
+          "description": "The value of the reference allele.",
+          "slot_uri": "sio:000300",
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "http://purl.obolibrary.org/obo/GENO_0000036",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "AlternateAllele",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/AlternateAllele",
+      "description": "Represents the alternate allele (geno:0000002).",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "geno:0000002"
+      ],
+      "slots": [
+        "alternateAllele__value"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "value",
+          "description": "The value of the alternate allele.",
+          "slot_uri": "sio:000300",
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "http://purl.obolibrary.org/obo/GENO_0000002",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "VariationSite",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/VariationSite",
+      "description": "Represents the location of a sequence alteration.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "faldo:Region"
+      ],
+      "slots": [
+        "variationSite__begins_at",
+        "variationSite__ends_at",
+        "variationSite__has_reference"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "begins_at",
+          "description": "The beginning of the location of the sequence alteration.",
+          "slot_uri": "faldo:begin",
+          "range": "VariationSiteBegin",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "ends_at",
+          "description": "The end of the location of the sequence alteration.",
+          "slot_uri": "faldo:end",
+          "range": "VariationSiteEnd",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "has_reference",
+          "description": "The reference sequence (contig, sequence, chromosome).",
+          "slot_uri": "faldo:reference",
+          "range": "VariationSiteReference",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "http://biohackathon.org/resource/faldo#Region",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "VariationSiteBegin",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/VariationSiteBegin",
+      "description": "Represents the beginning of the location of a sequence alteration.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "faldo:ExactPosition"
+      ],
+      "slots": [
+        "variationSiteBegin__position"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "position",
+          "description": "The position of the beginning of the location of the sequence alteration.",
+          "slot_uri": "faldo:position",
+          "range": "integer",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "http://biohackathon.org/resource/faldo#ExactPosition",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "VariationSiteEnd",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/VariationSiteEnd",
+      "description": "Represents the end of the location of a sequence alteration.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "faldo:ExactPosition"
+      ],
+      "slots": [
+        "variationSiteEnd__position"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "position",
+          "description": "The position of the end of the location of the sequence alteration.",
+          "slot_uri": "faldo:position",
+          "range": "integer",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "http://biohackathon.org/resource/faldo#ExactPosition",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "VariationSiteReference",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/VariationSiteReference",
+      "description": "Represents the reference sequence (contig, sequence, chromosome).",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "so:0000353"
+      ],
+      "slots": [
+        "variationSiteReference__value",
+        "variationSiteReference__label",
+        "variationSiteReference__sameAs"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "value",
+          "description": "The value of the reference sequence (ena sequence i.e. https://www.ebi.ac.uk/ena/browser/view/CM000684.2).",
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "label",
+          "description": "A human-readable label for the reference sequence.",
+          "slot_uri": "rdfs:label",
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "sameAs",
+          "description": "The value of the reference sequence in another database (ncbi sequence i.e. https://www.ncbi.nlm.nih.gov/nuccore/NC_000022.11).",
+          "slot_uri": "owl:sameAs",
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "http://purl.obolibrary.org/obo/SO_0000353",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "AssociatedCharacteristic",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/AssociatedCharacteristic",
+      "description": "Represents a phenotype, clinical trait or grouping associated with a sequence alteration.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "slots": [
+        "associatedCharacteristic__has_identifier",
+        "associatedCharacteristic__label",
+        "associatedCharacteristic__has_zygosity"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "has_identifier",
+          "description": "A unique identifier for the associated characteristic.",
+          "slot_uri": "sio:000300",
+          "range": "string",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "label",
+          "description": "A human-readable label for the associated characteristic.",
+          "slot_uri": "rdfs:label",
+          "range": "string",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "has_zygosity",
+          "description": "The zygocity of the associated characteristic.",
+          "slot_uri": "geno:0000608",
+          "range": "Zygosity",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://ican.univ-nantes.io/variants-kg/AssociatedCharacteristic",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Zygosity",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/Zygosity",
+      "description": "Represents the zygosity of an associated characteristic.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "mappings": [
+        "geno:0000133"
+      ],
+      "slots": [
+        "zygosity__type",
+        "zygosity__has_measurement_value",
+        "zygosity__has_frequency"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "type",
+          "description": "The type of zygosity.",
+          "slot_uri": "rdfs:type",
+          "range": "ZygosityType",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "has_measurement_value",
+          "description": "Count of alternative alleles in individuals with a certain zygosity.",
+          "slot_uri": "sio:000216",
+          "range": "Count",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "has_frequency",
+          "description": "Frequency of the allele in indibiduals with a certain zygosity.",
+          "slot_uri": "sio:000900",
+          "range": "Frequency",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "http://purl.obolibrary.org/obo/GENO_0000133",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Frequency",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/Frequency",
+      "description": "Represents the frequency of an allele in individuals with a certain zygosity.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "slots": [
+        "frequency__value"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "value",
+          "description": "The frequency value.",
+          "slot_uri": "sio:000300",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://ican.univ-nantes.io/variants-kg/Frequency",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Count",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/Count",
+      "description": "Represents the count of alternative alleles in individuals with a certain zygosity.",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "slots": [
+        "count__value"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "value",
+          "description": "The count value.",
+          "slot_uri": "sio:000300",
+          "range": "integer",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://ican.univ-nantes.io/variants-kg/Count",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Container",
+      "definition_uri": "https://ican.univ-nantes.io/variants-kg/Container",
+      "from_schema": "https://ican.univ-nantes.io/variants-kg",
+      "slots": [
+        "container__variantcatalog"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "variantcatalog",
+          "range": "SequenceAlteration",
+          "multivalued": true,
+          "inlined_as_list": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://ican.univ-nantes.io/variants-kg/Container",
+      "@type": "ClassDefinition"
+    }
+  ],
+  "metamodel_version": "1.7.0",
+  "source_file": "variantinfo.yaml",
+  "source_file_date": "2025-01-14T14:23:02",
+  "source_file_size": 7805,
+  "generation_date": "2025-01-14T14:41:41",
+  "@type": "SchemaDefinition",
+  "@context": [
+    "variantinfo//jsonld/variantinfo.context.jsonld",
+    "https://w3id.org/linkml/types.context.jsonld",
+    {
+      "@base": "https://ican.univ-nantes.io/variants-kg/"
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+{
+    "$defs": {
+        "AlternateAllele": {
+            "additionalProperties": false,
+            "description": "Represents the alternate allele (geno:0000002).",
+            "properties": {
+                "value": {
+                    "description": "The value of the alternate allele.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "value"
+            ],
+            "title": "AlternateAllele",
+            "type": "object"
+        },
+        "AssociatedCharacteristic": {
+            "additionalProperties": false,
+            "description": "Represents a phenotype, clinical trait or grouping associated with a sequence alteration.",
+            "properties": {
+                "has_identifier": {
+                    "description": "A unique identifier for the associated characteristic.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "has_zygosity": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Zygosity"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The zygocity of the associated characteristic."
+                },
+                "label": {
+                    "description": "A human-readable label for the associated characteristic.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "AssociatedCharacteristic",
+            "type": "object"
+        },
+        "Container": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "variantcatalog": {
+                    "items": {
+                        "$ref": "#/$defs/SequenceAlteration"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Container",
+            "type": "object"
+        },
+        "Count": {
+            "additionalProperties": false,
+            "description": "Represents the count of alternative alleles in individuals with a certain zygosity.",
+            "properties": {
+                "value": {
+                    "description": "The count value.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "value"
+            ],
+            "title": "Count",
+            "type": "object"
+        },
+        "Frequency": {
+            "additionalProperties": false,
+            "description": "Represents the frequency of an allele in individuals with a certain zygosity.",
+            "properties": {
+                "value": {
+                    "description": "The frequency value.",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "value"
+            ],
+            "title": "Frequency",
+            "type": "object"
+        },
+        "ReferenceAllele": {
+            "additionalProperties": false,
+            "description": "Represents the reference allele (geno:0000036).",
+            "properties": {
+                "value": {
+                    "description": "The value of the reference allele.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "value"
+            ],
+            "title": "ReferenceAllele",
+            "type": "object"
+        },
+        "SequenceAlteration": {
+            "additionalProperties": false,
+            "description": "A representation of a sequence alteration (so:0001059).",
+            "properties": {
+                "has_alternate_allele": {
+                    "$ref": "#/$defs/AlternateAllele",
+                    "description": "Links the sequence alteration to its alternate allele (geno:0000002) using the property geno:0000382."
+                },
+                "has_identifier": {
+                    "description": "A unique identifier for the sequence alteration.",
+                    "type": "string"
+                },
+                "has_location": {
+                    "$ref": "#/$defs/VariationSite",
+                    "description": "Links the sequence alteration to its location using the property faldo:Region."
+                },
+                "has_reference_allele": {
+                    "$ref": "#/$defs/ReferenceAllele",
+                    "description": "Links the sequence alteration to its reference allele (geno:0000036) using the property geno:0000385."
+                },
+                "is_associated_with": {
+                    "description": "Links the sequence alteration to a phenotype (female), clinical trait (diabetes) or grouping (whole cohort).",
+                    "items": {
+                        "$ref": "#/$defs/AssociatedCharacteristic"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "has_identifier",
+                "has_reference_allele",
+                "has_alternate_allele",
+                "has_location",
+                "is_associated_with"
+            ],
+            "title": "SequenceAlteration",
+            "type": "object"
+        },
+        "VariationSite": {
+            "additionalProperties": false,
+            "description": "Represents the location of a sequence alteration.",
+            "properties": {
+                "begins_at": {
+                    "$ref": "#/$defs/VariationSiteBegin",
+                    "description": "The beginning of the location of the sequence alteration."
+                },
+                "ends_at": {
+                    "$ref": "#/$defs/VariationSiteEnd",
+                    "description": "The end of the location of the sequence alteration."
+                },
+                "has_reference": {
+                    "$ref": "#/$defs/VariationSiteReference",
+                    "description": "The reference sequence (contig, sequence, chromosome)."
+                }
+            },
+            "required": [
+                "begins_at",
+                "ends_at",
+                "has_reference"
+            ],
+            "title": "VariationSite",
+            "type": "object"
+        },
+        "VariationSiteBegin": {
+            "additionalProperties": false,
+            "description": "Represents the beginning of the location of a sequence alteration.",
+            "properties": {
+                "position": {
+                    "description": "The position of the beginning of the location of the sequence alteration.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "position"
+            ],
+            "title": "VariationSiteBegin",
+            "type": "object"
+        },
+        "VariationSiteEnd": {
+            "additionalProperties": false,
+            "description": "Represents the end of the location of a sequence alteration.",
+            "properties": {
+                "position": {
+                    "description": "The position of the end of the location of the sequence alteration.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "position"
+            ],
+            "title": "VariationSiteEnd",
+            "type": "object"
+        },
+        "VariationSiteReference": {
+            "additionalProperties": false,
+            "description": "Represents the reference sequence (contig, sequence, chromosome).",
+            "properties": {
+                "label": {
+                    "description": "A human-readable label for the reference sequence.",
+                    "type": "string"
+                },
+                "sameAs": {
+                    "description": "The value of the reference sequence in another database (ncbi sequence i.e. https://www.ncbi.nlm.nih.gov/nuccore/NC_000022.11).",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "The value of the reference sequence (ena sequence i.e. https://www.ebi.ac.uk/ena/browser/view/CM000684.2).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "value",
+                "label",
+                "sameAs"
+            ],
+            "title": "VariationSiteReference",
+            "type": "object"
+        },
+        "Zygosity": {
+            "additionalProperties": false,
+            "description": "Represents the zygosity of an associated characteristic.",
+            "properties": {
+                "has_frequency": {
+                    "$ref": "#/$defs/Frequency",
+                    "description": "Frequency of the allele in indibiduals with a certain zygosity."
+                },
+                "has_measurement_value": {
+                    "$ref": "#/$defs/Count",
+                    "description": "Count of alternative alleles in individuals with a certain zygosity."
+                },
+                "type": {
+                    "$ref": "#/$defs/ZygosityType",
+                    "description": "The type of zygosity."
+                }
+            },
+            "required": [
+                "type",
+                "has_measurement_value",
+                "has_frequency"
+            ],
+            "title": "Zygosity",
+            "type": "object"
+        },
+        "ZygosityType": {
+            "description": "Enumeration of zygosity types.",
+            "enum": [
+                "Homozygous",
+                "Heterozygous",
+                "Disomic"
+            ],
+            "title": "ZygosityType",
+            "type": "string"
+        }
+    },
+    "$id": "https://ican.univ-nantes.io/variants-kg",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "metamodel_version": "1.7.0",
+    "title": "variants-kg",
+    "type": "object",
+    "version": null
+}

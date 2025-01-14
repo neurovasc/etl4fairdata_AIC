@@ -1,0 +1,80 @@
+# metamodel_version: 1.7.0
+enum ZygosityType
+  {
+    Homozygous
+    Heterozygous
+    Disomic
+  }
+
+type AlternateAllele
+  {
+    value: String!
+  }
+
+type AssociatedCharacteristic
+  {
+    hasIdentifier: String
+    label: String
+    hasZygosity: Zygosity
+  }
+
+type Container
+  {
+    variantcatalog: [SequenceAlteration]
+  }
+
+type Count
+  {
+    value: Integer!
+  }
+
+type Frequency
+  {
+    value: Float!
+  }
+
+type ReferenceAllele
+  {
+    value: String!
+  }
+
+type SequenceAlteration
+  {
+    hasIdentifier: String!
+    hasReferenceAllele: ReferenceAllele!
+    hasAlternateAllele: AlternateAllele!
+    hasLocation: VariationSite!
+    isAssociatedWith: [AssociatedCharacteristic]!
+  }
+
+type VariationSite
+  {
+    beginsAt: VariationSiteBegin!
+    endsAt: VariationSiteEnd!
+    hasReference: VariationSiteReference!
+  }
+
+type VariationSiteBegin
+  {
+    position: Integer!
+  }
+
+type VariationSiteEnd
+  {
+    position: Integer!
+  }
+
+type VariationSiteReference
+  {
+    value: String!
+    label: String!
+    sameAs: String!
+  }
+
+type Zygosity
+  {
+    type: ZygosityType!
+    hasMeasurementValue: Count!
+    hasFrequency: Frequency!
+  }
+

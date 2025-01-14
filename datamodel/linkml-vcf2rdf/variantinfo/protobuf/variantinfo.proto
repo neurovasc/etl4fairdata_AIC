@@ -1,0 +1,74 @@
+ syntax="proto3";
+ package
+// metamodel_version: 1.7.0
+// Represents the alternate allele (geno:0000002).
+message AlternateAllele
+ {
+  string value = 0
+ }
+// Represents a phenotype, clinical trait or grouping associated with a sequence alteration.
+message AssociatedCharacteristic
+ {
+  string hasIdentifier = 0
+  string label = 0
+  zygosity hasZygosity = 0
+ }
+message Container
+ {
+ repeated  sequenceAlteration variantcatalog = 0
+ }
+// Represents the count of alternative alleles in individuals with a certain zygosity.
+message Count
+ {
+  integer value = 0
+ }
+// Represents the frequency of an allele in individuals with a certain zygosity.
+message Frequency
+ {
+  float value = 0
+ }
+// Represents the reference allele (geno:0000036).
+message ReferenceAllele
+ {
+  string value = 0
+ }
+// A representation of a sequence alteration (so:0001059).
+message SequenceAlteration
+ {
+  string hasIdentifier = 0
+  referenceAllele hasReferenceAllele = 0
+  alternateAllele hasAlternateAllele = 0
+  variationSite hasLocation = 0
+ repeated  associatedCharacteristic isAssociatedWith = 0
+ }
+// Represents the location of a sequence alteration.
+message VariationSite
+ {
+  variationSiteBegin beginsAt = 0
+  variationSiteEnd endsAt = 0
+  variationSiteReference hasReference = 0
+ }
+// Represents the beginning of the location of a sequence alteration.
+message VariationSiteBegin
+ {
+  integer position = 0
+ }
+// Represents the end of the location of a sequence alteration.
+message VariationSiteEnd
+ {
+  integer position = 0
+ }
+// Represents the reference sequence (contig, sequence, chromosome).
+message VariationSiteReference
+ {
+  string value = 0
+  string label = 0
+  string sameAs = 0
+ }
+// Represents the zygosity of an associated characteristic.
+message Zygosity
+ {
+  zygosityType type = 0
+  count hasMeasurementValue = 0
+  frequency hasFrequency = 0
+ }

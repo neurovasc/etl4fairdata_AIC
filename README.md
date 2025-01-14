@@ -14,6 +14,10 @@ The pipeline main products are:
  snakemake --dag targets | dot -Tpng > dag.png
  python scripts starting with xxx are not meant to be executed, but are ressources for other scripts because I like fragmenting my code a lot.
 
+ # Data model and schema
+
+Documentation available at https://ican.univ-nantes.io/aggrvar-kg
+
 # TODOs
 - For variants that do not have a gnomad frequency, should the frequency be set to 0 in the rdf file or simply not included? Now it appears as "NaN"^^xsd:float
 - [DONE 13092024] - Add logger and verbose argument for vcfaggregate3rdf.py 

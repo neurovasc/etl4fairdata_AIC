@@ -1,0 +1,49 @@
+{
+   "aic": "https://example.org/aiccohortvariants#",
+   "faldo": "http://biohackathon.org/resource/faldo#",
+   "geno": "http://purl.obolibrary.org/obo/GENO_",
+   "hpo": "http://purl.obolibrary.org/obo/HP_",
+   "linkml": "https://w3id.org/linkml/",
+   "mondo": "http://purl.obolibrary.org/obo/MONDO_",
+   "ncit": "http://purl.obolibrary.org/obo/NCIT_",
+   "owl": "http://www.w3.org/2002/07/owl#",
+   "rdfs": "https://www.w3.org/2000/01/rdf-schema#",
+   "sio": "http://semanticscience.org/resource/",
+   "so": "http://purl.obolibrary.org/obo/SO_",
+   "AlternateAllele": {
+      "@id": "geno:0000002"
+   },
+   "AssociatedCharacteristic": {
+      "@id": "https://ican.univ-nantes.io/variants-kg/AssociatedCharacteristic"
+   },
+   "Container": {
+      "@id": "https://ican.univ-nantes.io/variants-kg/Container"
+   },
+   "Count": {
+      "@id": "https://ican.univ-nantes.io/variants-kg/Count"
+   },
+   "Frequency": {
+      "@id": "https://ican.univ-nantes.io/variants-kg/Frequency"
+   },
+   "ReferenceAllele": {
+      "@id": "geno:0000036"
+   },
+   "SequenceAlteration": {
+      "@id": "so:0001059"
+   },
+   "VariationSite": {
+      "@id": "faldo:Region"
+   },
+   "VariationSiteBegin": {
+      "@id": "faldo:ExactPosition"
+   },
+   "VariationSiteEnd": {
+      "@id": "faldo:ExactPosition"
+   },
+   "VariationSiteReference": {
+      "@id": "so:0000353"
+   },
+   "Zygosity": {
+      "@id": "geno:0000133"
+   }
+}

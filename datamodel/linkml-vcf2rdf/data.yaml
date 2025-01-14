@@ -1,6 +1,6 @@
 variantcatalog:
   - has_identifier:
-      value: "HGVSid:22:g.16050075A>G" 
+      'HGVSid:22:g.16050075A>G'
     has_reference_allele:
       value: "A"  
     has_alternate_allele:
@@ -11,9 +11,9 @@ variantcatalog:
       ends_at: 
         position: 16050076
       has_reference:
-        value: "CM000684.2" # https://www.ebi.ac.uk/ena/browser/view/CM000684.2
-        sameAs: "NC_000022.11"
-        label: "GRCh38 Chromosome 22"
+        value: 'CM000684.2' # https://www.ebi.ac.uk/ena/browser/view/CM000684.2
+        sameAs: 'NC_000022.11'
+        label: 'GRCh38 Chromosome 22'
     is_associated_with:
       - has_identifier: 'ncit:C61512'
         has_zygosity:
@@ -36,10 +36,40 @@ variantcatalog:
             value: 3
           has_frequency:
             value: 0.3
-      #- has_identifier: 'ncit:C46113'
-      #  has_zygosity:
-      #    has_measurement_value: 
-      #      value: 15
-      #    has_frequency:
-      #      value: 0.10
-      #  label: 'Intracranial aneurysm female sex, all zygosities.'
+  - has_identifier:
+      'HGVSid:22:g.16050076C>T'
+    has_reference_allele:
+      value: "C"  
+    has_alternate_allele:
+      value: "T"  
+    has_location:
+      begins_at:
+        position: 16050076
+      ends_at: 
+        position: 16050077
+      has_reference:
+        value: 'CM000684.2' # https://www.ebi.ac.uk/ena/browser/view/CM000684.2
+        sameAs: 'NC_000022.11'
+        label: 'GRCh38 Chromosome 22'
+    is_associated_with:
+      - has_identifier: 'ncit:C61512'
+        has_zygosity:
+          type: 'Disomic'
+          has_measurement_value: 
+            value: 10
+          has_frequency:
+            value: 0.10
+      - has_identifier: 'ncit:C61512'
+        has_zygosity:
+          type: 'Homozygous'
+          has_measurement_value: 
+            value: 7
+          has_frequency:
+            value: 0.07
+      - has_identifier: 'ncit:C61512'
+        has_zygosity:
+          type: 'Heterozygous'
+          has_measurement_value: 
+            value: 3
+          has_frequency:
+            value: 0.3

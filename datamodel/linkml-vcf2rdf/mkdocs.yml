@@ -1,0 +1,29 @@
+site_name: Aggregated-Genomic-Variants-Knowledge-Graph
+site_url: https://ican.univ-nantes.io/aggrvar-kg
+repo_url: https://gitlab.univ-nantes.fr/bodrug-a/etl4fairdata_AIC
+
+theme:
+  name: material
+  palette:
+    primary: teal
+    accent: orange
+  features:
+    - navigation.sections
+    - navigation.footer
+
+nav:
+  - Home: index.md
+  - Schema: variantinfo.md  # Link to the generated schema docs
+  - Reference: reference.md  # Other docs generated from LinkML schema
+
+plugins:
+  - search
+  - mermaid2
+
+markdown_extensions:
+  - pymdownx.superfences:
+        # make exceptions to highlighting of code:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
