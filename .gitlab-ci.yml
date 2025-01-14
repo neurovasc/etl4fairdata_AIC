@@ -1,0 +1,9 @@
+image: python:3.9
+
+pages:
+  script:
+    - pip install mkdocs
+    - mkdocs build
+  artifacts:
+    paths:
+      - public
