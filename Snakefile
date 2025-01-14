@@ -157,7 +157,7 @@ rule computeallelefrequencies:
 # Sanity check: is the bgziped VCF file valid?
 rule sanity_check_vcfvalidity:
     input:
-        vcf=deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.vcf.gz"
+        vcf = deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.vcf.gz"
     output:
         validation = intermediate_dir + "/sanity_check_vcfvalidity_complete.txt"
     run:
@@ -173,5 +173,24 @@ rule sanity_check_vcfvalidity:
                 f.write("OK : Sanity check passed successfully: aggregated vcf is a valid vcf.\n")
 
         check_vcf_validity(input.vcf, output.validation)
+
+#
+# Build RDF from the VCF aggregate
+# This step uses a RDF schema for variant information
+# inspired by faldo, disgenet, swat4hls paper, etc
+# This script uses gnomad file and dbsnp file, by default the paths are those
+# on my PC pp-irs1-4071ylt but you can change them with -g and -d parameters
+rule vcfaggregate2rdf:
+    input:
+        vcf = deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.vcf.gz"
+    params:
+        #limit=100,
+        threads=15,
+        chunksize=500
+    output:
+        rdf=deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.ttl"
+    shell:
+        "python3 src/vcfaggregate2rdf.py -b {input.vcf} -r {output.rdf} \
+         -t {params.threads} -k {params.chunksize}"
 
 #snakemake --rulegraph | dot -Tpdf > dag.pdf
