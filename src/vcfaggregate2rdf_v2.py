@@ -153,7 +153,7 @@ if __name__ == "__main__":
         lines = file.readlines()
     # For testing purposes, shorten the number of lines
     loggy.info(f"There are {len(lines)} variants to process.")
-    lines = lines[:2]
+    lines = lines[:1000]
     # Parallel processing of the variants
     chunksize = args.chunksize
     loggy.info("### Initiating multi-threading with futures ###")
