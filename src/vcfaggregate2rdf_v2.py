@@ -16,8 +16,7 @@ import pandas as pd
 import concurrent.futures
 import xxxutilitary as ut
 import xxxrdfgraphinfo as rgi
-from rdflib import Graph, Namespace
-from rdflib.namespace import RDF
+from rdflib import Graph
 
 ######################################################
 # arguments
@@ -75,11 +74,6 @@ def vcfvalidity(file):
         return False
     return True
 #
-def build_triples_for_one_variant(variantline):
-    ''' Builds triples for one variant
-    '''
-    pass
-#
 def process_variants(variants, chunk):
     '''
     '''
@@ -101,7 +95,7 @@ def process_variants(variants, chunk):
         df = pd.concat([df, dfl])
     #
     #loggy.debug(f"Processing variants in chunk {chunk} : build mini graph.")     
-    minig = build_rdfgraph(minig, df)
+    minig = rgi.build_rdfgraph(minig, df)
     #
     #loggy.debug(f"Processing variants in chunk {chunk} : writing to output files: {output}.")
     minig.serialize(destination=output, format="turtle")
@@ -117,32 +111,6 @@ def create_rdfgraph_namespace():
     for key, value in namespace.items():
         g.bind(key, value)
     return g
-#
-def build_rdfgraph(g, df):
-    '''
-    '''
-    for index, row in df.iterrows():
-        # Variant chromosome, position, ref, alt, info
-        chromosome = row['chromosome'].strip('chr')
-        position = int(row['position'])
-        reference = row['reference']
-        alternate = row['alternate']
-        info = row['info']
-        # Variant ID
-        variant_iid = build_variant_internal_id(chromosome, position, reference, alternate)
-        g.add((rgi.ICAN[variant_iid], RDF.type, rgi.SO["0001059"]))
-    return g
-#
-def build_variant_internal_id(chromosome, position, reference, alternate):
-    '''
-    '''
-    return f"{chromosome}_{position}_{reference}_{alternate}"
-#
-def get_or_build_HGVSid(chromosome, position, reference, alternate):
-    '''
-    '''
-    HGVSid = f"chr{chromosome}:g.{position}{reference}>{alternate}"
-    return HGVSid
 #
 def check_turtle(file):
     '''
@@ -185,7 +153,7 @@ if __name__ == "__main__":
         lines = file.readlines()
     # For testing purposes, shorten the number of lines
     loggy.info(f"There are {len(lines)} variants to process.")
-    lines = lines[:1000]
+    lines = lines[:2]
     # Parallel processing of the variants
     chunksize = args.chunksize
     loggy.info("### Initiating multi-threading with futures ###")
