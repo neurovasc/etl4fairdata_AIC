@@ -184,7 +184,7 @@ if __name__ == "__main__":
     with open(f"{args.vcf}.query", 'r') as file:
         lines = file.readlines()
     # For testing purposes, shorten the number of lines
-    loggy.info(f"### There are {len(lines)} variants to process.")
+    loggy.info(f"There are {len(lines)} variants to process.")
     lines = lines[:1000]
     # Parallel processing of the variants
     chunksize = args.chunksize
@@ -196,7 +196,7 @@ if __name__ == "__main__":
         loggy.debug(f"Finished building futures. Waiting for results.")
         results = [future.result() for future in concurrent.futures.as_completed(futures)]
     nb_chunks = len(results)
-    loggy.info(f"\nFinished processing all {nb_chunks}.")
+    loggy.info(f"### Finished processing all {nb_chunks} vcf chunks into subgraphs. ###")
     # Merging all the pocessed variants into one turtle file
     loggy.info(f"Merging all temp .ttl files.")
     count = 0
@@ -212,7 +212,8 @@ if __name__ == "__main__":
     with open(temporary_merge, 'w') as f:
         for ttl in ttlfiles:
             count += 1
-            loggy.debug(f"\rMerging files: {count}/{nb_chunks}\r")
+            if count%100 == 0 or count == nb_chunks:
+                loggy.debug(f"Merging files: {count}/{nb_chunks}")
             graph = Graph()
             graph.parse(ttl, format='turtle')
             f.write(graph.serialize(format='turtle'))
@@ -220,16 +221,14 @@ if __name__ == "__main__":
     megag = create_rdfgraph_namespace() # merged graph
     megag.parse(temporary_merge, format='turtle')
     megag.serialize(args.rdf, format="turtle")
-    loggy.info("\nFinsihed merging temp .ttl files.")
+    loggy.info("### Finished merging temp .ttl files. ###")
     loggy.info(f"Checking if valid turtle file: {args.rdf}.")
-    if check_turtle(args.rdf):
-        loggy.debug("Valid turtle file.")
-    else:
-        loggy.debug("Invalid turtle file.")
+    okttl = ut.color_truefalse(check_turtle(args.rdf))
+    loggy.debug(f"turtle file is valid: {okttl}")
 
     # Clean up
     if args.threads:
-        loggy.info("Cleaning up temp files.")
+        loggy.info("### Cleaning up temp files ###")
         clean_temp_ttlfiles()
         loggy.info("Done.")
 

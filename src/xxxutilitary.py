@@ -20,8 +20,7 @@ import pandas as pd
 import xxxvcfheaderinfo as vhi
 
 # Logger 
-logger = logging.getLogger(__name__)
-logging.basicConfig(filename='utilitary.log', encoding='utf-8', level=logging.DEBUG)
+loggy = logging.getLogger(__name__)
 
 #################################
 # Write header for the VCF file #
@@ -326,3 +325,9 @@ def check_values_equal(val1, val2):
 #
 if __name__ == "__main__":
     print("This script is intended to be used as a module.")
+
+# color text
+def color_truefalse(text):
+    """Returns text wrapped in ANSI color codes."""
+    color_code = 31 if text == "True" else 32
+    return f"\033[{color_code}m{text}\033[0m"

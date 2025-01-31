@@ -32,7 +32,7 @@ agp.add_argument('-b', '--bcf', type=str, help='Path to the BCF file')
 agp.add_argument('-l', '--limit', type=limit_type, help='Number of variants to process')
 #agp.add_argument('-g', '--gnomad', type=str, help='Path to the gnomad file', \
 #                 default='/data/gnomad/gnomad.exomes.v4.1.sites.chr1.vcf.bgz')
-agp.add_argument('-d', '--dbsnp', type=str, help='Path to the dbsnp file') 
+#agp.add_argument('-d', '--dbsnp', type=str, help='Path to the dbsnp file') 
 #                 default='/data/dbsnp/GCF_000001405.40.gz')
 agp.add_argument('-x', '--temp', type=str, help='Temp folder', \
                  default='temp/')
