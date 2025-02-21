@@ -14,7 +14,8 @@ In practical terms, I used the VCF file containing filtered exome variants as ca
 
 ### The data model
 As of 21-02-2025
-![Aggregated genomic variant data model](relative%20figures/data-model-aggregated-variantion-in-cohort_v1_2025-02-21.svg "Aggregated genomic variant data model")
+![Aggregated genomic variant data model](figures/data-model-aggregated-variantion-in-cohort_v1_2025-02-21.svg "Aggregated genomic variant data model")
+
 Documentation available at https://ican.univ-nantes.io/variants-kg-schema/
 
 ### Enviroment
