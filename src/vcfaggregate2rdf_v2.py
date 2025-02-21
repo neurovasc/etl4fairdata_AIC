@@ -32,6 +32,8 @@ agp.add_argument('-t', '--threads', type=int,
 agp.add_argument('-d', '--tempdir', type=str, 
                  help='Temporary folder for storing subgraphs',
                  default='temp/')
+agp.add_argument('-T', '--testing', action='store_true',
+                 help='Use only 150 variants for testing purposes')
 
 args = agp.parse_args()
 
@@ -153,7 +155,9 @@ if __name__ == "__main__":
         lines = file.readlines()
     # For testing purposes, shorten the number of lines
     loggy.info(f"There are {len(lines)} variants to process.")
-    lines = lines[:1000]
+    if args.testing:
+        loggy.debug("### Processing the 150 variants, for testing purposes ###")
+        lines = lines[:150]
     # Parallel processing of the variants
     chunksize = args.chunksize
     loggy.info("### Initiating multi-threading with futures ###")
