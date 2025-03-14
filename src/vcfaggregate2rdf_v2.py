@@ -157,7 +157,7 @@ if __name__ == "__main__":
     loggy.info(f"There are {len(lines)} variants to process.")
     if args.testing:
         loggy.debug("### Processing the 150 variants, for testing purposes ###")
-        lines = lines[:150]
+        lines = lines[207400:]
     # Parallel processing of the variants
     chunksize = args.chunksize
     loggy.info("### Initiating multi-threading with futures ###")

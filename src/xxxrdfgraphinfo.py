@@ -351,5 +351,6 @@ def build_rdfgraph(g, df):
                 # observation is associated with population group
                 g.add((ICAN[observation_n], SIO['001403'], ICAN[subpopulation]))
                 g.add((ICAN[subpopulation], RDF.type, NCIT['C17005'])) # subpopulation is a NCIT's "Population group"
+                g.add((ICAN[subpopulation], RDF.label, Literal(phenotype, datatype=XSD.string)))
         #       
     return g

@@ -184,13 +184,10 @@ rule vcfaggregate2rdf:
     input:
         vcf = deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.vcf.gz"
     params:
-        #limit=100,
-        threads=15,
-        chunksize=500
+        limit = 100
     output:
         rdf=deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.ttl"
     shell:
-        "python3 src/vcfaggregate2rdf.py -b {input.vcf} -r {output.rdf} \
-         -t {params.threads} -k {params.chunksize}"
+        "python3 src/vcfaggregate2rdf_v2.py -v {input.vcf} -r {output.rdf} --limit {params.limit}"
 
 #snakemake --rulegraph | dot -Tpdf > dag.pdf
