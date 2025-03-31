@@ -6,9 +6,10 @@ import glob
 datasetdir = "datasets/"
 datasets = {"test" : "test", 
             "synthetic1" : "synthetic1", 
-            "aic" : "aic"}
+            "aic" : "aic", 
+            "syntheticican2" : "syntheticican2"}
 ###########################
-dataset = datasets["aic"]# change this to the dataset you want to work with
+dataset = datasets["syntheticican2"]# change this to the dataset you want to work with
 ###########################
 input_dir = datasetdir + dataset + "/" +  dataset + "-data-input"
 inputcsv = glob.glob(input_dir + "/*.csv")[0]
@@ -79,7 +80,14 @@ rule reorder_samples_in_phenotypecsv:
             df = pd.read_csv(phenotypes)
             samples_df = pd.read_csv(samples, header=None, names=['identifier'])
             samples_list = samples_df['identifier'].tolist()
-            identifier_column = 'N°ADN IRT 1' 
+            try:
+                identifier_column = 'N°ADN IRT 1' 
+            except:
+                pass
+            try:
+                identifier_column = 'biosampleId' 
+            except:
+                pass
             sorted_df = df.set_index(identifier_column).loc[samples_list].reset_index()
             sorted_df = sorted_df.drop_duplicates(subset=[identifier_column])
             return sorted_df
@@ -108,7 +116,11 @@ rule sanity_check_samples:
             if len(df) != len(vcf_samples):
                 raise ValueError("The number of samples in the phenotype file and the VCF file is different.")
             # Check if the samples are in the same order
-            if not all(df['N°ADN IRT 1'] == vcf_samples):
+            try:
+                thesamples = df['N°ADN IRT 1']
+            except:
+                thesamples = df['biosampleId']
+            if not all(thesamples == vcf_samples):
                 raise ValueError("The samples are not in the same order in the phenotype file and the VCF file.")
             # Write a success message to the output file
             with open(output_file, "w") as f:
@@ -152,7 +164,7 @@ rule computeallelefrequencies:
     output:
         aggregatevcf = deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.vcf.gz"
     shell:
-        "python3 src/computeallelefrequencies.py -g {input.query} -c {input.clinical} -o {output.aggregatevcf} -s {input.sequences} -i {input.info}"
+        "python3 src/computeallelefrequencies.py -g {input.query} -c {input.clinical} -o {output.aggregatevcf} -s {input.sequences} -i {input.info} -T"
 #
 # Sanity check: is the bgziped VCF file valid?
 rule sanity_check_vcfvalidity:
@@ -188,6 +200,6 @@ rule vcfaggregate2rdf:
     output:
         rdf=deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.ttl"
     shell:
-        "python3 src/vcfaggregate2rdf_v2.py -v {input.vcf} -r {output.rdf} --limit {params.limit}"
+        "python3 src/vcfaggregate2rdf_v2.py -v {input.vcf} -r {output.rdf} --testing"
 
 #snakemake --rulegraph | dot -Tpdf > dag.pdf

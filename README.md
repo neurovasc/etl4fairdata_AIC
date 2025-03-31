@@ -10,7 +10,9 @@ The pipeline main products are:
 - an aggregated vcf file where individual genotypes are aggregated into frequencies and counts, relative to different clinical/phenotypical traits
 - a ttl file representing the vcf according to a data model
 
-In practical terms, I used the VCF file containing filtered exome variants as called by R. Blanchet and the csv file extracted from the GAIA database containing information about the iCAN Cohort. The ETL pipeline is highly tailored to the phenotypes registered in iCAN.
+In practical terms, I used the VCF file containing filtered exome variants as called by R. Blanchet and the csv file extracted from the GAIA:iCAN database containing information about the iCAN Cohort. The ETL pipeline is highly tailored to the phenotypes registered in iCAN.
+
+There is a separate collection of scripts inside buildsyntheticdataset/ folder to, well, build a synthetic dataset so an example demo can be deployed online.
 
 ### The data model
 As of 21-02-2025

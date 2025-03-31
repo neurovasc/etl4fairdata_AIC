@@ -45,10 +45,14 @@ overweight = (
 familialcase = (
     '##INFO=<ID=AF_familial,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with at least one 1st degree relative carrying an IC aneurysm [NCIT:00000]">\n'
     '##INFO=<ID=AC_familial,Number=A,Type=Integer,Description="Alt Allele Count in individuals with at least one 1st degree relative carrying an IC aneurysm [NCIT:00000]">\n'
+    '##INFO=<ID=AC_familial_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals have familial forms of ICA [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_familial_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals have familial forms of ICA [NCIT:00000] with heterozygous genotypes">\n'
 )
 sporadiccase = (
     '##INFO=<ID=AF_sporadic,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with no relatives carrying an IC aneurysm [NCIT:00000]">\n'
     '##INFO=<ID=AC_sporadic,Number=A,Type=Integer,Description="Alt Allele Count in individuals with no relatives carrying an IC aneurysm [NCIT:00000]">\n'
+    '##INFO=<ID=AC_sporadic_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals have sporadic forms of ICA [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_sporadic_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals have sporadic forms of ICA [NCIT:00000] with heterozygous genotypes">\n'
 )
 discoveryincidental = (
     '##INFO=<ID=AF_discoveryincidental,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with an incidental finding of an IC aneurysm [NCIT:00000]">\n'
@@ -77,10 +81,14 @@ multipleica = (
 aht = (
     '##INFO=<ID=AF_aht,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with arterial hypertension [NCIT:00000]">\n'
     '##INFO=<ID=AC_aht,Number=A,Type=Integer,Description="Alt Allele Count in individuals with arterial hypertension [NCIT:00000]">\n'
+    '##INFO=<ID=AC_aht_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals have arterial hypertension [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_aht_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals have arterial hypertension [NCIT:00000] with heterozygous genotypes">\n'    
 )
 diabetes =(
     '##INFO=<ID=AF_diabetes,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with diabetes [NCIT:00000]">\n'
     '##INFO=<ID=AC_diabetes,Number=A,Type=Integer,Description="Alt Allele Count in individuals with diabetes [NCIT:00000]">\n'
+    '##INFO=<ID=AC_diabetes_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals have diabetes [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_diabetes_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals have diabetes [NCIT:00000] with heterozygous genotypes">\n'  
 )
 dyslipidemia = (
     '##INFO=<ID=AF_dyslipidemia,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with dyslipidemia [NCIT:00000]">\n'

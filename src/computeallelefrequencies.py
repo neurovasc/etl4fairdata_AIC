@@ -64,6 +64,8 @@ agp.add_argument('-t', '--threads', type=int,\
 agp.add_argument('-b', '--batchsize', type=int,\
                 help='Number of lines (variants) to put into a batch',\
                 default=5)
+agp.add_argument('-T', '--testing', action='store_true',\
+                help='Run the script in testing mode with a small number of lines (1000)')
 
 args = agp.parse_args()
 
@@ -98,9 +100,9 @@ def process_batchlines(lines, group, clinical):
         # Getting frequencies and info fields
         
         frequencies, counts, infofields = ut.compute_frequencies(clinicalgenotyped, group)
-        #logging.debug(f'frequencies: {frequencies}')
-        #logging.debug(f'counts: {counts}')
-        #logging.debug(f'infofields: {infofields}')
+        logging.debug(f'frequencies: {frequencies}')
+        logging.debug(f'counts: {counts}')
+        logging.debug(f'infofields: {infofields}')
         # Setting up the info field for the variant
         info_field_for_variant = ''
         #
@@ -168,9 +170,7 @@ if __name__ == "__main__":
              'discoveryincidental', 'discoveryfamilialscreening', 'discoveryruptured', 'discoveryischemic',
              'ruptured', 'multipleica']
     '''
-    group = ['whole', 'female', 'male', 
-             'earlyonset', 
-             'obese', 'overweight']
+    group = ['whole', 'female', 'male', 'earlyonset']
 
     # We open the input file: the query genotype file created with bcftools query
     with open(args.genotypes, 'r') as genotypes_file, open(vcfout, 'w') as outvcf_file:
@@ -180,7 +180,7 @@ if __name__ == "__main__":
         outvcf_file.write(ut.write_headervcf(group, args.sequences, args.info))
         # We process the query genotype file line by line now
         # skip header in input file (bcftools query)
-        next(genotypes_file) 
+        next(genotypes_file)
         # process each batch of lines in a separate thread
         with ProcessPoolExecutor(max_workers=args.threads) as executor:
             futures = []
@@ -205,6 +205,9 @@ if __name__ == "__main__":
                 batchcount += 1
                 linecount += args.batchsize # in batchsize, we have the number of lines
                 print(f"linecount: {linecount}\r", end='')
+                if args.testing:
+                    if linecount >= 1000:
+                        break
             # 
             print("\nChecking completed batched: \n")
             completed_lines = 0
@@ -228,7 +231,9 @@ if __name__ == "__main__":
     # The output file should be a bgzipped vcf file
     # At which point do we index the vcf file? Coordiantes should be in order.
     try:
-        subprocess.run(['bgzip', '-kf', vcfout], check=True)
+        result = subprocess.run(['bgzip', '-kf', vcfout], check=True, capture_output=True, text=True)
+        print("STDOUT:", result.stdout)
+        print("STDERR:", result.stderr)
         print(f"File compressed successfully to {vcfoutgz}")
         subprocess.run(["bcftools", "sort", "-Oz", "-o", vcfoutgzsorted, vcfoutgz], check=True)
         #subprocess.run(["bcftools", "index",  vcfoutgzsorted], check=True)
@@ -236,6 +241,6 @@ if __name__ == "__main__":
     except subprocess.CalledProcessError as e:
         print(f"Error compressing file: {e}")
         # Clean up temporary file if compression fails
-        if os.path.exists(args.outfile):
-            os.remove(args.outfile)
+        #if os.path.exists(args.outfile):
+        #    os.remove(args.outfile)
 

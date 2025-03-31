@@ -50,7 +50,7 @@ def write_headervcf(info, contigfile, infofile):
             sys.exit(1)
     # VCF HEADER: annotations in the INFO field of the original OG input VCF
     annotation = open(infofile, 'r').read().split("\n")
-    tokeep = ['##INFO=<ID=CADD_RAW', '##INFO=<ID=PHRED', '##INFO=<ID=gnomad_AF', '##INFO=<ID=CSQ']
+    tokeep = [] #['##INFO=<ID=CADD_RAW', '##INFO=<ID=PHRED', '##INFO=<ID=gnomad_AF', '##INFO=<ID=CSQ']
     #
     for a in annotation:
         if any(keep in a for keep in tokeep):
@@ -68,30 +68,31 @@ def reshape_infofield(info):
     # Keep only certain fields from the original INFO field of the input vcf file
     # Original annotated file: QCed.VEP.AFctrls.GND.CADD.vcf.gz by R Blanchet
     fields = info.split(';')
-    csq = 'CSQ=nan'
+    #csq = 'CSQ=nan'
     gnomad_AF = 'gnomad_AF=nan'
     gnomad_AF_AFR = 'gnomad_AF_AFR=nan'
     gnomad_AF_EAS = 'gnomad_AF_EAS=nan'
     gnomad_AF_NFE = 'gnomad_AF_NFE=nan'
-    cadd_raw = 'CADD_RAW=nan'
-    cadd_phred = 'PHRED=nan'
+    #cadd_raw = 'CADD_RAW=nan'
+    #cadd_phred = 'PHRED=nan'
 
     for field in fields:
-        if 'CSQ' in field:
-            csq = field
-        if 'gnomad_AF=' in field:
-            gnomad_AF = field
-        if 'gnomad_AF_AFR=' in field:
+        #if 'CSQ' in field:
+        #    csq = field
+        #if 'gnomad_AF=' in field or 'AF=' in field:
+        #    gnomad_AF = field
+        if 'AF_AFR=' in field:
             gnomad_AF_AFR = field
-        if 'gnomad_AF_EAS=' in field:
+        if 'AF_EAS=' in field:
             gnomad_AF_EAS = field
-        if 'gnomad_AF_NFE=' in field:
+        if 'AF_NFE=' in field:
             gnomad_AF_NFE = field
-        if 'CADD_RAW=' in field:
-            cadd_raw = field
-        if 'PHRED=' in field:
-            cadd_phred = field
-    reshaped = ";".join([gnomad_AF, gnomad_AF_AFR, gnomad_AF_EAS, gnomad_AF_NFE, cadd_raw, cadd_phred, csq])
+        #if 'CADD_RAW=' in field:
+        #    cadd_raw = field
+        #if 'PHRED=' in field:
+        #    cadd_phred = field
+    #reshaped = ";".join([gnomad_AF, gnomad_AF_AFR, gnomad_AF_EAS, gnomad_AF_NFE, cadd_raw, cadd_phred, csq])
+    reshaped = ";".join([])
     return reshaped
 #
 ##################################
@@ -161,14 +162,28 @@ def compute_frequencies(df, group):
             af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(overweight_df['genotypes'])
             frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
             counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
-        if "familialcase" in g:
-            familial_df = df[(df['ATCD familial d\'AIC (1er degré)'] == 'Oui certain')]
+        if "familialCase" in g:
+            try:
+                familial_df = df[(df['ATCD familial d\'AIC (1er degré)'] == 'Oui certain')] # real GAIA ICAN extraction
+            except:
+                pass
+            try:
+                familial_df = df[(df['familialcase'] == 'Yes')] # syntheticican2 dataset
+            except:
+                pass
             familial_genotypes = ''.join(familial_df['genotypes'].tolist())
             familial_refc, familial_altc, familial_unkc = familial_genotypes.count('0'), familial_genotypes.count('1'), familial_genotypes.count('.')
             frequencies[i] = calcfreq({'0': familial_refc, '1': familial_altc})
             counts[i] = f"{familial_altc}/{familial_refc+familial_altc}"
         if "sporadiccase" in g:
-            sporadic_df = df[(df['cas sporadique'] == 'Oui')]
+            try:
+                sporadic_df = df[(df['cas sporadique'] == 'Oui')]
+            except:
+                pass
+            try:
+                sporadic_df = df[(df['sporadicCase'] == 'Yes')]
+            except:
+                pass
             sporadic_genotypes = ''.join(sporadic_df['genotypes'].tolist())
             sporadic_refc, sporadic_altc, sporadic_unkc = sporadic_genotypes.count('0'), sporadic_genotypes.count('1'), sporadic_genotypes.count('.')
             frequencies[i] = calcfreq({'0': sporadic_refc, '1': sporadic_altc})
@@ -211,19 +226,40 @@ def compute_frequencies(df, group):
             frequencies[i] = calcfreq({'0': multipleica_refc, '1': multipleica_altc})
             counts[i] = f"{multipleica_altc}/{multipleica_refc+multipleica_altc}"
         if "aht" in g:
-            aht_df = df[(df['hypertension arterielle'] ==  'HTA traitée') | (df['hypertension arterielle'] == 'HTA non traitée')]
+            try:
+                aht_df = df[(df['hypertension arterielle'] ==  'HTA traitée') | (df['hypertension arterielle'] == 'HTA non traitée')]
+            except:
+                pass
+            try:
+                aht_df = df[(df['medicalHistory-arterialHypertension'] == 'Yes')]
+            except:
+                pass
             aht_genotypes = ''.join(aht_df['genotypes'].tolist())
             aht_refc, aht_altc, aht_unkc = aht_genotypes.count('0'), aht_genotypes.count('1'), aht_genotypes.count('.')
             frequencies[i] = calcfreq({'0': aht_refc, '1': aht_altc})
             counts[i] = f"{aht_altc}/{aht_refc+aht_altc}"
         if "diabetes" in g:
-            diabetes_df = df[(df['diabete'] == 'Oui')]
+            try:
+                diabetes_df = df[(df['diabete'] == 'Oui')]
+            except:
+                pass
+            try:
+                diabetes_df = df[(df['medicalHistory-diabetes'] == 'Yes')]
+            except:
+                pass
             diabetes_genotypes = ''.join(diabetes_df['genotypes'].tolist())
             diabetes_refc, diabetes_altc, diabetes_unkc = diabetes_genotypes.count('0'), diabetes_genotypes.count('1'), diabetes_genotypes.count('.')
             frequencies[i] = calcfreq({'0': diabetes_refc, '1': diabetes_altc})
             counts[i] = f"{diabetes_altc}/{diabetes_refc+diabetes_altc}"
         if "dyslipidemia" in g:
-            dyslipidemia_df = df[(df['dyslipidemie'] == 'Oui')]
+            try:
+                dyslipidemia_df = df[(df['dyslipidemie'] == 'Oui')]
+            except:
+                pass
+            try:
+                dyslipidemia_df = df[(df['medicalHistory-dyslipidemia'] == 'Yes')]
+            except:
+                pass
             dyslipidemia_genotypes = ''.join(dyslipidemia_df['genotypes'].tolist())
             dyslipidemia_refc, dyslipidemia_altc, dyslipidemia_unkc = dyslipidemia_genotypes.count('0'), dyslipidemia_genotypes.count('1'), dyslipidemia_genotypes.count('.')
             frequencies[i] = calcfreq({'0': dyslipidemia_refc, '1': dyslipidemia_altc})
@@ -234,7 +270,6 @@ def compute_frequencies(df, group):
 def get_infofieldslabels(group):
     infofields = []
     for g in group:
-        # the labels
         try:
             # here we split the vcf header info fields corresponding to the group
             # of interest, and extract only the labels for the frequencies and counts
@@ -306,13 +341,17 @@ def add_age_of_onset(df):
     Warning: this is quite time consuming, the most time
     consuming part of adding annotations to the VCF file.
         '''
-    df['date de naissance'] = pd.to_datetime(df['date de naissance'], dayfirst=True)
-    df['date du 1er diagnostic'] = pd.to_datetime(df['date du 1er diagnostic'], errors='coerce', dayfirst=True)
-    df['age of onset'] = df.apply(lambda row: (row['date du 1er diagnostic'].year - row['date de naissance'].year 
-                                           - ((row['date du 1er diagnostic'].month, row['date du 1er diagnostic'].day) 
-                                              < (row['date de naissance'].month, row['date de naissance'].day))) 
-                              if pd.notna(row['date du 1er diagnostic']) else pd.NA, axis=1)
-    return df
+    if 'firstDiagnosisAge' in df.columns.tolist():
+        df['age of onset'] = df['firstDiagnosisAge']
+        return df
+    else:
+        df['date de naissance'] = pd.to_datetime(df['date de naissance'], dayfirst=True)
+        df['date du 1er diagnostic'] = pd.to_datetime(df['date du 1er diagnostic'], errors='coerce', dayfirst=True)
+        df['age of onset'] = df.apply(lambda row: (row['date du 1er diagnostic'].year - row['date de naissance'].year 
+                                            - ((row['date du 1er diagnostic'].month, row['date du 1er diagnostic'].day) 
+                                                < (row['date de naissance'].month, row['date de naissance'].day))) 
+                                if pd.notna(row['date du 1er diagnostic']) else pd.NA, axis=1)
+        return df
 
 #
 def check_values_equal(val1, val2):
