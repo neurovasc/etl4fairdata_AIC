@@ -36,7 +36,7 @@ Documentation available at https://ican.univ-nantes.io/variants-kg-schema/
 6) Parallelization function
 
 ### TODOs
-- For variants that do not have a gnomad frequency, should the frequency be set to 0 in the rdf file or simply not included? Now it appears as "NaN"^^xsd:float
+- For variants that do not have a gnomad frequency or other frequency, should the frequency be set to 0 in the rdf file or simply not included? Now it appears as "NaN"^^xsd:float
 - [DONE, september 2024 + february 2025] - Add logger and verbose argument for vcfaggregate3rdf_v2.py 
 - [USELESS, added -T option] Add custom check function that prevents the usage of both --limit and (--chunk or --threads)
 - [USELESS, added -T option] Add custom adaptation of chunksize according to the number of variants in the vcf file
@@ -48,7 +48,7 @@ Documentation available at https://ican.univ-nantes.io/variants-kg-schema/
 as possible
 - [DONE, february 2025] Build rdf in vcfaggregate2rdf in a prettier way: now it is spaghetti code with rdflib
 - [DONE, january 2025] - Add homozygous and heterozygous counts
-- create a sturdier test dataset
+- [DONE, varil 2025] - create a sturdier test dataset --> syntheticican2 (see inex-med Neurovasc jupyter notebook)
 
 ### What happens after the Snakemake pipeline ?
 Setting up a fuseki server for sparql queries
