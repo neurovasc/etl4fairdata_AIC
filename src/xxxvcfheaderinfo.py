@@ -23,7 +23,6 @@ female = (
     '##INFO=<ID=AC_female_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals with female sex [NCIT:00000] with homozygous genotypes">\n'
     '##INFO=<ID=AC_female_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals with female sex [NCIT:00000] with heterozygous genotypes">\n'
     )
-
 earlyonset = (
     '##INFO=<ID=AF_earlyonset,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with early onset [NCIT:00000]">\n'
     '##INFO=<ID=AC_earlyonset,Number=A,Type=Integer,Description="Alt Allele Count in individuals with early onset [NCIT:00000]">\n'
@@ -54,29 +53,11 @@ sporadiccase = (
     '##INFO=<ID=AC_sporadic_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals have sporadic forms of ICA [NCIT:00000] with homozygous genotypes">\n'
     '##INFO=<ID=AC_sporadic_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals have sporadic forms of ICA [NCIT:00000] with heterozygous genotypes">\n'
 )
-discoveryincidental = (
-    '##INFO=<ID=AF_discoveryincidental,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with an incidental finding of an IC aneurysm [NCIT:00000]">\n'
-    '##INFO=<ID=AC_discoveryincidental,Number=A,Type=Integer,Description="Alt Allele Count in individuals with an incidental finding of an IC aneurysm [NCIT:00000]">\n'
-)
-discoveryfamilialscreening = (
-    '##INFO=<ID=AF_discoveryfamilialscreening,Number=A,Type=Float,Description="Alt Allele Frequency within individuals whose IC aneurysms were found through familial screening[NCIT:00000]">\n'
-    '##INFO=<ID=AC_discoveryfamilialscreening,Number=A,Type=Integer,Description="Alt Allele Count in individuals whose IC aneurysms were found through familial screening [NCIT:00000]">\n'
-)
-discoveryruptured = (
-    '##INFO=<ID=AF_discoveryruptured,Number=A,Type=Float,Description="Alt Allele Frequency within individuals whose IC aneurysms were found as a consequence of its rupture [NCIT:00000]">\n'
-    '##INFO=<ID=AC_discoveryruptured,Number=A,Type=Integer,Description="Alt Allele Count in individuals whose IC aneurysms were found as a consequence of its rupture [NCIT:00000]">\n'
-) 
-discoveryischemic = (
-    '##INFO=<ID=AF_discoveryischemic,Number=A,Type=Float,Description="Alt Allele Frequency within individuals whose IC aneurysms were found as a consequence of compressif or ischemic aneurysm symptoms (headaches, diplopia) [NCIT:00000]">\n'
-    '##INFO=<ID=AC_discoveryischemic,Number=A,Type=Integer,Description="Alt Allele Count in individuals whose IC aneurysms was found as a consequence of compressif or ischemic aneurysm symptoms (headaches, diplopia) [NCIT:00000]">\n'
-)
-ruptured =(
-    '##INFO=<ID=AF_ruptured,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with a ruptured IC aneurysm [NCIT:00000]">\n'
-    '##INFO=<ID=AC_ruptured,Number=A,Type=Integer,Description="Alt Allele Count in individuals with a ruptured IC aneurysm [NCIT:00000]">\n'
-)
 multipleica = (
-    '##INFO=<ID=AF_multipleica,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with multiple IC aneurysms [NCIT:00000]">\n'
-    '##INFO=<ID=AC_multipleica,Number=A,Type=Integer,Description="Alt Allele Count in individuals with multiple IC aneurysms [NCIT:00000]">\n'
+    '##INFO=<ID=AF_multipleica,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with multiple ica [NCIT:00000]">\n'
+    '##INFO=<ID=AC_multipleica,Number=A,Type=Integer,Description="Alt Allele Count in individuals with multiple ica [NCIT:00000]">\n'
+    '##INFO=<ID=AC_multipleica_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals with multiple ica [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_multipleica_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals with multiple ica [NCIT:00000] with heterozygous genotypes">\n'
 )
 aht = (
     '##INFO=<ID=AF_aht,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with arterial hypertension [NCIT:00000]">\n'
@@ -87,12 +68,33 @@ aht = (
 diabetes =(
     '##INFO=<ID=AF_diabetes,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with diabetes [NCIT:00000]">\n'
     '##INFO=<ID=AC_diabetes,Number=A,Type=Integer,Description="Alt Allele Count in individuals with diabetes [NCIT:00000]">\n'
-    '##INFO=<ID=AC_diabetes_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals have diabetes [NCIT:00000] with homozygous genotypes">\n'
-    '##INFO=<ID=AC_diabetes_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals have diabetes [NCIT:00000] with heterozygous genotypes">\n'  
+    '##INFO=<ID=AC_diabetes_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals that have diabetes [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_diabetes_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals that have diabetes [NCIT:00000] with heterozygous genotypes">\n'  
 )
-dyslipidemia = (
-    '##INFO=<ID=AF_dyslipidemia,Number=A,Type=Float,Description="Alt Allele Frequency within individuals with dyslipidemia [NCIT:00000]">\n'
-    '##INFO=<ID=AC_dyslipidemia,Number=A,Type=Integer,Description="Alt Allele Count in individuals with dyslipidemia [NCIT:00000]">\n'
+neversmoked = (
+    '##INFO=<ID=AF_neversmoked,Number=A,Type=Float,Description="Alt Allele Frequency within individuals that never smoked [NCIT:00000]">\n'
+    '##INFO=<ID=AC_neversmoked,Number=A,Type=Integer,Description="Alt Allele Count in individuals that never smoked [NCIT:00000]">\n'
+    '##INFO=<ID=AC_neversmoked_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals that never smoked [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_neversmoked_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals that never smoked [NCIT:00000] with heterozygous genotypes">\n'  
+
+)
+currentlysmoking = (
+    '##INFO=<ID=AF_currentlysmoking,Number=A,Type=Float,Description="Alt Allele Frequency within individuals that are currently smoking [NCIT:00000]">\n'
+    '##INFO=<ID=AC_currentlysmoking,Number=A,Type=Integer,Description="Alt Allele Count in individuals that are currently smoking [NCIT:00000]">\n'
+    '##INFO=<ID=AC_currentlysmoking_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals that are currently smoking [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_currentlysmoking_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals that are currently smoking [NCIT:00000] with heterozygous genotypes">\n'  
+)
+treatment = (
+    '##INFO=<ID=AF_treatment,Number=A,Type=Float,Description="Alt Allele Frequency within individuals that had an ica treatment [NCIT:00000]">\n'
+    '##INFO=<ID=AC_treatment,Number=A,Type=Integer,Description="Alt Allele Count in individuals that had an ica treatment [NCIT:00000]">\n'
+    '##INFO=<ID=AC_treatment_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals that had an ica treatment [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_treatment_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals that had an ica treatment [NCIT:00000] with heterozygous genotypes">\n'  
+)
+treatmentcoils = (
+    '##INFO=<ID=AF_treatmentcoils,Number=A,Type=Float,Description="Alt Allele Frequency within individuals that had an ica treatment with coils [NCIT:00000]">\n'
+    '##INFO=<ID=AC_treatmentcoils,Number=A,Type=Integer,Description="Alt Allele Count in individuals that had an ica treatment with coils [NCIT:00000]">\n'
+    '##INFO=<ID=AC_treatmentcoils_hom,Number=1,Type=Integer,Description="Alt Allele Count in individuals that had an ica treatment with coils [NCIT:00000] with homozygous genotypes">\n'
+    '##INFO=<ID=AC_treatmentcoils_het,Number=1,Type=Integer,Description="Alt Allele Count in individuals that had an ica treatment with coils [NCIT:00000] with heterozygous genotypes">\n'  
 )
 #
 info_headerchunk = { 
@@ -104,14 +106,12 @@ info_headerchunk = {
     'overweight' : overweight,
     'familialcase' : familialcase,
     'sporadiccase' : sporadiccase,
-    'discoveryincidental' : discoveryincidental,
-    'discoveryfamilialscreening' : discoveryfamilialscreening,
-    'discoveryischemic' : discoveryischemic,
-    'discoveryruptured' : discoveryruptured,
-    'ruptured' : ruptured,
     'multipleica' : multipleica,
     'aht' : aht,
     'diabetes' : diabetes,
-    'dyslipidemia' : dyslipidemia
+    'neversmoked' : neversmoked,
+    'currentlysmoking' : currentlysmoking,
+    'treatment' : treatment, 
+    'treatmentcoils' : treatmentcoils
 }
 #

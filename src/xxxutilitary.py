@@ -118,153 +118,117 @@ def compute_frequencies(df, group):
     infofields = get_infofieldslabels(group)
     #
     for i, g in enumerate(group):
+        # OK CHECK 04152025 syntheticican2
         if 'whole' == g: # whole population in the OC vcf file
             af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(df['genotypes'])
             frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
             counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
+        # OK CHECK 04152025 syntheticican2
         if "female" == g: # female population in the OC vcf file
             # filter based on clinical/phenotypical trait 
             femalesex_list = ['F', 'female', 'femme']
-            female_df = df[df['sexe'].isin(femalesex_list)]
+            female_df = df[df['sex'].isin(femalesex_list)]
             # process 
             af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(female_df['genotypes'])
             frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
             counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
+        # OK CHECK 04152025 syntheticican2
         if "male" == g: # male population in the OC vcf file
             # filter based on clinical/phenotypical trait
             malesex_list = ['M', 'male', 'homme', 'H']
-            male_df = df[df['sexe'].isin(malesex_list)]
+            male_df = df[df['sex'].isin(malesex_list)]
             # process
             af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(male_df['genotypes'])
             frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
             counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
+        # OK CHECK 04152025 syntheticican2
         if "earlyonset" in g: # early onset population in the OC vcf file
             # filter based on clinical/phenotypical trait
-            df = add_age_of_onset(df)
-            earlyonset_df = df[df['age of onset']<35]
+            earlyonset_df = df[(df['firstDiagnosisAge'] < 35)]
             # process
             af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(earlyonset_df['genotypes'])
             frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
             counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
+        # OK CHECK 04152025 syntheticican2
         if "obese" in g:
             # filter based on clinical/phenotypical trait
-            df['imc'] = pd.to_numeric(df['imc'], errors='coerce')
-            obese_df = df[(df['imc'] >= 30) & (df['imc'] < 100)]
+            df['bodyMassIndex'] = pd.to_numeric(df['bodyMassIndex'], errors='coerce')
+            obese_df = df[(df['bodyMassIndex'] >= 30) & (df['bodyMassIndex'] < 100)]
             # process
             af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(obese_df['genotypes'])
             frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
             counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
-        if "overweight" in g:
+        # OK CHECK 04152025 syntheticican2
+        if "familialcase" in g:
             # filter based on clinical/phenotypical trait
-            df['imc'] = pd.to_numeric(df['imc'], errors='coerce')
-            overweight_df = df[(df['imc'] >= 25) & (df['imc'] < 30)]
+            familial_df = df[(df['familialCase'] == True)]
             # process
-            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(overweight_df['genotypes'])
-            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het} 
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(familial_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het}
             counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
-        if "familialCase" in g:
-            try:
-                familial_df = df[(df['ATCD familial d\'AIC (1er degré)'] == 'Oui certain')] # real GAIA ICAN extraction
-            except:
-                pass
-            try:
-                familial_df = df[(df['familialcase'] == 'Yes')] # syntheticican2 dataset
-            except:
-                pass
-            familial_genotypes = ''.join(familial_df['genotypes'].tolist())
-            familial_refc, familial_altc, familial_unkc = familial_genotypes.count('0'), familial_genotypes.count('1'), familial_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': familial_refc, '1': familial_altc})
-            counts[i] = f"{familial_altc}/{familial_refc+familial_altc}"
-        if "sporadiccase" in g:
-            try:
-                sporadic_df = df[(df['cas sporadique'] == 'Oui')]
-            except:
-                pass
-            try:
-                sporadic_df = df[(df['sporadicCase'] == 'Yes')]
-            except:
-                pass
-            sporadic_genotypes = ''.join(sporadic_df['genotypes'].tolist())
-            sporadic_refc, sporadic_altc, sporadic_unkc = sporadic_genotypes.count('0'), sporadic_genotypes.count('1'), sporadic_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': sporadic_refc, '1': sporadic_altc})
-            counts[i] = f"{sporadic_altc}/{sporadic_refc+sporadic_altc}"
-        if "discoveryincidental" in g:
-            discovery_df = df[(df['circonstances de decouverte'] == 'Fortuite')]
-            discovery_genotypes = ''.join(discovery_df['genotypes'].tolist())
-            discovery_refc, discovery_altc, discovery_unkc = discovery_genotypes.count('0'), discovery_genotypes.count('1'), discovery_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': discovery_refc, '1': discovery_altc})
-            counts[i] = f"{discovery_altc}/{discovery_refc+discovery_altc}"
-        if "discoveryfamilialscreening" in g:
-            discovery_df = df[(df['circonstances de decouverte'] == 'Dépistage familial')]
-            discovery_genotypes = ''.join(discovery_df['genotypes'].tolist())
-            discovery_refc, discovery_altc, discovery_unkc = discovery_genotypes.count('0'), discovery_genotypes.count('1'), discovery_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': discovery_refc, '1': discovery_altc})
-            counts[i] = f"{discovery_altc}/{discovery_refc+discovery_altc}"
-        if "discoveryruptured" in g:
-            discovery_df = df[(df['circonstances de decouverte'] == 'Rupture AIC')]
-            discovery_genotypes = ''.join(discovery_df['genotypes'].tolist())
-            discovery_refc, discovery_altc, discovery_unkc = discovery_genotypes.count('0'), discovery_genotypes.count('1'), discovery_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': discovery_refc, '1': discovery_altc})
-            counts[i] = f"{discovery_altc}/{discovery_refc+discovery_altc}"
-        if "discoveryischemic" in g:
-            discovery_df = df[(df['circonstances de decouverte'] == 'Compressif ou ischémique')]
-            discovery_genotypes = ''.join(discovery_df['genotypes'].tolist())
-            discovery_refc, discovery_altc, discovery_unkc = discovery_genotypes.count('0'), discovery_genotypes.count('1'), discovery_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': discovery_refc, '1': discovery_altc})
-            counts[i] = f"{discovery_altc}/{discovery_refc+discovery_altc}"
-        if "ruptured" in g:
-            ruptured_df = df[((df['AIC 1 Rompu'] == 'Oui')) | ((df['AIC 2 Rompu'] == 'Oui')) | ((df['AIC 3 Rompu'] == 'Oui'))
-                             | ((df['AIC 4 Rompu'] == 'Oui')) | ((df['AIC 5 Rompu'] == 'Oui'))]
-            ruptured_genotypes = ''.join(ruptured_df['genotypes'].tolist())
-            ruptured_refc, ruptured_altc, ruptured_unkc = ruptured_genotypes.count('0'), ruptured_genotypes.count('1'), ruptured_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': ruptured_refc, '1': ruptured_altc})
-            counts[i] = f"{ruptured_altc}/{ruptured_refc+ruptured_altc}"
-        if "multipleica" in g:
-            multipleica_df = df[(df['nb d anevrismes'] > 1)]
-            multipleica_genotypes = ''.join(multipleica_df['genotypes'].tolist())
-            multipleica_refc, multipleica_altc, multipleica_unkc = multipleica_genotypes.count('0'), multipleica_genotypes.count('1'), multipleica_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': multipleica_refc, '1': multipleica_altc})
-            counts[i] = f"{multipleica_altc}/{multipleica_refc+multipleica_altc}"
+        # OK CHECK 04152025 syntheticican2
         if "aht" in g:
-            try:
-                aht_df = df[(df['hypertension arterielle'] ==  'HTA traitée') | (df['hypertension arterielle'] == 'HTA non traitée')]
-            except:
-                pass
-            try:
-                aht_df = df[(df['medicalHistory-arterialHypertension'] == 'Yes')]
-            except:
-                pass
-            aht_genotypes = ''.join(aht_df['genotypes'].tolist())
-            aht_refc, aht_altc, aht_unkc = aht_genotypes.count('0'), aht_genotypes.count('1'), aht_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': aht_refc, '1': aht_altc})
-            counts[i] = f"{aht_altc}/{aht_refc+aht_altc}"
+            # filter based on clinical/phenotypical trait
+            hta_df = df[(df['medicalHistory-arterialHypertension'] == True)]
+            # process
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(hta_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het}
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
+        # OK CHECK 04152025 syntheticican2
         if "diabetes" in g:
-            try:
-                diabetes_df = df[(df['diabete'] == 'Oui')]
-            except:
-                pass
-            try:
-                diabetes_df = df[(df['medicalHistory-diabetes'] == 'Yes')]
-            except:
-                pass
-            diabetes_genotypes = ''.join(diabetes_df['genotypes'].tolist())
-            diabetes_refc, diabetes_altc, diabetes_unkc = diabetes_genotypes.count('0'), diabetes_genotypes.count('1'), diabetes_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': diabetes_refc, '1': diabetes_altc})
-            counts[i] = f"{diabetes_altc}/{diabetes_refc+diabetes_altc}"
-        if "dyslipidemia" in g:
-            try:
-                dyslipidemia_df = df[(df['dyslipidemie'] == 'Oui')]
-            except:
-                pass
-            try:
-                dyslipidemia_df = df[(df['medicalHistory-dyslipidemia'] == 'Yes')]
-            except:
-                pass
-            dyslipidemia_genotypes = ''.join(dyslipidemia_df['genotypes'].tolist())
-            dyslipidemia_refc, dyslipidemia_altc, dyslipidemia_unkc = dyslipidemia_genotypes.count('0'), dyslipidemia_genotypes.count('1'), dyslipidemia_genotypes.count('.')
-            frequencies[i] = calcfreq({'0': dyslipidemia_refc, '1': dyslipidemia_altc})
-            counts[i] = f"{dyslipidemia_altc}/{dyslipidemia_refc+dyslipidemia_altc}"
+            # filter based on clinical/phenotypical trait
+            diabetes_df = df[(df['medicalHistory-diabetes'] == True)]
+            # process
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(diabetes_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het}
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
+        # OK CHECK 04152025 syntheticican2
+        if "neversmoked" in g:
+            # filter based on clinical/phenotypical trait
+            neversmoked_df = df[(df['lifestyle-tobacco_neversmoked'] == True)]
+            # process
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(neversmoked_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het}
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
+        # OK CHECK 04152025 syntheticican2
+        if "currentlysmoking" in g:
+            # filter based on clinical/phenotypical trait
+            currentlysmoking_df = df[(df['lifestyle-tobacco_currentlysmoking'] == True)]
+            # process
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(currentlysmoking_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het}
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
+        # OK CHECK 04152025 syntheticican2
+        if "multipleica" in g:
+            # filter based on clinical/phenotypical trait
+            multipleica_df = df[(df['multipleAneurysms'] == True)]
+            # process
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(multipleica_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het}
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
+        if "treatment" in g:
+            # filter based on clinical/phenotypical trait
+            treatment_df = df[df['aic-1-treatment'] | df['aic-2-treatment'] | \
+                              df['aic-3-treatment'] | df['aic-4-treatment'] | df['aic-5-treatment']] 
+            # process
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(treatment_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het}
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
+        if "treatmentcoils" in g:
+            # filter based on clinical/phenotypical trait
+            treatmentcoils_df = df[(df['aic-1-treatmentType'] == 'Coils') | (df['aic-2-treatmentType'] == 'Coils') | \
+                                    (df['aic-3-treatmentType'] == 'Coils') | (df['aic-4-treatmentType'] == 'Coils') | \
+                                    (df['aic-5-treatmentType'] == 'Coils')]
+            # process
+            af, af_hom, af_het, ac, ac_hom, ac_het = process_genotypes(treatmentcoils_df['genotypes'])
+            frequencies[i] = {'allz': af, 'homoz': af_hom, 'heteroz': af_het}
+            counts[i] = {'allz': ac, 'homoz': ac_hom, 'heteroz': ac_het}
         #
+        verbose = 0
+        if verbose:
+            print(f"Group: {g}, \
+                frequencies: {frequencies[i]}, \
+                counts: {counts[i]}")
     return frequencies, counts, infofields
 #
 def get_infofieldslabels(group):
@@ -315,26 +279,52 @@ def process_genotypes(genotypes):
     - the frequency of the alternative allele in homozygous state
     - the frequency of the alternative allele in heterozygous state
     '''
-    # genotypes af and ac regardless of zygosities
-    genotypeslist = genotypes.tolist()
-    refc, altc,  = sum(item.count('0') for item in genotypeslist), sum(item.count('1') for item in genotypeslist)
-    #unkc = sum(item.count('.') for item in genotypeslist)
-    af = calcfreq({'0': refc, '1': altc}) # needs to be FLOAT, as described in the vcf header
-    ac = f"{altc}" # needs to be INTEGER, as described in the vcf header
-    # homozygous genotypes 
-    hom_genotypeslist = [x for x in genotypes if x not in {'0/1', '1/0', './.'}]
-    hom_refc, hom_altc = sum(item.count('0') for item in hom_genotypeslist), sum(item.count('1') for item in hom_genotypeslist)
-    #hom_unkc = sum(item.count('.') for item in hom_genotypeslist)
-    af_hom = calcfreq({'0': hom_refc, '1': hom_altc})
-    ac_hom = f"{hom_altc}" # allele counts, in homozygous status, meaning we get the number of individuals by /2 
-    # heterozygous genotypes 
-    het_genotypeslist = [x for x in genotypes if x not in {'1/1', '0/0', './.'}]
-    het_refc, het_altc = sum(item.count('0') for item in het_genotypeslist), sum(item.count('1') for item in het_genotypeslist)
-    #het_unkc = sum(item.count('.') for item in het_genotypeslist)
-    af_het = calcfreq({'0': het_refc, '1': het_altc})
-    ac_het = f"{het_altc}" 
     #
-    return af, af_hom, af_het, ac, ac_hom, ac_het
+    genotypeslist = genotypes.tolist()
+    #
+    for i in range(len(genotypeslist)):
+        g = genotypeslist[i]
+        newg = g.replace('|', '/') # if phased genotypes
+        genotypeslist[i] = newg
+    #
+    # TOTAL ALTERNATE ALLELE COUNT AND FREQUENCY
+    totalAlleleCount = len(genotypeslist)*2 
+    totalReferenceAlleleCount = sum(item.count('0') for item in genotypeslist)
+    totalAlternateAlleleCount = sum(item.count('1') for item in genotypeslist)
+    #
+    totalAlternateAlleleFrequency = calcfreq({'0': totalReferenceAlleleCount, '1': totalAlternateAlleleCount}) # needs to be FLOAT, as described in the vcf header
+    totalAlternateAlleleCount = f"{totalAlternateAlleleCount}" # needs to be INTEGER, as described in the vcf header
+    #
+    # ALTERNATE ALLELE COUNT AND FREQUENCY IN HOMOZYGOUS GENOTYPES
+    # What is the alternate allele frequency among homozygous individuals? 
+    homozygousGenotypeslist = [x for x in genotypeslist if x not in {'0/1', '1/0', './.'}]
+    homozygousReferenceAlleleCount = sum(item.count('0') for item in homozygousGenotypeslist)
+    homozygousAlternateAlleleCount =  sum(item.count('1') for item in homozygousGenotypeslist)
+    homozygousAlternateAlleleFrequency = calcfreq({'0': homozygousReferenceAlleleCount, '1': homozygousAlternateAlleleCount})
+    homozygousAlternateAlleleCount = f"{homozygousAlternateAlleleCount}" # allele counts, in homozygous status, meaning we get the number of individuals by /2 
+    #
+    # ALTERNATE ALLELE COUNT AND FREQUENCY IN HETEROZYGOUS GENOTYPES
+    # What is the alternate allele frequency among heterozygous individuals? Always 0.5 of course
+    # We only want to know the count anyway.
+    heterozygousGenotypeslist = [x for x in genotypeslist if x not in {'0/0', '1/1', './.'}]
+    heterozygousReferenceAlleleCount = sum(item.count('0') for item in heterozygousGenotypeslist)
+    heterozygousAlternateAlleleCount =  heterozygousReferenceAlleleCount # sum(item.count('1') for item in heterozygousGenotypeslist)
+    heterozygousAlternateAlleleFrequency = 0.5 #calcfreq({'0': heterozygousReferenceAlleleCount, '1': heterozygousAlternateAlleleCount})
+    heterozygousReferenceAlleleCount = f"{heterozygousReferenceAlleleCount}" # allele counts, in homozygous status, meaning we get the number of individuals by /2
+    #
+    verbose = 0
+    if verbose:
+        print("Total Alleles:", len(genotypeslist)*2)
+        print("totalReferenceAlleleCount:", totalReferenceAlleleCount)
+        print("totalAlternateAlleleCount:",  totalAlternateAlleleCount)
+        print("alternateAlleleFrequency:", totalAlternateAlleleFrequency)
+        print("alternateAlleleCount", totalAlternateAlleleCount)
+        print("homozygousAlternateAlleleCount:", homozygousAlternateAlleleCount)
+        print("homozygousAlternateAlleleFrequency:", homozygousAlternateAlleleFrequency)
+        print("heterozygousAlternateAlleleCount:", heterozygousAlternateAlleleCount)
+        print("heterozygousAlternateAlleleFrequency:", heterozygousAlternateAlleleFrequency)
+    #
+    return totalAlternateAlleleFrequency, homozygousAlternateAlleleFrequency, heterozygousAlternateAlleleFrequency, totalAlternateAlleleCount, homozygousAlternateAlleleCount, heterozygousAlternateAlleleCount
 #
 def add_age_of_onset(df):
     ''' Add the age of onset to the dataframe

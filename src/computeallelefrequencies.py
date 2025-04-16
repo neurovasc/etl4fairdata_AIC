@@ -98,7 +98,6 @@ def process_batchlines(lines, group, clinical):
         ##################################################
         #
         # Getting frequencies and info fields
-        
         frequencies, counts, infofields = ut.compute_frequencies(clinicalgenotyped, group)
         logging.debug(f'frequencies: {frequencies}')
         logging.debug(f'counts: {counts}')
@@ -170,7 +169,10 @@ if __name__ == "__main__":
              'discoveryincidental', 'discoveryfamilialscreening', 'discoveryruptured', 'discoveryischemic',
              'ruptured', 'multipleica']
     '''
-    group = ['whole', 'female', 'male', 'earlyonset']
+    group = ['whole', 'female', 'male', 'earlyonset', 'obese',
+             'familialcase', 'aht', 'diabetes', 
+             'neversmoked', 'currentlysmoking', 'multipleica', 
+             'treatment', 'treatmentcoils']
 
     # We open the input file: the query genotype file created with bcftools query
     with open(args.genotypes, 'r') as genotypes_file, open(vcfout, 'w') as outvcf_file:

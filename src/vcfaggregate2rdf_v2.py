@@ -136,6 +136,49 @@ def clean_temp_ttlfiles():
     temp_files = glob.glob(os.path.join(temp_folder, '*.ttl'))
     for file in temp_files:
         os.remove(file)
+#
+def merge_turtle_files_clean(ttl_files, output_path, loggy=None):
+    """
+    Merge Turtle files as text, keeping only the first file's prefixes.
+    Assumes all TTL files are valid and use consistent prefixes.
+    """
+    prefix_lines = []
+    body_lines = []
+    prefix_seen = False
+
+    for count, filepath in enumerate(ttl_files, 1):
+        if loggy and (count % 100 == 0 or count == len(ttl_files)):
+            loggy.debug(f"Merging file {count}/{len(ttl_files)}: {filepath}")
+
+        with open(filepath, 'r') as infile:
+            lines = infile.readlines()
+
+        local_prefix = []
+        local_body = []
+
+        for line in lines:
+            if line.strip().startswith('@prefix'):
+                if not prefix_seen:
+                    local_prefix.append(line)
+            else:
+                local_body.append(line)
+
+        if not prefix_seen:
+            prefix_lines = local_prefix
+            prefix_seen = True
+
+        body_lines.extend(local_body)
+    # Ensure there are no duplicates
+
+    # Write the final output
+    with open(output_path, 'w') as outfile:
+        outfile.writelines(prefix_lines)
+        outfile.write('\n')
+        outfile.writelines(body_lines)
+
+    if loggy:
+        loggy.info(f"Merged {len(ttl_files)} TTL files into {output_path} with single prefix block.")
+
 # Main
 if __name__ == "__main__":
     # Check validity of the VCF file
@@ -157,7 +200,7 @@ if __name__ == "__main__":
     loggy.info(f"There are {len(lines)} variants to process.")
     if args.testing:
         loggy.debug("### Processing the 150 variants, for testing purposes ###")
-        lines = lines[207400:]
+        lines = lines[:1500]
     # Parallel processing of the variants
     chunksize = args.chunksize
     loggy.info("### Initiating multi-threading with futures ###")
@@ -165,34 +208,22 @@ if __name__ == "__main__":
         loggy.debug(f"Submitting to concurrent executor with {args.threads} threads.")
         futures = [executor.submit(process_variants, lines[chunk:chunk+chunksize], 
                                    chunk) for chunk in range(0, len(lines), chunksize)]
-        loggy.debug(f"Finished building futures. Waiting for results.")
+        loggy.debug(f"Finished building futures. Waiting for results. Number of futures: {len(futures)}")
         results = [future.result() for future in concurrent.futures.as_completed(futures)]
     nb_chunks = len(results)
     loggy.info(f"### Finished processing all {nb_chunks} vcf chunks into subgraphs. ###")
     # Merging all the pocessed variants into one turtle file
-    loggy.info(f"Merging all temp .ttl files.")
-    count = 0
-    # The turtle files should not be loaded into memory
-    # but rather serialized to the final file
-    temporary_merge = args.tempdir + '/temp_merge.ttl'
-    # Empty file if it already exists
-    if os.path.exists(temporary_merge):
-        open(temporary_merge, 'w').close()
-    # Get all the turtle files in temp
-    ttlfiles = glob.glob(args.tempdir + '/' +str(os.path.basename(args.rdf))+'_*_intermediate.ttl')
-    # Merge all the turtle files into one, without loading them into memory all at once
-    with open(temporary_merge, 'w') as f:
-        for ttl in ttlfiles:
-            count += 1
-            if count%100 == 0 or count == nb_chunks:
-                loggy.debug(f"Merging files: {count}/{nb_chunks}")
-            graph = Graph()
-            graph.parse(ttl, format='turtle')
-            f.write(graph.serialize(format='turtle'))
-    # Create graph for final serialization
-    megag = create_rdfgraph_namespace() # merged graph
-    megag.parse(temporary_merge, format='turtle')
-    megag.serialize(args.rdf, format="turtle")
+    loggy.info(f"Merging all temp .ttl files. Temporary folder: {args.tempdir}")
+    #
+    ttlfiles = glob.glob(os.path.join(args.tempdir, f"{os.path.basename(args.rdf)}_*_intermediate.ttl"))
+    merge_turtle_files_clean(ttlfiles, args.rdf, loggy=None)
+    #
+    # Ensure no duplicates
+    loggy.info(f"Ensuring no duplicates in {args.tempdir} (serialization). Be mindful of memory usage.")
+    g = Graph()
+    g.parse(args.rdf, format="ttl")
+    g.serialize(destination=args.rdf, format="turtle")
+    #
     loggy.info("### Finished merging temp .ttl files. ###")
     loggy.info(f"Checking if valid turtle file: {args.rdf}.")
     okttl = ut.color_truefalse(check_turtle(args.rdf))

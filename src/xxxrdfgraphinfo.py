@@ -18,11 +18,15 @@ SIO = Namespace('http://semanticscience.org/resource/SIO_')
 SKOS = Namespace('http://www.w3.org/2004/02/skos/core#')
 SO = Namespace('http://purl.obolibrary.org/obo/SO_')
 XSD = Namespace('http://www.w3.org/2001/XMLSchema#')
+RO = Namespace('http://purl.obolibrary.org/obo/RO_')
+HP = Namespace('http://purl.obolibrary.org/obo/HP_')
+ORPHA = Namespace('http://www.orpha.net/ORDO/Orphanet_')
 
 namespace = {'faldo' : FALDO, 'aggrvar' : AGGRVAR, 'aic' : ICAN,
              'geno' : GENO, 'hpo' : HPO, 'linkml' : LINKML, 'mondo' : MONDO,
              'ncit' : NCIT, 'owl' : OWL, 'rdf' : RDF, 'rdfs' : RDFS,
-             'sio' : SIO, 'skos' : SKOS, 'so' : SO, 'xsd' : XSD}
+             'sio' : SIO, 'skos' : SKOS, 'so' : SO, 'xsd' : XSD, 'ro' : RO,
+             'hp' : HP, 'orpha' : ORPHA}
 #
 # Building nodes
 #
@@ -82,6 +86,22 @@ def build_subpopulation_n(phenotype):
     '''
     return f"Subpopulation/{phenotype}"
 #
+def build_phenotype_n(phenotype):
+    '''
+    '''
+    phenocodes = {'female': NCIT['C16576'], 
+                  'male' : NCIT['C20197'],
+                  'aht': HP['0000822'], 
+                  'obese': NCIT['C159658'],
+                  'currentlysmoking': NCIT['C17934'],
+                  'familial': ORPHA['231160']}
+    #print(f"Phenotype: {phenotype}")
+    #print(f"Phenotype code: {phenocodes[phenotype]}")
+    #print(f"Phenotype codes: {phenocodes}")
+    phenotype_code = phenocodes[phenotype]
+    return phenotype_code
+
+#
 # Building strings / values
 #
 def build_variant_HGVSid(chromosome, position, reference, alternate):
@@ -91,8 +111,25 @@ def build_variant_HGVSid(chromosome, position, reference, alternate):
     chridandmore = pd.read_csv('datasets/hg38_ids_report_sequences.tsv', sep='\t') # hardcoded
     # source : https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001405.40/
     refseqids = dict(zip(chridandmore['Sequence name'], chridandmore['RefSeq seq accession']))
-    HGVSid = f"HGVSid:{refseqids[chromosome]}:g.{position}{reference}>{alternate}"
-    return HGVSid
+
+    HGVSid = pd.NA
+    if len(reference) == 1 and len(alternate) == 1:
+        # Substitution: g.123A>G
+        HGVSid = f"{refseqids[chromosome]}:g.{position}{reference}>{alternate}"
+    elif len(reference) > 1 and alternate == reference[0]:
+        # Deletion: g.123_125del
+        start = position + 1
+        end = position + len(reference) - 1
+        HGVSid = f"{refseqids[chromosome]}:g.{start}_{end}del"
+    elif reference == reference[0] and len(alternate) > 1:
+        # Insertion: g.123_124insGTA (inserts between pos and pos+1)
+        inserted_seq = alternate[1:]
+        start = position
+        end = position + 1
+        HGVSid = f"{refseqids[chromosome]}:g.{start}_{end}ins{inserted_seq}"
+    else:
+        raise ValueError("Unsupported variant type or inconsistent REF/ALT format.")
+    return f"HGVSid:{HGVSid}"
 #
 def build_variant_refallele(chromosome, position, reference, alternate):
     return reference
@@ -258,9 +295,9 @@ def build_rdfgraph(g, df):
         #
         # schema: light purple
         g.add((ICAN[region_referencesequence_n], RDF.type, SO['0000353']))
-        g.add((ICAN[region_referencesequence_n], RDF.label, Literal(chromosome, datatype=XSD.string)))
-        g.add((ICAN[region_referencesequence_n], SO['000300'], Literal(region_referencesequence_genbankid, datatype=XSD.string)))
-        g.add((ICAN[region_referencesequence_n], OWL.sameAs, Literal(region_referencesequence_refseqid, datatype=XSD.string)))
+        g.add((ICAN[region_referencesequence_n], RDF.label, Literal(chromosome, datatype=XSD.string))) # label 1 or 22
+        g.add((ICAN[region_referencesequence_n], SO['000300'], Literal(region_referencesequence_genbankid, datatype=XSD.string))) # ena sequenceid
+        g.add((ICAN[region_referencesequence_n], OWL.sameAs, Literal(region_referencesequence_refseqid, datatype=XSD.string))) # refseqid
         #
         # schema: light cyan
         g.add((ICAN[region_exactposition_start_n], FALDO['position'], Literal(region_exactposition_start, datatype=XSD.integer)))
@@ -270,11 +307,11 @@ def build_rdfgraph(g, df):
         # Linking variant to Cohort and Subpopulations' Observations
         #
         # Variant to Cohort
-        cohort = build_cohort_n()
+        cohort = build_cohort_n() # Details can be build in another script, separately
         #
         # schema: light orange
         g.add((ICAN[variant_iid], SIO['001403'], ICAN[cohort])) # variant is associated with Cohort
-        g.add((ICAN[cohort], RDF.type, NCIT['C61512']))
+        g.add((ICAN[cohort], RDF.type, NCIT['C61512'])) # ICAN is a cohort
         #
         # Observations in info field of VCF
         # An observation is a combination of a variant, a phenotype (or several phenotypes) and a zygosity
@@ -309,48 +346,68 @@ def build_rdfgraph(g, df):
                 # Observation to its attributes: count, frequency, zygosity and Subpopulation
                 # schema: quite obvious red
                 #
-                g.add((ICAN[variant_iid], SIO['001403'], ICAN[observation_n])) # variant is associated with Observation
-                g.add((ICAN[observation_n], RDF.type, SIO['000649'])) # Observation is an sio:000649 'information_processing' class
-                #
-                # Frequency and Counts are not always both present for observations.
-                #
-                # Frequency
-                # schema: obviously vibrant blue
                 try:
-                    frequency = matching_observation['frequency'] # --> value
-                    # Frequency
-                    g.add((ICAN[observation_n], SIO['000900'], ICAN[observationFrequency_n])) # observation has frequency
-                    g.add((ICAN[observationFrequency_n], RDF.type, SIO['001367'])) # frequency is frequency
-                    g.add((ICAN[observationFrequency_n], SIO['000300'],Literal(frequency, datatype=XSD.float)))
-                except: 
-                    pass
-                # Count
-                # schema: obviously vibrant blue
-                try:
-                    count = matching_observation['count'] # --> value
-                    # Count
-                    g.add((ICAN[observation_n], SIO['000216'], ICAN[observationCount_n])) # has count (measurement value)
-                    g.add((ICAN[observationCount_n], RDF.type, SIO['000794'])) # count is count
-                    g.add((ICAN[observationCount_n], SIO['000300'], Literal(count, datatype=XSD.integer)))
+                    frequency = float(matching_observation['frequency']) # --> value
                 except:
+                    frequency = 0
+                try:
+                    count = int(matching_observation['count']) # --> value
+                except:
+                    count = 0
+                # Do not build an observation if count or frequency are 0
+                # It will save time and space
+                # OR: because an observation does not always have count and frequecy
+                if count > 0 or frequency > 0:
+                    g.add((ICAN[variant_iid], SIO['001403'], ICAN[observation_n])) # variant is associated with Observation
+                    g.add((ICAN[observation_n], RDF.type, SIO['000649'])) # Observation is an sio:000649 'information_processing' class
+                    #
+                    # Frequency and Counts are not always both present for observations.
+                    #
+                    # Frequency
+                    # schema: obviously vibrant blue
+                    try:
+                        #frequency = matching_observation['frequency'] # --> value
+                        # Frequency
+                        g.add((ICAN[observation_n], SIO['000900'], ICAN[observationFrequency_n])) # observation has frequency
+                        g.add((ICAN[observationFrequency_n], RDF.type, SIO['001367'])) # frequency is frequency
+                        g.add((ICAN[observationFrequency_n], SIO['000300'],Literal(frequency, datatype=XSD.float)))
+                    except: 
+                        pass
+                    # Count
+                    # schema: obviously vibrant blue
+                    try:
+                        #count = matching_observation['count'] # --> value
+                        # Count
+                        g.add((ICAN[observation_n], SIO['000216'], ICAN[observationCount_n])) # has count (measurement value)
+                        g.add((ICAN[observationCount_n], RDF.type, SIO['000794'])) # count is count
+                        g.add((ICAN[observationCount_n], SIO['000300'], Literal(count, datatype=XSD.integer)))
+                    except:
+                        pass
+                    #
+                    # Zygosity information is alsways present for an observation
+                    #
+                    # Zygosity
+                    # schema: obviously vibrant blue
+                    zygosityOntology = {'unspecified' : '0000137', 'het' : '0000135', 'hom' : '0000136'} # GENO
+                    g.add((ICAN[observation_n], GENO['0000608'], GENO[zygosityOntology[zygosity]]))
+                    #
+                    # Subpopulation is always present for an observation
+                    #
+                    # Subpopulation
+                    # schema: grass green, quite green
+                    subpopulation = build_subpopulation_n(phenotype) # feature:X
+                    # 
+                    # observation is associated with population group
+                    g.add((ICAN[observation_n], SIO['001403'], ICAN[subpopulation]))
+                    g.add((ICAN[subpopulation], RDF.type, NCIT['C17005'])) # subpopulation is a NCIT's "Population group"
+                    g.add((ICAN[subpopulation], RDF.label, Literal(phenotype, datatype=XSD.string)))
+                    try:
+                        phenotype_n_code = build_phenotype_n(phenotype) # feature:X
+                        g.add((ICAN[subpopulation], RO['0016001'], phenotype_n_code)) # has phenotype or disease
+                    except:
+                        #print(f"{phenotype}: phenotype not in dictionary")
+                        pass 
+                else:
                     pass
-                #
-                # Zygosity information is alsways present for an observation
-                #
-                # Zygosity
-                # schema: obviously vibrant blue
-                zygosityOntology = {'unspecified' : '0000137', 'het' : '0000135', 'hom' : '0000136'} # GENO
-                g.add((ICAN[observation_n], GENO['000608'], GENO[zygosityOntology[zygosity]]))
-                #
-                # Subpopulation is always present for an observation
-                #
-                # Subpopulation
-                # schema: grass green, quite green
-                subpopulation = build_subpopulation_n(phenotype) # feature:X
-                # 
-                # observation is associated with population group
-                g.add((ICAN[observation_n], SIO['001403'], ICAN[subpopulation]))
-                g.add((ICAN[subpopulation], RDF.type, NCIT['C17005'])) # subpopulation is a NCIT's "Population group"
-                g.add((ICAN[subpopulation], RDF.label, Literal(phenotype, datatype=XSD.string)))
         #       
     return g
