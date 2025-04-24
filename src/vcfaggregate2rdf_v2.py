@@ -10,6 +10,7 @@ import os
 import io
 import glob
 import gzip
+import time
 import argparse
 import logging
 import pandas as pd
@@ -17,6 +18,7 @@ import concurrent.futures
 import xxxutilitary as ut
 import xxxrdfgraphinfo as rgi
 from rdflib import Graph
+from pathlib import Path
 
 ######################################################
 # arguments
@@ -46,6 +48,17 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',  
     datefmt='%Y-%m-%d %H:%M:%S', 
 )
+######################################################
+# timer
+class Timer:
+    def __enter__(self):
+        self.start = time.time()
+        return self
+
+    def __exit__(self, *args):
+        self.end = time.time()
+        self.interval = self.end - self.start
+        print(f"Code block executed in {self.interval:.4f} seconds")
 
 ######################################################
 # Check validity of arguments
@@ -187,10 +200,16 @@ if __name__ == "__main__":
     loggy.info(f"VCF.gz file is valid: {okvcf}")
 
     # Convert vcf.gz or bcf to bcftools query file
-    loggy.info("### Converting VCF.gz to bcftools query file ###")
-    os.system(f"bcftools query -f'%CHROM\t%POS\t%REF\t%ALT\t%INFO\n' \
-              {args.vcf} > {args.vcf}.query")
-    loggy.info(f"New file available: {args.vcf}.query")
+    queryfile = Path(f"{args.vcf}.query")
+    if not queryfile.exists():
+        loggy.info("### Converting VCF.gz to bcftools query file ###")
+        start = time.time()
+        os.system(f"bcftools query -f'%CHROM\t%POS\t%REF\t%ALT\t%INFO\n' \
+                {args.vcf} > {args.vcf}.query")
+        end = time.time()
+        loggy.info(f"New file available: {args.vcf}.query (execution time: {end - start:.2f} seconds)")
+    else:
+        loggy.info(f"Bcftools query file already available: {args.vcf}.query - NOT COMPUTED AGAIN")
 
     # Parsing the bcftools query file
     loggy.info("### Reading the bcftools query file ###")
@@ -200,7 +219,7 @@ if __name__ == "__main__":
     loggy.info(f"There are {len(lines)} variants to process.")
     if args.testing:
         loggy.debug("### Processing the 150 variants, for testing purposes ###")
-        lines = lines[:1500]
+        lines = lines[:150]
     # Parallel processing of the variants
     chunksize = args.chunksize
     loggy.info("### Initiating multi-threading with futures ###")
@@ -219,7 +238,7 @@ if __name__ == "__main__":
     merge_turtle_files_clean(ttlfiles, args.rdf, loggy=None)
     #
     # Ensure no duplicates
-    loggy.info(f"Ensuring no duplicates in {args.tempdir} (serialization). Be mindful of memory usage.")
+    loggy.info(f"Ensuring no duplicates in {args.rdf} (serialization). Be mindful of memory usage.")
     g = Graph()
     g.parse(args.rdf, format="ttl")
     g.serialize(destination=args.rdf, format="turtle")

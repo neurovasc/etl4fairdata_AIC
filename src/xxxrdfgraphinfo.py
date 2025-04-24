@@ -357,7 +357,7 @@ def build_rdfgraph(g, df):
                 # Do not build an observation if count or frequency are 0
                 # It will save time and space
                 # OR: because an observation does not always have count and frequecy
-                if count > 0 or frequency > 0:
+                if count > 5 and frequency > 0:
                     g.add((ICAN[variant_iid], SIO['001403'], ICAN[observation_n])) # variant is associated with Observation
                     g.add((ICAN[observation_n], RDF.type, SIO['000649'])) # Observation is an sio:000649 'information_processing' class
                     #
