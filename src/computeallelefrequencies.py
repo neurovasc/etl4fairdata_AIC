@@ -208,7 +208,7 @@ if __name__ == "__main__":
                 linecount += args.batchsize # in batchsize, we have the number of lines
                 print(f"linecount: {linecount}\r", end='')
                 if args.testing:
-                    if linecount >= 1000:
+                    if linecount >= 3000:
                         break
             # 
             print("\nChecking completed batched: \n")
