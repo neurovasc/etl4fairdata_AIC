@@ -35,6 +35,10 @@ Documentation available at https://ican.univ-nantes.io/variants-kg-schema/
 5) Function that processes several lines in batches of size n
 6) Parallelization function
 
+### Example command line of scripts individually
+>echo "=== $(date) ===" > computeAF_output.log && { time python3 src/computeallelefrequencies.py -g datasets/syntheticican2/syntheticican2-data-intermediate/genopheno-geno-sampled-querygenotype.tsv -c datasets/syntheticican2/syntheticican2-data-intermediate/genopheno-pheno-sampled-reordered.csv -o datasets/syntheticican2/syntheticican2-data-deliverable/syntheticican2-genotypes.aggregate.vcf.gz -s datasets/syntheticican2/syntheticican2-data-intermediate/genopheno-geno-sampled-contigs.txt -i datasets/syntheticican2/syntheticican2-data-intermediate/genopheno-geno-sampled-info.txt -t 18 -T ;} >> computeAF_output.log 2>&1 & disown
+>echo "=== $(date) ===" > vcf2rdf_output.log && { time python3 src/vcfaggregate2rdf_v2.py -r datasets/syntheticican2/syntheticican2-data-deliverable/syntheticican2-genotypes.aggregate.ttl -v datasets/syntheticican2/syntheticican2-data-deliverable/syntheticican2-genotypes.aggregate.sorted.vcf.gz -t 18 ; } >> vcf2rdf_output.log 2>&1 & disown
+
 ### TODOs
 - For variants that do not have a gnomad frequency or other frequency, should the frequency be set to 0 in the rdf file or simply not included? Now it appears as "NaN"^^xsd:float
 - [DONE, september 2024 + february 2025] - Add logger and verbose argument for vcfaggregate3rdf_v2.py 

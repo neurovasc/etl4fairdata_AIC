@@ -36,6 +36,9 @@ agp.add_argument('-d', '--tempdir', type=str,
                  default='temp/')
 agp.add_argument('-T', '--testing', action='store_true',
                  help='Use only 150 variants for testing purposes')
+agp.add_argument('-L', '--testinglines', type=int,
+                 nargs="+",
+                 help='Use variants in the interval n:m for testing purposes')
 
 args = agp.parse_args()
 
@@ -217,16 +220,28 @@ if __name__ == "__main__":
         lines = file.readlines()
     # For testing purposes, shorten the number of lines
     loggy.info(f"There are {len(lines)} variants to process.")
+    startat = 0
+    endat = len(lines)
     if args.testing:
-        loggy.debug("### Processing the 150 variants, for testing purposes ###")
-        lines = lines[:150]
+        if args.testinglines is not None:
+            startat = args.testinglines[0]
+            endat = args.testinglines[1]
+            loggy.debug(f"### Processing {startat}:{endat} variants, for testing purposes ###")
+            lines = lines[startat:endat]
+        else:
+            loggy.debug("### Processing the 150 variants, for testing purposes ###")
+            lines = lines[:200]
     # Parallel processing of the variants
     chunksize = args.chunksize
     loggy.info("### Initiating multi-threading with futures ###")
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.threads) as executor:
         loggy.debug(f"Submitting to concurrent executor with {args.threads} threads.")
+        # nb: chunk+startat is used for intermediate file naming,
+        # so that if the process fails, one can resume from the last chunk
+        # by using -T and -L parameters, after deleting the last intermediate files
+        # just in case they were incomplete
         futures = [executor.submit(process_variants, lines[chunk:chunk+chunksize], 
-                                   chunk) for chunk in range(0, len(lines), chunksize)]
+                                   chunk+startat) for chunk in range(0, len(lines), chunksize)]
         loggy.debug(f"Finished building futures. Waiting for results. Number of futures: {len(futures)}")
         results = [future.result() for future in concurrent.futures.as_completed(futures)]
     nb_chunks = len(results)

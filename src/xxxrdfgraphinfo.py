@@ -406,7 +406,7 @@ def build_rdfgraph(g, df):
                         g.add((ICAN[subpopulation], RO['0016001'], phenotype_n_code)) # has phenotype or disease
                     except:
                         #print(f"{phenotype}: phenotype not in dictionary")
-                        pass 
+                        pass
                 else:
                     pass
         #       
