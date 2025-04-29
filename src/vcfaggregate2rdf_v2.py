@@ -33,14 +33,30 @@ agp.add_argument('-t', '--threads', type=int,
                  default=1)
 agp.add_argument('-d', '--tempdir', type=str, 
                  help='Temporary folder for storing subgraphs',
-                 default='temp/')
+                 default=None)
 agp.add_argument('-T', '--testing', action='store_true',
                  help='Use only 150 variants for testing purposes')
 agp.add_argument('-L', '--testinglines', type=int,
                  nargs="+",
                  help='Use variants in the interval n:m for testing purposes')
+agp.add_argument('-C', '--cleanup', action='store_true',
+                 help='Cleanup temporary files after processing')
 
 args = agp.parse_args()
+
+######################################################
+# temporary directory
+
+if args.tempdir is None:
+    # Make a temp folder based on timestamp and basename
+    timestamp = time.strftime('%Y%m%d-%H%M%S')
+    vcf_basename = os.path.splitext(os.path.basename(args.vcf))[0]
+    temp_folder_name = f"temp/vcfaggregate2rdf_{timestamp}_{vcf_basename}"
+    
+    # Actually create the directory
+    os.makedirs(temp_folder_name, exist_ok=True)
+
+    args.tempdir = temp_folder_name
 
 ######################################################
 # logging
@@ -155,119 +171,156 @@ def clean_temp_ttlfiles():
 #
 def merge_turtle_files_clean(ttl_files, output_path, loggy=None):
     """
-    Merge Turtle files as text, keeping only the first file's prefixes.
-    Assumes all TTL files are valid and use consistent prefixes.
+    Merge Turtle (.ttl) files into a single file.
+    
+    - Only keep @prefix declarations from the first file.
+    - Write triples from all files.
+    - Process files line-by-line to minimize memory usage.
+    - Optionally logs progress.
     """
-    prefix_lines = []
-    body_lines = []
-    prefix_seen = False
+    prefix_written = False
 
-    for count, filepath in enumerate(ttl_files, 1):
-        if loggy and (count % 100 == 0 or count == len(ttl_files)):
-            loggy.debug(f"Merging file {count}/{len(ttl_files)}: {filepath}")
-
-        with open(filepath, 'r') as infile:
-            lines = infile.readlines()
-
-        local_prefix = []
-        local_body = []
-
-        for line in lines:
-            if line.strip().startswith('@prefix'):
-                if not prefix_seen:
-                    local_prefix.append(line)
-            else:
-                local_body.append(line)
-
-        if not prefix_seen:
-            prefix_lines = local_prefix
-            prefix_seen = True
-
-        body_lines.extend(local_body)
-    # Ensure there are no duplicates
-
-    # Write the final output
     with open(output_path, 'w') as outfile:
-        outfile.writelines(prefix_lines)
-        outfile.write('\n')
-        outfile.writelines(body_lines)
+        for count, filepath in enumerate(ttl_files, 1):
+            if loggy and (count % 100 == 0 or count == len(ttl_files)):
+                loggy.debug(f"Merging file {count}/{len(ttl_files)}: {filepath}")
 
+            with open(filepath, 'r') as infile:
+                for line in infile:
+                    stripped_line = line.strip()
+                    if stripped_line.startswith('@prefix'):
+                        if not prefix_written:
+                            outfile.write(line)
+                    else:
+                        outfile.write(line)
+
+            if not prefix_written:
+                # After finishing the first file, write a blank line and mark prefixes as done
+                outfile.write('\n')
+                prefix_written = True
     if loggy:
-        loggy.info(f"Merged {len(ttl_files)} TTL files into {output_path} with single prefix block.")
+        loggy.info(f"Merged {len(ttl_files)} TTL files into {output_path} with a single prefix block.")
 
-# Main
+
+def chunk_lines(file_path, chunksize, start=0, end=None):
+    """
+    Generator yielding chunks of lines from a file without loading the entire file in memory.
+    """
+    with open(file_path, 'r') as f:
+        chunk = []
+        for idx, line in enumerate(f):
+            if idx < start:
+                continue
+            if end is not None and idx >= end:
+                break
+            chunk.append(line)
+            if len(chunk) >= chunksize:
+                yield chunk, idx - len(chunk) + 1  # return chunk and its starting line number
+                chunk = []
+        if chunk:
+            yield chunk, idx - len(chunk) + 1
+
+# ---------------- Main Script ----------------
+
 if __name__ == "__main__":
-    # Check validity of the VCF file
+    # 1. Check validity of VCF file
     loggy.info("### Checking validity of file containing the variants: vcf.gz ###")
     okvcf = ut.color_truefalse(vcfvalidity(args.vcf))
     loggy.info(f"VCF.gz file is valid: {okvcf}")
 
-    # Convert vcf.gz or bcf to bcftools query file
+    # 2. Convert vcf.gz or bcf to bcftools query file
     queryfile = Path(f"{args.vcf}.query")
     if not queryfile.exists():
         loggy.info("### Converting VCF.gz to bcftools query file ###")
         start = time.time()
-        os.system(f"bcftools query -f'%CHROM\t%POS\t%REF\t%ALT\t%INFO\n' \
-                {args.vcf} > {args.vcf}.query")
+        os.system(f"bcftools query -f'%CHROM\t%POS\t%REF\t%ALT\t%INFO\n' {args.vcf} > {args.vcf}.query")
         end = time.time()
         loggy.info(f"New file available: {args.vcf}.query (execution time: {end - start:.2f} seconds)")
     else:
         loggy.info(f"Bcftools query file already available: {args.vcf}.query - NOT COMPUTED AGAIN")
 
-    # Parsing the bcftools query file
-    loggy.info("### Reading the bcftools query file ###")
+    # 3. Count total number of lines (lightweight)
+    loggy.info("### Counting the number of variants ###")
+    total_lines = 0
     with open(f"{args.vcf}.query", 'r') as file:
-        lines = file.readlines()
-    # For testing purposes, shorten the number of lines
-    loggy.info(f"There are {len(lines)} variants to process.")
+        for _ in file:
+            total_lines += 1
+    loggy.info(f"There are {total_lines} variants to process.")
+
+    # 4. Testing mode adjustments
     startat = 0
-    endat = len(lines)
+    endat = total_lines
     if args.testing:
         if args.testinglines is not None:
             startat = args.testinglines[0]
             endat = args.testinglines[1]
             loggy.debug(f"### Processing {startat}:{endat} variants, for testing purposes ###")
-            lines = lines[startat:endat]
         else:
-            loggy.debug("### Processing the 150 variants, for testing purposes ###")
-            lines = lines[:200]
-    # Parallel processing of the variants
+            loggy.debug("### Processing 200 variants, for testing purposes ###")
+            endat = min(200, total_lines)
+
+    # 5. Parallel processing of variants
     chunksize = args.chunksize
+    max_pending_futures = args.threads  # Limit in-flight futures
     loggy.info("### Initiating multi-threading with futures ###")
+
+    futures = set()
+    chunk_generator = chunk_lines(f"{args.vcf}.query", chunksize, startat, endat)
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.threads) as executor:
-        loggy.debug(f"Submitting to concurrent executor with {args.threads} threads.")
-        # nb: chunk+startat is used for intermediate file naming,
-        # so that if the process fails, one can resume from the last chunk
-        # by using -T and -L parameters, after deleting the last intermediate files
-        # just in case they were incomplete
-        futures = [executor.submit(process_variants, lines[chunk:chunk+chunksize], 
-                                   chunk+startat) for chunk in range(0, len(lines), chunksize)]
-        loggy.debug(f"Finished building futures. Waiting for results. Number of futures: {len(futures)}")
-        results = [future.result() for future in concurrent.futures.as_completed(futures)]
-    nb_chunks = len(results)
-    loggy.info(f"### Finished processing all {nb_chunks} vcf chunks into subgraphs. ###")
-    # Merging all the pocessed variants into one turtle file
+        loggy.debug(f"Throttled submission to concurrent executor with {args.threads} threads, max pending futures = {max_pending_futures}.")
+        
+        # Pre-fill futures queue
+        for _ in range(max_pending_futures):
+            try:
+                chunk, chunk_start = next(chunk_generator)
+                future = executor.submit(process_variants, chunk, chunk_start)
+                futures.add(future)
+                loggy.debug(f"Submitted new chunk starting at line {chunk_start}.")
+            except StopIteration:
+                break
+
+        # Process completed futures and keep submitting new chunks
+        while futures:
+            done, futures = concurrent.futures.wait(futures, return_when=concurrent.futures.FIRST_COMPLETED)
+            for fut in done:
+                _ = fut.result()  # No accumulation of large results
+
+                try:
+                    chunk, chunk_start = next(chunk_generator)
+                    future = executor.submit(process_variants, chunk, chunk_start)
+                    futures.add(future)
+                    loggy.debug(f"Submitted new chunk starting at line {chunk_start}.")
+                except StopIteration:
+                    pass
+
+    loggy.info(f"### Finished processing all VCF chunks into subgraphs. ###")
+
+    '''
+    # 6. Merge temp turtle files
     loggy.info(f"Merging all temp .ttl files. Temporary folder: {args.tempdir}")
-    #
     ttlfiles = glob.glob(os.path.join(args.tempdir, f"{os.path.basename(args.rdf)}_*_intermediate.ttl"))
-    merge_turtle_files_clean(ttlfiles, args.rdf, loggy=None)
-    #
-    # Ensure no duplicates
+    loggy.debug(f"Number of temporary files to merge: {len(ttlfiles)}")
+    merge_turtle_files_clean(ttlfiles, args.rdf, loggy=loggy)
+
+    # 7. Optionally ensure no duplicates (careful, memory heavy)
     loggy.info(f"Ensuring no duplicates in {args.rdf} (serialization). Be mindful of memory usage.")
     g = Graph()
     g.parse(args.rdf, format="ttl")
     g.serialize(destination=args.rdf, format="turtle")
-    #
-    loggy.info("### Finished merging temp .ttl files. ###")
-    loggy.info(f"Checking if valid turtle file: {args.rdf}.")
-    okttl = ut.color_truefalse(check_turtle(args.rdf))
-    loggy.debug(f"turtle file is valid: {okttl}")
 
-    # Clean up
-    if args.threads:
+    loggy.info("### Finished merging temp .ttl files. ###")
+
+    # 8. Check validity of final TTL file
+    loggy.info(f"Checking if valid turtle file: {args.rdf}.")
+    oktl = ut.color_truefalse(check_turtle(args.rdf))
+    loggy.debug(f"Turtle file is valid: {oktl}")
+
+    # 9. Cleanup
+    if args.cleanup:
         loggy.info("### Cleaning up temp files ###")
         clean_temp_ttlfiles()
         loggy.info("Done.")
-
+    '''
     
 

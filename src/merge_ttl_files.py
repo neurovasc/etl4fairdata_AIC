@@ -1,32 +1,69 @@
-
 import os
 import glob
 from rdflib import Graph
-from vcfaggregate2rdf_v2 import create_rdfgraph_namespace
+import xxxrdfgraphinfo as rgi
+import argparse
 
-count = 0
-# The turtle files should not be loaded into memory
-# but rather serialized to the final file
-temporary_merge = '/home/bodrug-a/Devlopment/etl4fairdata_AIC/temp/temp_merge.ttl'
-# Empty file if it already exists
-if os.path.exists(temporary_merge):
-    open(temporary_merge, 'w').close()
-# Get all the turtle files in temp
-ttlfiles = glob.glob('/home/bodrug-a/Devlopment/etl4fairdata_AIC/temp/*_*_intermediate.ttl')
-print(ttlfiles)
+# Argument parser
+parser = argparse.ArgumentParser(description="Merge TTL files with shared prefixes and deduplication.")
+parser.add_argument('-d', '--temp-folder', type=str, required=True,
+                    help='Temporary folder containing *_intermediate.ttl files to merge.')
+args = parser.parse_args()
 
-# Merge all the turtle files into one, without loading them into memory all at once
-with open(temporary_merge, 'w') as f:
-    for ttl in ttlfiles:
-        print(ttl)
-        count += 1
-        if count%100 == 0 or count == len(ttlfiles):
-            print(f"Merging files: {count}/{len(ttlfiles)}")
-        graph = Graph()
-        graph.parse(ttl, format='turtle')
-        f.write(graph.serialize(format='turtle'))
-exit()
-# Create graph for final serialization
-megag = create_rdfgraph_namespace() # merged graph
+# Function
+def create_rdfgraph_namespace():
+    '''
+    '''
+    namespace = rgi.namespace
+    g = Graph()
+    for key, value in namespace.items():
+        g.bind(key, value)
+    return g
+
+# Paths
+temp_folder = args.temp_folder
+temporary_merge = os.path.join(temp_folder, 'temp_merge.ttl')
+final_merged_file = os.path.join(temp_folder, 'mergedfile.ttl')
+# Empty the temporary merge file if it already exists
+open(temporary_merge, 'w').close()
+
+# Get all the intermediate turtle files
+ttlfiles = glob.glob(os.path.join(temp_folder, '*_*_intermediate.ttl'))
+print(f"Found {len(ttlfiles)} files to merge.")
+
+# Step 1: Extract prefixes from the first file
+prefix_lines = []
+first_file = ttlfiles[0]
+with open(first_file, 'r') as f:
+    for line in f:
+        if line.strip().startswith('@prefix'):
+            prefix_lines.append(line)
+
+print(f"Collected {len(prefix_lines)} prefixes from the first file.")
+
+# Step 2: Merge
+with open(temporary_merge, 'w') as outfile:
+    # Write all prefixes first
+    outfile.writelines(prefix_lines)
+    outfile.write('\n')  # Add a newline after prefixes
+
+    # Now process all files
+    for idx, ttl in enumerate(ttlfiles, 1):
+        with open(ttl, 'r') as infile:
+            for line in infile:
+                if not line.strip().startswith('@prefix'):
+                    outfile.write(line)
+
+        if idx % 1 == 0 or idx == len(ttlfiles):
+            print(f"Merged {idx}/{len(ttlfiles)} files.")
+
+print(f"Finished merging all files into {temporary_merge}.")
+
+# Step 3: Deduplicate triples by parsing temp_merge.ttl into a clean graph
+print("Deduplicating merged TTL file...")
+megag = create_rdfgraph_namespace()  # Create fresh graph with namespaces
+print("Parsing temporary merge file...")
 megag.parse(temporary_merge, format='turtle')
-megag.serialize('/home/bodrug-a/Devlopment/etl4fairdata_AIC/temp/mergedfile.ttl', format="turtle")
+print("Removing duplicates... (serializing to a new graph)")
+megag.serialize(destination=final_merged_file, format='turtle')
+print(f"Final merged TTL file written to: {final_merged_file}")
