@@ -231,6 +231,8 @@ def build_rdfgraph(g, df):
     ''' Follwing schema: 
     schema: https://docs.google.com/drawings/d/1xfawlZxZgUYMsIuDHQgSAZnKI3FV0lTmR7JQKXJ3v58
     '''
+    count_threshold = 5
+    frequency_threshold = 0.0 # 5/6000=0.0008333
     for index, row in df.iterrows():
         # Variant chromosome, position, ref, alt, info
         chromosome = row['chromosome'].strip('chr')
@@ -354,10 +356,13 @@ def build_rdfgraph(g, df):
                     count = int(matching_observation['count']) # --> value
                 except:
                     count = 0
-                # Do not build an observation if count or frequency are 0
-                # It will save time and space
-                # OR: because an observation does not always have count and frequecy
-                if count > 5 and frequency > 0:
+                # Do not build an observation if count is inferior to the threshold of minimum counts to be able to share data
+                # It will save time and space :)
+                # BUT, frequencies for observation with hom and het will be 0, because AF are not calculated 
+                # in the previous computeallelefrequencies step, and is set to 0 above in this script.
+                # So add frequencies only if they are > 0
+                if count > count_threshold: # MINIMUM ALLELE COUNT FOR SHARING DATA
+                    print("## YE PASS: ", observation_n, variant_hgvsid_n, count, frequency, zygosity)
                     g.add((ICAN[variant_iid], SIO['001403'], ICAN[observation_n])) # variant is associated with Observation
                     g.add((ICAN[observation_n], RDF.type, SIO['000649'])) # Observation is an sio:000649 'information_processing' class
                     #
@@ -365,15 +370,17 @@ def build_rdfgraph(g, df):
                     #
                     # Frequency
                     # schema: obviously vibrant blue
-                    try:
-                        #frequency = matching_observation['frequency'] # --> value
-                        # Frequency
-                        g.add((ICAN[observation_n], SIO['000900'], ICAN[observationFrequency_n])) # observation has frequency
-                        g.add((ICAN[observationFrequency_n], RDF.type, SIO['001367'])) # frequency is frequency
-                        g.add((ICAN[observationFrequency_n], SIO['000300'],Literal(frequency, datatype=XSD.float)))
-                    except: 
+                    if frequency > frequency_threshold: # AF will always be 0 with phenotype observation hom and het, because not computed in computeallelefrequencies step
+                        try:
+                            #frequency = matching_observation['frequency'] # --> value
+                            # Frequency
+                            g.add((ICAN[observation_n], SIO['000900'], ICAN[observationFrequency_n])) # observation has frequency
+                            g.add((ICAN[observationFrequency_n], RDF.type, SIO['001367'])) # frequency is frequency
+                            g.add((ICAN[observationFrequency_n], SIO['000300'],Literal(frequency, datatype=XSD.float)))
+                        except: 
+                            pass
+                    else:
                         pass
-                    # Count
                     # schema: obviously vibrant blue
                     try:
                         #count = matching_observation['count'] # --> value
@@ -390,6 +397,7 @@ def build_rdfgraph(g, df):
                     # schema: obviously vibrant blue
                     zygosityOntology = {'unspecified' : '0000137', 'het' : '0000135', 'hom' : '0000136'} # GENO
                     g.add((ICAN[observation_n], GENO['0000608'], GENO[zygosityOntology[zygosity]]))
+                    
                     #
                     # Subpopulation is always present for an observation
                     #
@@ -408,6 +416,6 @@ def build_rdfgraph(g, df):
                         #print(f"{phenotype}: phenotype not in dictionary")
                         pass
                 else:
-                    pass
+                    print("## NO PASS: ", observation_n, variant_hgvsid_n, count, frequency, zygosity)
         #       
     return g

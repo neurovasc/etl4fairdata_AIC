@@ -45,6 +45,15 @@ agp.add_argument('-C', '--cleanup', action='store_true',
 args = agp.parse_args()
 
 ######################################################
+# logging
+loggy = logging.getLogger(__name__)
+
+logging.basicConfig(
+    level=logging.DEBUG,  
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',  
+    datefmt='%Y-%m-%d %H:%M:%S', 
+)
+######################################################
 # temporary directory
 
 if args.tempdir is None:
@@ -57,16 +66,14 @@ if args.tempdir is None:
     os.makedirs(temp_folder_name, exist_ok=True)
 
     args.tempdir = temp_folder_name
-
-######################################################
-# logging
-loggy = logging.getLogger(__name__)
-
-logging.basicConfig(
-    level=logging.DEBUG,  
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',  
-    datefmt='%Y-%m-%d %H:%M:%S', 
-)
+else:
+    # Ensure the temp directory exists
+    os.makedirs(args.tempdir, exist_ok=True)
+    # Check if the temp directory is empty
+    if not os.listdir(args.tempdir):
+        loggy.info(f"Temporary directory {args.tempdir} is empty.")
+    else:
+        loggy.info(f"Temporary directory {args.tempdir} is not empty. Existing may be used or overwritten.")
 ######################################################
 # timer
 class Timer:
@@ -131,10 +138,10 @@ def process_variants(variants, chunk):
     #loggy.debug(f"Processing variants in chunk {chunk} : build mini graph.")     
     minig = rgi.build_rdfgraph(minig, df)
     #
-    #loggy.debug(f"Processing variants in chunk {chunk} : writing to output files: {output}.")
+    loggy.debug(f"Processing variants in chunk {chunk} : writing to output files: {output}.")
     minig.serialize(destination=output, format="turtle")
     #
-    #loggy.debug(f"Processing variants in chunk {chunk} : finished.")
+    loggy.debug(f"Processing variants in chunk {chunk} : finished.")
     return minig
 #
 def create_rdfgraph_namespace():
@@ -229,6 +236,8 @@ if __name__ == "__main__":
     loggy.info(f"VCF.gz file is valid: {okvcf}")
 
     # 2. Convert vcf.gz or bcf to bcftools query file
+    # NB: bcftools query is always run on the entirety of the VCF file 
+    # and is not generated again if it exists. WARNING WARNING. (saves ~30 seconds)
     queryfile = Path(f"{args.vcf}.query")
     if not queryfile.exists():
         loggy.info("### Converting VCF.gz to bcftools query file ###")
@@ -263,7 +272,7 @@ if __name__ == "__main__":
     chunksize = args.chunksize
     max_pending_futures = args.threads  # Limit in-flight futures
     loggy.info("### Initiating multi-threading with futures ###")
-
+    #
     futures = set()
     chunk_generator = chunk_lines(f"{args.vcf}.query", chunksize, startat, endat)
 
@@ -294,15 +303,15 @@ if __name__ == "__main__":
                 except StopIteration:
                     pass
 
-    loggy.info(f"### Finished processing all VCF chunks into subgraphs. ###")
+    loggy.info(f"### FiniLS shed processing all VCF chunks into subgraphs. ###")
 
-    '''
+    
     # 6. Merge temp turtle files
     loggy.info(f"Merging all temp .ttl files. Temporary folder: {args.tempdir}")
     ttlfiles = glob.glob(os.path.join(args.tempdir, f"{os.path.basename(args.rdf)}_*_intermediate.ttl"))
     loggy.debug(f"Number of temporary files to merge: {len(ttlfiles)}")
     merge_turtle_files_clean(ttlfiles, args.rdf, loggy=loggy)
-
+    '''
     # 7. Optionally ensure no duplicates (careful, memory heavy)
     loggy.info(f"Ensuring no duplicates in {args.rdf} (serialization). Be mindful of memory usage.")
     g = Graph()
