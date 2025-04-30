@@ -21,12 +21,13 @@ XSD = Namespace('http://www.w3.org/2001/XMLSchema#')
 RO = Namespace('http://purl.obolibrary.org/obo/RO_')
 HP = Namespace('http://purl.obolibrary.org/obo/HP_')
 ORPHA = Namespace('http://www.orpha.net/ORDO/Orphanet_')
+EDAM = Namespace('http://edamontology.org/')
 
 namespace = {'faldo' : FALDO, 'aggrvar' : AGGRVAR, 'aic' : ICAN,
              'geno' : GENO, 'hpo' : HPO, 'linkml' : LINKML, 'mondo' : MONDO,
              'ncit' : NCIT, 'owl' : OWL, 'rdf' : RDF, 'rdfs' : RDFS,
              'sio' : SIO, 'skos' : SKOS, 'so' : SO, 'xsd' : XSD, 'ro' : RO,
-             'hp' : HP, 'orpha' : ORPHA}
+             'hp' : HP, 'orpha' : ORPHA, 'edam' : EDAM}
 #
 # Building nodes
 #
@@ -362,7 +363,7 @@ def build_rdfgraph(g, df):
                 # in the previous computeallelefrequencies step, and is set to 0 above in this script.
                 # So add frequencies only if they are > 0
                 if count > count_threshold: # MINIMUM ALLELE COUNT FOR SHARING DATA
-                    print("## YE PASS: ", observation_n, variant_hgvsid_n, count, frequency, zygosity)
+                    #print("## YE PASS: ", observation_n, variant_hgvsid_n, count, frequency, zygosity)
                     g.add((ICAN[variant_iid], SIO['001403'], ICAN[observation_n])) # variant is associated with Observation
                     g.add((ICAN[observation_n], RDF.type, SIO['000649'])) # Observation is an sio:000649 'information_processing' class
                     #
@@ -412,10 +413,12 @@ def build_rdfgraph(g, df):
                     try:
                         phenotype_n_code = build_phenotype_n(phenotype) # feature:X
                         g.add((ICAN[subpopulation], RO['0016001'], phenotype_n_code)) # has phenotype or disease
+                        g.add((phenotype_n_code, RDF.type, EDAM['data_0966'])) # phenotype_n_code is an ontology term
                     except:
                         #print(f"{phenotype}: phenotype not in dictionary")
                         pass
                 else:
-                    print("## NO PASS: ", observation_n, variant_hgvsid_n, count, frequency, zygosity)
+                    #print("## NO PASS: ", observation_n, variant_hgvsid_n, count, frequency, zygosity)
+                    pass
         #       
     return g
