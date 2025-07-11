@@ -7,9 +7,10 @@ datasetdir = "datasets/"
 datasets = {"test" : "test", 
             "synthetic1" : "synthetic1", 
             "aic" : "aic", 
-            "syntheticican2" : "syntheticican2"}
+            "syntheticican2" : "syntheticican2",
+            "synican3" : "synican3"}
 ###########################
-dataset = datasets["syntheticican2"]# change this to the dataset you want to work with
+dataset = datasets["synican3"]# change this to the dataset you want to work with
 ###########################
 input_dir = datasetdir + dataset + "/" +  dataset + "-data-input"
 inputcsv = glob.glob(input_dir + "/*.csv")[0]
@@ -19,9 +20,6 @@ deliverable_dir = datasetdir + dataset + "/" +  dataset + "-data-deliverable"
 
 
 rule setup:
-    output:
-        directory(intermediate_dir),
-        directory(deliverable_dir)
     run:
         os.makedirs(intermediate_dir, exist_ok=True)
         os.makedirs(deliverable_dir, exist_ok=True)
@@ -164,7 +162,7 @@ rule computeallelefrequencies:
     output:
         aggregatevcf = deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.vcf.gz"
     shell:
-        "python3 src/computeallelefrequencies.py -g {input.query} -c {input.clinical} -o {output.aggregatevcf} -s {input.sequences} -i {input.info} -T"
+        "python3 src/computeallelefrequencies.py -g {input.query} -c {input.clinical} -o {output.aggregatevcf} -s {input.sequences} -i {input.info}"
 #
 # Sanity check: is the bgziped VCF file valid?
 rule sanity_check_vcfvalidity:
@@ -200,6 +198,6 @@ rule vcfaggregate2rdf:
     output:
         rdf=deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.ttl"
     shell:
-        "python3 src/vcfaggregate2rdf_v2.py -v {input.vcf} -r {output.rdf} --testing"
+        "python3 src/vcfaggregate2rdf_v2.py -v {input.vcf} -r {output.rdf}"
 
 #snakemake --rulegraph | dot -Tpdf > dag.pdf

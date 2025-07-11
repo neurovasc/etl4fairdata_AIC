@@ -10,7 +10,6 @@ HPO = Namespace('http://purl.obolibrary.org/obo/HP_')
 LINKML = Namespace('https://w3id.org/linkml/')
 MONDO = Namespace('http://purl.obolibrary.org/obo/MONDO_')
 NCIT = Namespace('http://purl.obolibrary.org/obo/NCIT_')
-OWL = Namespace('http://www.w3.org/2002/07/owl#')
 RDF = Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 RDFS = Namespace('http://www.w3.org/2000/01/rdf-schema#')
 OWL = Namespace('https://www.w3.org/TR/2004/REC-owl-semantics-20040210/#owl_')
@@ -22,6 +21,7 @@ RO = Namespace('http://purl.obolibrary.org/obo/RO_')
 HP = Namespace('http://purl.obolibrary.org/obo/HP_')
 ORPHA = Namespace('http://www.orpha.net/ORDO/Orphanet_')
 EDAM = Namespace('http://edamontology.org/')
+SNOMED = Namespace('http://snomed.info/id/')
 
 namespace = {'faldo' : FALDO, 'aggrvar' : AGGRVAR, 'aic' : ICAN,
              'geno' : GENO, 'hpo' : HPO, 'linkml' : LINKML, 'mondo' : MONDO,
@@ -92,10 +92,15 @@ def build_phenotype_n(phenotype):
     '''
     phenocodes = {'female': NCIT['C16576'], 
                   'male' : NCIT['C20197'],
-                  'aht': HP['0000822'], 
+                  'earlyonset' : HPO['0011462'],
                   'obese': NCIT['C159658'],
-                  'currentlysmoking': NCIT['C17934'],
-                  'familial': ORPHA['231160']}
+                  'familial': ORPHA['231160'],
+                  'aht': HP['0000822'],
+                  'diabetes': HPO['0000819'],
+                  'neversmoked' : NCIT['C65108'],
+                  'currentlysmoking': NCIT['C17934'], 
+                  'multipleica' : SNOMED['783413008'], 
+                  'treatmentcoils' : SNOMED['102314001']}
     #print(f"Phenotype: {phenotype}")
     #print(f"Phenotype code: {phenocodes[phenotype]}")
     #print(f"Phenotype codes: {phenocodes}")
@@ -232,11 +237,11 @@ def build_rdfgraph(g, df):
     ''' Follwing schema: 
     schema: https://docs.google.com/drawings/d/1xfawlZxZgUYMsIuDHQgSAZnKI3FV0lTmR7JQKXJ3v58
     '''
-    count_threshold = 5
+    count_threshold = 0
     frequency_threshold = 0.0 # 5/6000=0.0008333
     for index, row in df.iterrows():
         # Variant chromosome, position, ref, alt, info
-        chromosome = row['chromosome'].strip('chr')
+        chromosome = str(row['chromosome']).strip('chr')
         position = int(row['position'])
         reference = row['reference']
         alternate = row['alternate']
