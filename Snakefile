@@ -8,6 +8,7 @@ datasets = {"test" : "test",
             "synthetic1" : "synthetic1", 
             "aic" : "aic", 
             "syntheticican2" : "syntheticican2",
+            "synican3" : "synican3",
             "synican3" : "synican3"}
 ###########################
 dataset = datasets["synican3"]# change this to the dataset you want to work with
@@ -218,8 +219,6 @@ rule vcfaggregate2rdf:
     output:
         rdf=deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.ttl"
     shell:
-        "python3 src/vcfaggregate2rdf_v2.py -v {input.vcf} -r {output.rdf}"
-
-
+        "python3 src/vcfaggregate2rdf_v2.py -v {input.vcf} -r {output.rdf} --testing"
 
 #snakemake --rulegraph | dot -Tpdf > dag.pdf
