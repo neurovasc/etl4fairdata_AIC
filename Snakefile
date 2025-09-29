@@ -18,6 +18,15 @@ inputvcf = glob.glob(input_dir + "/*.vcf.gz")[0]
 intermediate_dir = datasetdir + dataset + "/" +  dataset + "-data-intermediate"
 deliverable_dir = datasetdir + dataset + "/" +  dataset + "-data-deliverable"
 
+# rule all
+rule all:
+    input:
+        deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.ttl",
+        deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.vcf.gz",
+        intermediate_dir + "/sanity_check_samples_complete.txt",
+        intermediate_dir + "/sanity_check_vcfvalidity_complete.txt"
+
+
 
 rule setup:
     run:
@@ -210,5 +219,7 @@ rule vcfaggregate2rdf:
         rdf=deliverable_dir+"/"+datasets[dataset]+"-genotypes.aggregate.ttl"
     shell:
         "python3 src/vcfaggregate2rdf_v2.py -v {input.vcf} -r {output.rdf}"
+
+
 
 #snakemake --rulegraph | dot -Tpdf > dag.pdf

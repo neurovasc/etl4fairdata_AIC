@@ -48,13 +48,15 @@ except:
 # For simulated data
 try:
     samples = pd.read_csv(args.samples, header=None)
-    clinical = pd.read_csv(args.clinical, sep=';')
-    #print(clinical.head())
+    clinical = pd.read_csv(args.clinical, sep=',')
+    print(clinical.head())
     aic_samples = list(set(clinical['biosampleId']))
     clinical_samples = clinical
     with open(args.outsamples, 'w') as f: f.write('\n'.join(aic_samples))
     with open(args.outfile, 'w') as f: f.write(clinical.to_csv(index=False))
+    print("Simulated data processed")
 except:
+    print("Nothing was processed")
     pass
 
 
