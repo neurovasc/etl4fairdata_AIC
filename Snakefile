@@ -48,10 +48,21 @@ rule sample_selection_withpheno:
         csv = inputcsv,
         list1 = intermediate_dir+"/biosample-ids-in-vcf.lst"
     output:
-        list2 = intermediate_dir+"/biosample-ids-in-vcf-with-pheno-in-csv.lst",
-        csv = intermediate_dir + "/genopheno-pheno-sampled.csv"
+        csv2 = intermediate_dir + "/genopheno-pheno-sampled.csv",
+        list2 = intermediate_dir+"/biosample-ids-in-vcf-with-pheno-in-csv.lst"
     shell:
-        "python src/sampleselection.py -c {input.csv} -s {input.list1} -o {output.list2} -f {output.csv}"
+        """ 
+        echo python src/sampleselection.py \
+            -s {input.list1} \
+            -c {input.csv} \
+            -o {output.list2} \
+            -f {output.csv2};
+        python src/sampleselection.py \
+            -s {input.list1} \
+            -c {input.csv} \
+            -o {output.list2} \
+            -f {output.csv2}
+        """
 #
 # extract the biosamples in the genotype vcf file that also have a phenotype in the phenotype csv file
 rule sample_selection_withgeno:
