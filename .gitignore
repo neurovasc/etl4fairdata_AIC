@@ -1,6 +1,11 @@
-data-deliverable/*
-data-input/*
-data-intermediate/*
 .snakemake/*
 temp/
 datasets/aic/*
+datasets/syntheticican2/syntheticican2-data-input/exome_3k.vcf.gz
+datasets/syntheticican2/syntheticican2-data-intermediate/genopheno-geno-sampled-querygenotype.tsv
+datasets/syntheticican2/syntheticican2-data-intermediate/genopheno-geno-sampled.vcf.gz
+ontologies/tdbontologies
+ontologies/*
+legacy/
+ui/
+temp/
