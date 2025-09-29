@@ -52,13 +52,14 @@ Documentation available at https://ican.univ-nantes.io/variants-kg-schema/
 as possible
 - [DONE, february 2025] Build rdf in vcfaggregate2rdf in a prettier way: now it is spaghetti code with rdflib
 - [DONE, january 2025] - Add homozygous and heterozygous counts
-- [DONE, varil 2025] - create a sturdier test dataset --> syntheticican2 (see inex-med Neurovasc jupyter notebook)
+- [DONE, avril 2025] - create a sturdier test dataset --> syntheticican2 (see inex-med Neurovasc jupyter notebook)
+- [DONE, agust 2025] - synican3 synthetic dataset generated from real data (F Laporte methods for genetics, modified inex-Med notebooks for phenoclinical data)
 
 ### What happens after the Snakemake pipeline ?
 Setting up a fuseki server for sparql queries
 >fuseki-server --file=the-awesome-aggregated-variants.ttl /ican
 
-Please visit: https://10-54-1-83.gcp.glicid.fr/
+Please visit: https://cgen-kg-ica.bird.glicid.fr/
 
 Next step is building sparql query example catalog. See (sq4av) sparqlqueries4aggregatedvariants repo.
 
