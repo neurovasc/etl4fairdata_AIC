@@ -1,5 +1,9 @@
 .snakemake/*
 temp/
+datasets/synican3/synican3-data-deliverable/
+datasets/synican3/synican3-data-input/differently_samples_files_backup/
+datasets/synican3/synican3-data-intermediate/
+datasets/syntheticican2/
 datasets/aic/*
 datasets/syntheticican2/syntheticican2-data-input/exome_3k.vcf.gz
 datasets/syntheticican2/syntheticican2-data-intermediate/genopheno-geno-sampled-querygenotype.tsv
